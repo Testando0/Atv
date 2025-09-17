@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Online - Canais ao Vivo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: #1f1f1f;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 2px solid #333;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1200px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .player-container {
+            width: 100%;
+            position: relative;
+            padding-top: 56.25%; /* Proporção 16:9 */
+            background-color: #000;
+        }
+
+        .player-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        #current-channel {
+            margin-top: 10px;
+            font-size: 1.2em;
+            color: #ccc;
+        }
+
+        .channel-list {
+            width: 100%;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #1f1f1f;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .channel-list h2 {
+            text-align: center;
+            margin-top: 0;
+            border-bottom: 1px solid #444;
+            padding-bottom: 15px;
+        }
+
+        .channel-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .channel-button {
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #555;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .channel-button:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            width: 100%;
+            background-color: #1f1f1f;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>TV Online</h1>
+    </header>
+
+    <main>
+        <div class="player-container">
+            <iframe id="tv-player" src="https://playertv.net/embed.php?channel=globo" allowfullscreen></iframe>
+        </div>
+        <p id="current-channel">Canal atual: Globo</p>
+
+        <div class="channel-list">
+            <h2>Escolha um Canal</h2>
+            <div class="channel-buttons">
+                <button class="channel-button" data-channel="globo" data-name="Globo">Globo</button>
+                <button class="channel-button" data-channel="sbt" data-name="SBT">SBT</button>
+                <button class="channel-button" data-channel="record" data-name="Record TV">Record TV</button>
+                <button class="channel-button" data-channel="band" data-name="Band">Band</button>
+                <button class="channel-button" data-channel="redetv" data-name="RedeTV!">RedeTV!</button>
+                <button class="channel-button" data-channel="cultura" data-name="TV Cultura">TV Cultura</button>
+                <button class="channel-button" data-channel="cnnbrasil" data-name="CNN Brasil">CNN Brasil</button>
+                <button class="channel-button" data-channel="jovempannews" data-name="Jovem Pan News">Jovem Pan News</button>
+                <button class="channel-button" data-channel="bandsports" data-name="BandSports">BandSports</button>
+                <button class="channel-button" data-channel="espn" data-name="ESPN">ESPN</button>
+                <button class="channel-button" data-channel="discovery" data-name="Discovery Channel">Discovery</button>
+                <button class="channel-button" data-channel="history" data-name="History Channel">History</button>
+                <button class="channel-button" data-channel="cartoon" data-name="Cartoon Network">Cartoon Network</button>
+                <button class="channel-button" data-channel="discoverykids" data-name="Discovery Kids">Discovery Kids</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Seu Site de TV Online. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const player = document.getElementById('tv-player');
+            const currentChannelDisplay = document.getElementById('current-channel');
+            const channelButtons = document.querySelectorAll('.channel-button');
+
+            channelButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const channelId = button.getAttribute('data-channel');
+                    const channelName = button.getAttribute('data-name');
+                    
+                    // Atualiza a URL do iframe do player
+                    player.src = `https://playertv.net/embed.php?channel=${channelId}`;
+                    
+                    // Atualiza o texto que mostra o canal atual
+                    currentChannelDisplay.textContent = `Canal atual: ${channelName}`;
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
