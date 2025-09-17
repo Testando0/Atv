@@ -6,12 +6,12 @@
     <title>TV Online - Canais Ao Vivo</title>
     <style>
         :root {
-            --background-color: #121212;
-            --surface-color: #1e1e1e;
-            --primary-text-color: #e0e0e0;
-            --secondary-text-color: #b3b3b3;
-            --accent-color: #03dac6;
-            --border-color: #333;
+            --background-color: #3f0000; /* Vermelho escuro */
+            --surface-color: #5a0000;   /* Vermelho um pouco mais claro para as categorias */
+            --primary-text-color: #ffffff; /* Texto principal branco */
+            --secondary-text-color: #e0e0e0; /* Texto secundário levemente acinzentado */
+            --accent-color: #ff3333;    /* Vermelho vibrante para destaque */
+            --border-color: #8b0000;    /* Vermelho escuro para bordas */
         }
 
         body {
@@ -55,7 +55,7 @@
             width: 100%;
             position: relative;
             padding-top: 56.25%; /* Proporção 16:9 */
-            background-color: #000;
+            background-color: #000; /* Player background remains black for contrast */
             margin-top: 20px;
             border-radius: 8px;
             overflow: hidden;
@@ -98,9 +98,9 @@
         }
 
         .channel-button {
-            background-color: #333;
+            background-color: #8B0000; /* Um vermelho mais profundo para os botões */
             color: #fff;
-            border: 1px solid #555;
+            border: 1px solid #B22222; /* Um vermelho rubi para a borda do botão */
             padding: 12px 18px;
             cursor: pointer;
             border-radius: 5px;
@@ -110,9 +110,9 @@
         }
 
         .channel-button:hover {
-            background-color: #555;
+            background-color: #B22222; /* Um vermelho um pouco mais claro ao passar o mouse */
             transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
 
         footer {
