@@ -3,39 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TV Online - Canais ao Vivo</title>
+    <title>TV Online - Canais Ao Vivo</title>
     <style>
+        :root {
+            --background-color: #121212;
+            --surface-color: #1e1e1e;
+            --primary-text-color: #e0e0e0;
+            --secondary-text-color: #b3b3b3;
+            --accent-color: #03dac6;
+            --border-color: #333;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
+            background-color: var(--background-color);
+            color: var(--primary-text-color);
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         header {
-            width: 100%;
-            background-color: #1f1f1f;
-            padding: 20px 0;
             text-align: center;
-            border-bottom: 2px solid #333;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 2.8em;
+            color: var(--accent-color);
+            font-weight: 700;
         }
-
-        main {
-            width: 100%;
-            max-width: 1200px;
-            margin-top: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        
+        #current-channel {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.3em;
+            color: var(--secondary-text-color);
+            font-weight: 500;
         }
 
         .player-container {
@@ -43,6 +56,9 @@
             position: relative;
             padding-top: 56.25%; /* Proporção 16:9 */
             background-color: #000;
+            margin-top: 20px;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         .player-container iframe {
@@ -54,49 +70,49 @@
             border: none;
         }
         
-        #current-channel {
-            margin-top: 10px;
-            font-size: 1.2em;
-            color: #ccc;
-        }
-
-        .channel-list {
-            width: 100%;
+        .channel-grid-container {
             margin-top: 30px;
+        }
+        
+        .channel-category {
+            background-color: var(--surface-color);
             padding: 20px;
-            background-color: #1f1f1f;
             border-radius: 8px;
-            box-sizing: border-box;
+            margin-bottom: 25px;
         }
 
-        .channel-list h2 {
-            text-align: center;
+        .channel-category h2 {
             margin-top: 0;
-            border-bottom: 1px solid #444;
-            padding-bottom: 15px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            color: var(--primary-text-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            display: inline-block;
         }
 
         .channel-buttons {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
+            gap: 12px;
         }
 
         .channel-button {
             background-color: #333;
             color: #fff;
             border: 1px solid #555;
-            padding: 10px 15px;
+            padding: 12px 18px;
             cursor: pointer;
             border-radius: 5px;
             font-size: 1em;
-            transition: background-color 0.3s, transform 0.2s;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
         }
 
         .channel-button:hover {
             background-color: #555;
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         footer {
@@ -104,48 +120,131 @@
             padding: 20px;
             margin-top: 30px;
             width: 100%;
-            background-color: #1f1f1f;
             font-size: 0.9em;
-            color: #888;
+            color: var(--secondary-text-color);
+            border-top: 1px solid var(--border-color);
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>TV Online</h1>
-    </header>
+    <div class="container">
+        <header>
+            <h1>TV Online Grátis</h1>
+        </header>
 
-    <main>
-        <div class="player-container">
-            <iframe id="tv-player" src="https://playertv.net/e/?v=globo" allowfullscreen allow="fullscreen"></iframe>
-        </div>
-        <p id="current-channel">Canal atual: Globo</p>
-
-        <div class="channel-list">
-            <h2>Escolha um Canal</h2>
-            <div class="channel-buttons">
-                <button class="channel-button" data-channel="globo" data-name="Globo">Globo</button>
-                <button class="channel-button" data-channel="sbt" data-name="SBT">SBT</button>
-                <button class="channel-button" data-channel="record" data-name="Record TV">Record TV</button>
-                <button class="channel-button" data-channel="band" data-name="Band">Band</button>
-                <button class="channel-button" data-channel="redetv" data-name="RedeTV!">RedeTV!</button>
-                <button class="channel-button" data-channel="cultura" data-name="TV Cultura">TV Cultura</button>
-                <button class="channel-button" data-channel="cnnbrasil" data-name="CNN Brasil">CNN Brasil</button>
-                <button class="channel-button" data-channel="jovempannews" data-name="Jovem Pan News">Jovem Pan News</button>
-                <button class="channel-button" data-channel="bandsports" data-name="BandSports">BandSports</button>
-                <button class="channel-button" data-channel="espn" data-name="ESPN">ESPN</button>
-                <button class="channel-button" data-channel="discovery" data-name="Discovery Channel">Discovery</button>
-                <button class="channel-button" data-channel="history" data-name="History Channel">History</button>
-                <button class="channel-button" data-channel="cartoon" data-name="Cartoon Network">Cartoon Network</button>
-                <button class="channel-button" data-channel="discoverykids" data-name="Discovery Kids">Discovery Kids</button>
+        <main>
+            <div class="player-container">
+                <iframe id="tv-player" src="https://playertv.net/e/?v=globo" allowfullscreen allow="fullscreen"></iframe>
             </div>
-        </div>
-    </main>
+            <p id="current-channel">Canal atual: Globo</p>
 
-    <footer>
-        <p>&copy; 2025 Seu Site de TV Online. Todos os direitos reservados.</p>
-    </footer>
+            <div class="channel-grid-container">
+                
+                <div class="channel-category">
+                    <h2>Canais Abertos</h2>
+                    <div class="channel-buttons">
+                        <button class="channel-button" data-channel="globo" data-name="Globo">Globo</button>
+                        <button class="channel-button" data-channel="sbt" data-name="SBT">SBT</button>
+                        <button class="channel-button" data-channel="record" data-name="Record TV">Record TV</button>
+                        <button class="channel-button" data-channel="band" data-name="Band">Band</button>
+                        <button class="channel-button" data-channel="redetv" data-name="RedeTV!">RedeTV!</button>
+                        <button class="channel-button" data-channel="cultura" data-name="TV Cultura">TV Cultura</button>
+                        <button class="channel-button" data-channel="tvgazeta" data-name="TV Gazeta">TV Gazeta</button>
+                        <button class="channel-button" data-channel="tvaparecida" data-name="TV Aparecida">TV Aparecida</button>
+                    </div>
+                </div>
+
+                <div class="channel-category">
+                    <h2>Notícias</h2>
+                    <div class="channel-buttons">
+                        <button class="channel-button" data-channel="globonews" data-name="GloboNews">GloboNews</button>
+                        <button class="channel-button" data-channel="cnnbrasil" data-name="CNN Brasil">CNN Brasil</button>
+                        <button class="channel-button" data-channel="jovempannews" data-name="Jovem Pan News">Jovem Pan News</button>
+                        <button class="channel-button" data-channel="recordnews" data-name="Record News">Record News</button>
+                        <button class="channel-button" data-channel="bandnews" data-name="BandNews TV">BandNews TV</button>
+                    </div>
+                </div>
+
+                <div class="channel-category">
+                    <h2>Esportes</h2>
+                    <div class="channel-buttons">
+                        <button class="channel-button" data-channel="sportv" data-name="SporTV">SporTV</button>
+                        <button class="channel-button" data-channel="sportv2" data-name="SporTV 2">SporTV 2</button>
+                        <button class="channel-button" data-channel="sportv3" data-name="SporTV 3">SporTV 3</button>
+                        <button class="channel-button" data-channel="espn" data-name="ESPN">ESPN</button>
+                        <button class="channel-button" data-channel="espn2" data-name="ESPN 2">ESPN 2</button>
+                        <button class="channel-button" data-channel="espn3" data-name="ESPN 3">ESPN 3</button>
+                        <button class="channel-button" data-channel="bandsports" data-name="BandSports">BandSports</button>
+                        <button class="channel-button" data-channel="premiere" data-name="Premiere">Premiere</button>
+                        <button class="channel-button" data-channel="combate" data-name="Combate">Combate</button>
+                    </div>
+                </div>
+
+                <div class="channel-category">
+                    <h2>Filmes e Séries</h2>
+                    <div class="channel-buttons">
+                        <button class="channel-button" data-channel="telecinepremium" data-name="Telecine Premium">Telecine Premium</button>
+                        <button class="channel-button" data-channel="telecineaction" data-name="Telecine Action">Telecine Action</button>
+                        <button class="channel-button" data-channel="telecinepipoca" data-name="Telecine Pipoca">Telecine Pipoca</button>
+                        <button class="channel-button" data-channel="telecinefun" data-name="Telecine Fun">Telecine Fun</button>
+                        <button class="channel-button" data-channel="telecinetouch" data-name="Telecine Touch">Telecine Touch</button>
+                        <button class="channel-button" data-channel="telecinecult" data-name="Telecine Cult">Telecine Cult</button>
+                        <button class="channel-button" data-channel="megapix" data-name="Megapix">Megapix</button>
+                        <button class="channel-button" data-channel="warner" data-name="Warner Channel">Warner</button>
+                        <button class="channel-button" data-channel="axn" data-name="AXN">AXN</button>
+                        <button class="channel-button" data-channel="sony" data-name="Sony Channel">Sony</button>
+                        <button class="channel-button" data-channel="tnt" data-name="TNT">TNT</button>
+                        <button class="channel-button" data-channel="space" data-name="Space">Space</button>
+                        <button class="channel-button" data-channel="cinemax" data-name="Cinemax">Cinemax</button>
+                        <button class="channel-button" data-channel="studiouniversal" data-name="Studio Universal">Studio Universal</button>
+                    </div>
+                </div>
+
+                <div class="channel-category">
+                    <h2>Infantil</h2>
+                    <div class="channel-buttons">
+                        <button class="channel-button" data-channel="cartoon" data-name="Cartoon Network">Cartoon Network</button>
+                        <button class="channel-button" data-channel="discoverykids" data-name="Discovery Kids">Discovery Kids</button>
+                        <button class="channel-button" data-channel="gloob" data-name="Gloob">Gloob</button>
+                        <button class="channel-button" data-channel="gloobinho" data-name="Gloobinho">Gloobinho</button>
+                        <button class="channel-button" data-channel="nickelodeon" data-name="Nickelodeon">Nickelodeon</button>
+                        <button class="channel-button" data-channel="nickjr" data-name="Nick Jr.">Nick Jr.</button>
+                        <button class="channel-button" data-channel="disneychannel" data-name="Disney Channel">Disney Channel</button>
+                        <button class="channel-button" data-channel="cartoonito" data-name="Cartoonito">Cartoonito</button>
+                    </div>
+                </div>
+                
+                <div class="channel-category">
+                    <h2>Documentários e Cultura</h2>
+                    <div class="channel-buttons">
+                        <button class="channel-button" data-channel="discovery" data-name="Discovery Channel">Discovery</button>
+                        <button class="channel-button" data-channel="history" data-name="History Channel">History</button>
+                        <button class="channel-button" data-channel="history2" data-name="History 2">History 2</button>
+                        <button class="channel-button" data-channel="natgeo" data-name="National Geographic">Nat Geo</button>
+                        <button class="channel-button" data-channel="animalplanet" data-name="Animal Planet">Animal Planet</button>
+                        <button class="channel-button" data-channel="discoveryhh" data-name="Discovery H&H">Discovery H&H</button>
+                        <button class="channel-button" data-channel="discoveryturbo" data-name="Discovery Turbo">Discovery Turbo</button>
+                    </div>
+                </div>
+
+                <div class="channel-category">
+                    <h2>Variedades e Música</h2>
+                    <div class="channel-buttons">
+                        <button class="channel-button" data-channel="multishow" data-name="Multishow">Multishow</button>
+                        <button class="channel-button" data-channel="gnt" data-name="GNT">GNT</button>
+                        <button class="channel-button" data-channel="viva" data-name="Canal Viva">Viva</button>
+                        <button class="channel-button" data-channel="bis" data-name="Canal BIS">BIS</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 TV Online. Todos os direitos reservados. O conteúdo dos canais é de responsabilidade de seus respectivos provedores.</p>
+        </footer>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -158,11 +257,14 @@
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
                     
-                    // ATUALIZAÇÃO: Altera a URL do iframe do player para o novo formato
+                    // Atualiza a URL do iframe do player
                     player.src = `https://playertv.net/e/?v=${channelId}`;
                     
                     // Atualiza o texto que mostra o canal atual
                     currentChannelDisplay.textContent = `Canal atual: ${channelName}`;
+
+                    // Rola a tela para o topo para focar no player
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             });
         });
