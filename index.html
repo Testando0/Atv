@@ -118,7 +118,7 @@
 
     <main>
         <div class="player-container">
-            <iframe id="tv-player" src="https://playertv.net/embed.php?channel=globo" allowfullscreen></iframe>
+            <iframe id="tv-player" src="https://playertv.net/e/?v=globo" allowfullscreen allow="fullscreen"></iframe>
         </div>
         <p id="current-channel">Canal atual: Globo</p>
 
@@ -158,8 +158,8 @@
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
                     
-                    // Atualiza a URL do iframe do player
-                    player.src = `https://playertv.net/embed.php?channel=${channelId}`;
+                    // ATUALIZAÇÃO: Altera a URL do iframe do player para o novo formato
+                    player.src = `https://playertv.net/e/?v=${channelId}`;
                     
                     // Atualiza o texto que mostra o canal atual
                     currentChannelDisplay.textContent = `Canal atual: ${channelName}`;
