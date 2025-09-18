@@ -308,12 +308,32 @@
             const currentChannelDisplay = document.getElementById('current-channel');
             const channelButtons = document.querySelectorAll('.channel-button');
 
+            // Função para solicitar tela cheia, cuidando de diferentes navegadores
+            function requestPlayerFullscreen(element) {
+                if (element.requestFullscreen) {
+                    element.requestFullscreen();
+                } else if (element.mozRequestFullScreen) { // Firefox
+                    element.mozRequestFullScreen();
+                } else if (element.webkitRequestFullscreen) { // Chrome, Safari e Opera
+                    element.webkitRequestFullscreen();
+                } else if (element.msRequestFullscreen) { // IE/Edge
+                    element.msRequestFullscreen();
+                }
+            }
+
             channelButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
                     
-                    // Atualiza a URL do iframe do player
+                    // Adiciona um ouvinte para o evento 'load' do iframe.
+                    // Isso garante que a tela cheia seja solicitada APÓS o novo canal carregar.
+                    // A opção { once: true } faz com que o ouvinte seja removido após ser usado uma vez.
+                    player.addEventListener('load', () => {
+                        requestPlayerFullscreen(player);
+                    }, { once: true });
+                    
+                    // Atualiza a URL do iframe do player (isso irá disparar o evento 'load')
                     player.src = `https://playertv.net/e/?v=${channelId}`;
                     
                     // Atualiza o texto que mostra o canal atual
@@ -327,4 +347,4 @@
     </script>
 
 </body>
-    </html>
+</html>
