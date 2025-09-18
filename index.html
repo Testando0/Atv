@@ -148,7 +148,7 @@
                         <button class="channel-button" data-channel="sbt" data-name="SBT">SBT</button>
                         <button class="channel-button" data-channel="recordSP" data-name="Record TV">Record TV</button>
                         <button class="channel-button" data-channel="band" data-name="Band">Band</button>
-                        <button class="channel-button" data-channel="redetv" data-name="RedeTV!">RedeTV</button>
+                        <button class="channel-button" data-channel="redetv" data-name="RedeTV!">RedeTV!</button>
                         <button class="channel-button" data-channel="cultura" data-name="TV Cultura">TV Cultura</button>
                         <button class="channel-button" data-channel="tvgazeta" data-name="TV Gazeta">TV Gazeta</button>
                         <button class="channel-button" data-channel="tvaparecida" data-name="TV Aparecida">TV Aparecida</button>
@@ -209,6 +209,7 @@
                         <button class="channel-button" data-channel="gloob" data-name="Gloob">Gloob</button>
                         <button class="channel-button" data-channel="gloobinho" data-name="Gloobinho">Gloobinho</button>
                         <button class="channel-button" data-channel="nickAlt" data-name="Nickelodeon">Nickelodeon</button>
+                        <button class="channel-button" data-channel="paramountAlt" data-name="Paramount">Paramount</button>
                         <button class="channel-button" data-channel="nickjr" data-name="Nick Jr.">Nick Jr.</button>
                         <button class="channel-button" data-channel="disneychannel" data-name="Disney Channel">Disney Channel</button>
                         <button class="channel-button" data-channel="cartoonito" data-name="Cartoonito">Cartoonito</button>
@@ -261,7 +262,7 @@
                     player.src = `https://playertv.net/e/?v=${channelId}`;
                     
                     // Atualiza o texto que mostra o canal atual
-                    currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
+                    currentChannelDisplay.textContent = `Canal atual: ${channelName}`;
 
                     // Rola a tela para o topo para focar no player
                     window.scrollTo({ top: 0, behavior: 'smooth' });
