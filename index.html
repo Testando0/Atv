@@ -59,6 +59,7 @@
             margin-top: 20px;
             border-radius: 8px;
             overflow: hidden;
+            border: 2px solid var(--border-color);
         }
 
         .player-container iframe {
@@ -79,6 +80,7 @@
             padding: 20px;
             border-radius: 8px;
             margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
 
         .channel-category h2 {
@@ -135,12 +137,20 @@
 
         <main>
             <div class="player-container">
-                <iframe id="tv-player" src="https://playertv.net/e/?v=globo" allowfullscreen allow="fullscreen"></iframe>
+                <iframe id="tv-player" src="https://playertv.net/e/?v=globoPRalt" allowfullscreen allow="fullscreen"></iframe>
             </div>
-            <p id="current-channel">Escolha Um Canal</p>
+            <p id="current-channel">Escolha Um Canal Abaixo</p>
 
             <div class="channel-grid-container">
                 
+                <div class="channel-category">
+                    <h2>Reality Shows</h2>
+                    <div class="channel-buttons">
+                        <button class="channel-button" data-channel="bbb" data-name="BBB Ao Vivo">BBB Ao Vivo</button>
+                        <button class="channel-button" data-channel="fazenda" data-name="A Fazenda">A Fazenda</button>
+                    </div>
+                </div>
+
                 <div class="channel-category">
                     <h2>Canais Abertos</h2>
                     <div class="channel-buttons">
@@ -175,15 +185,30 @@
                         <button class="channel-button" data-channel="espn" data-name="ESPN">ESPN</button>
                         <button class="channel-button" data-channel="espn2" data-name="ESPN 2">ESPN 2</button>
                         <button class="channel-button" data-channel="espn3" data-name="ESPN 3">ESPN 3</button>
+                        <button class="channel-button" data-channel="espn4" data-name="ESPN 4">ESPN 4</button>
                         <button class="channel-button" data-channel="bandsports" data-name="BandSports">BandSports</button>
-                        <button class="channel-button" data-channel="premiere" data-name="Premiere">Premiere</button>
                         <button class="channel-button" data-channel="combate" data-name="Combate">Combate</button>
+                        <button class="channel-button" data-channel="dazn1" data-name="DAZN 1">DAZN 1</button>
+                        <button class="channel-button" data-channel="dazn2" data-name="DAZN 2">DAZN 2</button>
+                        <button class="channel-button" data-channel="premiere" data-name="Premiere Clubes">Premiere Clubes</button>
+                        <button class="channel-button" data-channel="premiere2" data-name="Premiere 2">Premiere 2</button>
+                        <button class="channel-button" data-channel="premiere3" data-name="Premiere 3">Premiere 3</button>
+                        <button class="channel-button" data-channel="premiere4" data-name="Premiere 4">Premiere 4</button>
+                        <button class="channel-button" data-channel="premiere5" data-name="Premiere 5">Premiere 5</button>
+                        <button class="channel-button" data-channel="premiere6" data-name="Premiere 6">Premiere 6</button>
+                        <button class="channel-button" data-channel="premiere7" data-name="Premiere 7">Premiere 7</button>
                     </div>
                 </div>
 
                 <div class="channel-category">
                     <h2>Filmes e Séries</h2>
                     <div class="channel-buttons">
+                        <button class="channel-button" data-channel="hbo" data-name="HBO">HBO</button>
+                        <button class="channel-button" data-channel="hbo2" data-name="HBO 2">HBO 2</button>
+                        <button class="channel-button" data-channel="hbofamily" data-name="HBO Family">HBO Family</button>
+                        <button class="channel-button" data-channel="hbomundi" data-name="HBO Mundi">HBO Mundi</button>
+                        <button class="channel-button" data-channel="hbopop" data-name="HBO Pop">HBO Pop</button>
+                        <button class="channel-button" data-channel="hboxtreme" data-name="HBO Xtreme">HBO Xtreme</button>
                         <button class="channel-button" data-channel="telecinepremium" data-name="Telecine Premium">Telecine Premium</button>
                         <button class="channel-button" data-channel="telecineaction" data-name="Telecine Action">Telecine Action</button>
                         <button class="channel-button" data-channel="telecinepipoca" data-name="Telecine Pipoca">Telecine Pipoca</button>
@@ -195,9 +220,16 @@
                         <button class="channel-button" data-channel="axn" data-name="AXN">AXN</button>
                         <button class="channel-button" data-channel="sony" data-name="Sony Channel">Sony</button>
                         <button class="channel-button" data-channel="tnt" data-name="TNT">TNT</button>
+                        <button class="channel-button" data-channel="tntseries" data-name="TNT Séries">TNT Séries</button>
                         <button class="channel-button" data-channel="space" data-name="Space">Space</button>
                         <button class="channel-button" data-channel="cinemax" data-name="Cinemax">Cinemax</button>
                         <button class="channel-button" data-channel="studiouniversal" data-name="Studio Universal">Studio Universal</button>
+                        <button class="channel-button" data-channel="universaltv" data-name="Universal TV">Universal TV</button>
+                        <button class="channel-button" data-channel="paramount" data-name="Paramount Network">Paramount</button>
+                        <button class="channel-button" data-channel="fx" data-name="FX">FX</button>
+                        <button class="channel-button" data-channel="starchannel" data-name="Star Channel">Star Channel</button>
+                        <button class="channel-button" data-channel="starlife" data-name="Star Life">Star Life</button>
+                        <button class="channel-button" data-channel="a&e" data-name="A&E">A&E</button>
                     </div>
                 </div>
 
@@ -209,10 +241,10 @@
                         <button class="channel-button" data-channel="gloob" data-name="Gloob">Gloob</button>
                         <button class="channel-button" data-channel="gloobinho" data-name="Gloobinho">Gloobinho</button>
                         <button class="channel-button" data-channel="nickAlt" data-name="Nickelodeon">Nickelodeon</button>
-                        <button class="channel-button" data-channel="paramoutAlt" data-name="Paramount">Paramount</button>
                         <button class="channel-button" data-channel="nickjr" data-name="Nick Jr.">Nick Jr.</button>
                         <button class="channel-button" data-channel="disneychannel" data-name="Disney Channel">Disney Channel</button>
                         <button class="channel-button" data-channel="cartoonito" data-name="Cartoonito">Cartoonito</button>
+                        <button class="channel-button" data-channel="tooncast" data-name="Tooncast">Tooncast</button>
                     </div>
                 </div>
                 
@@ -226,6 +258,10 @@
                         <button class="channel-button" data-channel="animalplanet" data-name="Animal Planet">Animal Planet</button>
                         <button class="channel-button" data-channel="discoveryhh" data-name="Discovery H&H">Discovery H&H</button>
                         <button class="channel-button" data-channel="discoveryturbo" data-name="Discovery Turbo">Discovery Turbo</button>
+                        <button class="channel-button" data-channel="discoveryid" data-name="Discovery ID">Discovery ID</button>
+                        <button class="channel-button" data-channel="discoveryscience" data-name="Discovery Science">Discovery Science</button>
+                        <button class="channel-button" data-channel="tlc" data-name="TLC">TLC</button>
+                        <button class="channel-button" data-channel="foodnetwork" data-name="Food Network">Food Network</button>
                     </div>
                 </div>
 
@@ -236,6 +272,9 @@
                         <button class="channel-button" data-channel="gnt" data-name="GNT">GNT</button>
                         <button class="channel-button" data-channel="viva" data-name="Canal Viva">Viva</button>
                         <button class="channel-button" data-channel="bis" data-name="Canal BIS">BIS</button>
+                        <button class="channel-button" data-channel="mtv" data-name="MTV">MTV</button>
+                        <button class="channel-button" data-channel="comedycentral" data-name="Comedy Central">Comedy Central</button>
+                        <button class="channel-button" data-channel="eentertainment" data-name="E! Entertainment">E!</button>
                     </div>
                 </div>
 
@@ -272,4 +311,4 @@
     </script>
 
 </body>
-</html>
+                                                                                                                           </html>
