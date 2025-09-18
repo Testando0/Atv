@@ -41,6 +41,7 @@
             font-size: 2.8em;
             color: var(--accent-color);
             font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         
         #current-channel {
@@ -55,11 +56,12 @@
             width: 100%;
             position: relative;
             padding-top: 56.25%; /* Proporção 16:9 */
-            background-color: #000; /* Player background remains black for contrast */
+            background-color: #000;
             margin-top: 20px;
             border-radius: 8px;
             overflow: hidden;
-            border: 2px solid var(--border-color);
+            border: 3px solid var(--border-color);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
 
         .player-container iframe {
@@ -190,6 +192,8 @@
                         <button class="channel-button" data-channel="combate" data-name="Combate">Combate</button>
                         <button class="channel-button" data-channel="dazn1" data-name="DAZN 1">DAZN 1</button>
                         <button class="channel-button" data-channel="dazn2" data-name="DAZN 2">DAZN 2</button>
+                        <button class="channel-button" data-channel="dazn3" data-name="DAZN 3">DAZN 3</button>
+                        <button class="channel-button" data-channel="dazn4" data-name="DAZN 4">DAZN 4</button>
                         <button class="channel-button" data-channel="premiere" data-name="Premiere Clubes">Premiere Clubes</button>
                         <button class="channel-button" data-channel="premiere2" data-name="Premiere 2">Premiere 2</button>
                         <button class="channel-button" data-channel="premiere3" data-name="Premiere 3">Premiere 3</button>
@@ -197,6 +201,7 @@
                         <button class="channel-button" data-channel="premiere5" data-name="Premiere 5">Premiere 5</button>
                         <button class="channel-button" data-channel="premiere6" data-name="Premiere 6">Premiere 6</button>
                         <button class="channel-button" data-channel="premiere7" data-name="Premiere 7">Premiere 7</button>
+                        <button class="channel-button" data-channel="premiere8" data-name="Premiere 8">Premiere 8</button>
                     </div>
                 </div>
 
@@ -209,6 +214,7 @@
                         <button class="channel-button" data-channel="hbomundi" data-name="HBO Mundi">HBO Mundi</button>
                         <button class="channel-button" data-channel="hbopop" data-name="HBO Pop">HBO Pop</button>
                         <button class="channel-button" data-channel="hboxtreme" data-name="HBO Xtreme">HBO Xtreme</button>
+                        <button class="channel-button" data-channel="hbosignature" data-name="HBO Signature">HBO Signature</button>
                         <button class="channel-button" data-channel="telecinepremium" data-name="Telecine Premium">Telecine Premium</button>
                         <button class="channel-button" data-channel="telecineaction" data-name="Telecine Action">Telecine Action</button>
                         <button class="channel-button" data-channel="telecinepipoca" data-name="Telecine Pipoca">Telecine Pipoca</button>
@@ -230,6 +236,7 @@
                         <button class="channel-button" data-channel="starchannel" data-name="Star Channel">Star Channel</button>
                         <button class="channel-button" data-channel="starlife" data-name="Star Life">Star Life</button>
                         <button class="channel-button" data-channel="a&e" data-name="A&E">A&E</button>
+                        <button class="channel-button" data-channel="syfy" data-name="Syfy">Syfy</button>
                     </div>
                 </div>
 
@@ -245,9 +252,17 @@
                         <button class="channel-button" data-channel="disneychannel" data-name="Disney Channel">Disney Channel</button>
                         <button class="channel-button" data-channel="cartoonito" data-name="Cartoonito">Cartoonito</button>
                         <button class="channel-button" data-channel="tooncast" data-name="Tooncast">Tooncast</button>
+                        <button class="channel-button" data-channel="dreamworks" data-name="DreamWorks">DreamWorks</button>
                     </div>
                 </div>
-                
+                 
+                <div class="channel-category">
+                    <h2>Animação Adulta</h2>
+                    <div class="channel-buttons">
+                         <button class="channel-button" data-channel="adultswim" data-name="Adult Swim">Adult Swim</button>
+                    </div>
+                </div>
+
                 <div class="channel-category">
                     <h2>Documentários e Cultura</h2>
                     <div class="channel-buttons">
@@ -255,6 +270,7 @@
                         <button class="channel-button" data-channel="history" data-name="History Channel">History</button>
                         <button class="channel-button" data-channel="history2" data-name="History 2">History 2</button>
                         <button class="channel-button" data-channel="natgeo" data-name="National Geographic">Nat Geo</button>
+                        <button class="channel-button" data-channel="natgeowild" data-name="Nat Geo Wild">Nat Geo Wild</button>
                         <button class="channel-button" data-channel="animalplanet" data-name="Animal Planet">Animal Planet</button>
                         <button class="channel-button" data-channel="discoveryhh" data-name="Discovery H&H">Discovery H&H</button>
                         <button class="channel-button" data-channel="discoveryturbo" data-name="Discovery Turbo">Discovery Turbo</button>
@@ -311,4 +327,4 @@
     </script>
 
 </body>
-                                                                                                                           </html>
+    </html>
