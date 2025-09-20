@@ -525,13 +525,33 @@
                 document.getElementById('login-form-container').classList.remove('hidden');
             });
 
-            // --- LÓGICA DO PLAYER (Original) ---
+            // --- LÓGICA DO PLAYER (Ajustada para Tela Cheia Automática) ---
+            const playerContainer = document.querySelector('.player-container');
+
+            // Função para solicitar a tela cheia, cuidando de diferentes navegadores
+            const openFullscreen = (elem) => {
+                if (elem.requestFullscreen) {
+                    elem.requestFullscreen();
+                } else if (elem.webkitRequestFullscreen) { /* Safari */
+                    elem.webkitRequestFullscreen();
+                } else if (elem.msRequestFullscreen) { /* IE11 */
+                    elem.msRequestFullscreen();
+                }
+            };
+
             channelButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
+                    
+                    // Atualiza o canal no player
                     player.src = `https://playertv.net/e/?v=${channelId}`;
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
+                    
+                    // Solicita que o container do player entre em modo tela cheia
+                    openFullscreen(playerContainer);
+
+                    // A linha abaixo se torna menos necessária, mas não prejudica
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             });
