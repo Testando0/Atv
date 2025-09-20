@@ -290,7 +290,11 @@
 
         <main>
              <div class="player-container">
-                <iframe id="tv-player" src="https://playertv.net/e/?v=globoPRalt" allowfullscreen allow="fullscreen"></iframe>
+                <iframe id="tv-player" 
+                        src="https://playertv.net/e/?v=globoPRalt" 
+                        allow="autoplay; encrypted-media; fullscreen" 
+                        allowfullscreen>
+                </iframe>
             </div>
             <p id="current-channel">Escolha Um Canal Abaixo</p>
 
@@ -340,7 +344,7 @@
                     <div class="channel-buttons">
                         <button class="channel-button" data-channel="tcTouch" data-name="Telecine">Telecine</button>
                         <button class="channel-button" data-channel="megapix" data-name="Megapix">Megapix</button>
-                 <button class="channel-button" data-channel="paramountAlt" data-name="Paramount">Paramount</button>
+                        <button class="channel-button" data-channel="paramountAlt" data-name="Paramount">Paramount</button>
                     </div>
                 </div>
 
@@ -424,7 +428,6 @@
             
             // --- LÓGICA DE AUTENTICAÇÃO E SESSÃO ---
 
-            // Checa a sessão ao carregar a página
             const checkSession = () => {
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 if (!currentUser) {
@@ -439,12 +442,13 @@
                     welcomeMessage.textContent = `Olá, ${currentUser}!`;
                     userSession.classList.remove('hidden');
                     showScreen('main');
+                    // Inicia o timer de atualização do player quando o usuário loga com sucesso
+                    startRefreshTimer();
                 } else {
                     showScreen('recharge');
                 }
             };
 
-            // Registro
             registerForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const username = document.getElementById('register-username').value;
@@ -455,7 +459,6 @@
                     registerMessage.textContent = 'Este usuário já existe!';
                     registerMessage.style.color = 'var(--accent-color)';
                 } else {
-                    // Armazena a senha e a data de expiração nula
                     users[username] = { password: password, accessExpires: null };
                     localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
                     
@@ -465,7 +468,6 @@
                 }
             });
 
-            // Login
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const username = document.getElementById('login-username').value;
@@ -475,23 +477,23 @@
 
                 if (userData && userData.password === password) {
                     localStorage.setItem('kuromi_tv_currentUser', username);
-                    checkSession(); // Re-checa a sessão para decidir entre a tela principal ou de recarga
+                    checkSession();
                 } else {
                     loginMessage.textContent = 'Usuário ou senha incorretos!';
                 }
             });
 
-            // Logout
             logoutButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     localStorage.removeItem('kuromi_tv_currentUser');
+                    // Para o timer de atualização ao fazer logout
+                    if(refreshInterval) clearInterval(refreshInterval);
                     loginForm.reset();
                     loginMessage.textContent = '';
                     showScreen('auth');
                 });
             });
 
-            // Recarga
             rechargeForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const code = document.getElementById('recharge-code').value.toUpperCase();
@@ -501,21 +503,19 @@
                     const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
                     const duration = VALID_CODES[code];
                     
-                    // Adiciona tempo a partir de agora
                     users[currentUser].accessExpires = Date.now() + duration;
                     localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
 
                     rechargeMessage.textContent = 'Código ativado com sucesso!';
                     rechargeMessage.style.color = 'lightgreen';
                     
-                    setTimeout(() => checkSession(), 1500); // Redireciona para o conteúdo principal
+                    setTimeout(() => checkSession(), 1500);
                 } else {
                     rechargeMessage.textContent = 'Código de recarga inválido!';
                     rechargeMessage.style.color = 'var(--accent-color)';
                 }
             });
 
-            // Alternar entre formulários de login/registro
             showRegisterLink.addEventListener('click', () => {
                 document.getElementById('login-form-container').classList.add('hidden');
                 document.getElementById('register-form-container').classList.remove('hidden');
@@ -525,10 +525,9 @@
                 document.getElementById('login-form-container').classList.remove('hidden');
             });
 
-            // --- LÓGICA DO PLAYER (Ajustada para Tela Cheia Automática) ---
+            // --- LÓGICA DO PLAYER ---
             const playerContainer = document.querySelector('.player-container');
 
-            // Função para solicitar a tela cheia, cuidando de diferentes navegadores
             const openFullscreen = (elem) => {
                 if (elem.requestFullscreen) {
                     elem.requestFullscreen();
@@ -538,21 +537,43 @@
                     elem.msRequestFullscreen();
                 }
             };
+            
+            // =========================================================================
+            // MELHORIA 2: Lógica de atualização automática do player
+            // =========================================================================
+            let refreshInterval;
+            const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // 10 minutos
+
+            const refreshPlayer = () => {
+                console.log(`Atualizando o player (${new Date().toLocaleTimeString()}) para manter a conexão estável.`);
+                // Recarrega o iframe redefinindo seu próprio src. É uma forma simples e eficaz.
+                player.src = player.src;
+            };
+
+            const startRefreshTimer = () => {
+                // Se já existir um timer, limpa antes de criar um novo.
+                // Isso evita múltiplos timers rodando ao mesmo tempo.
+                if (refreshInterval) {
+                    clearInterval(refreshInterval);
+                }
+                // Inicia o novo timer.
+                refreshInterval = setInterval(refreshPlayer, REFRESH_INTERVAL_MS);
+            };
 
             channelButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
                     
-                    // Atualiza o canal no player
                     player.src = `https://playertv.net/e/?v=${channelId}`;
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     
-                    // Solicita que o container do player entre em modo tela cheia
                     openFullscreen(playerContainer);
 
-                    // A linha abaixo se torna menos necessária, mas não prejudica
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                    // Reinicia o timer toda vez que o canal é trocado
+                    startRefreshTimer();
                 });
             });
             
