@@ -57,7 +57,7 @@
             gap: 15px;
         }
 
-        #logout-button {
+        .logout-button { /* Renomeado para classe para ser reutilizado */
             background-color: var(--accent-color);
             color: white;
             border: none;
@@ -68,7 +68,7 @@
             transition: background-color 0.3s;
         }
 
-        #logout-button:hover {
+        .logout-button:hover {
             background-color: #cc0000;
         }
         
@@ -83,7 +83,7 @@
         .player-container {
             width: 100%;
             position: relative;
-            padding-top: 56.25%; /* Proporção 16:9 */
+            padding-top: 56.25%;
             background-color: #000;
             margin-top: 20px;
             border-radius: 8px;
@@ -117,7 +117,6 @@
             margin-top: 0;
             margin-bottom: 20px;
             font-size: 1.8em;
-            color: var(--primary-text-color);
             border-bottom: 2px solid var(--accent-color);
             padding-bottom: 10px;
             display: inline-block;
@@ -130,9 +129,9 @@
         }
 
         .channel-button {
-            background-color: #8B0000; /* Um vermelho mais profundo para os botões */
+            background-color: #8B0000;
             color: #fff;
-            border: 1px solid #B22222; /* Um vermelho rubi para a borda do botão */
+            border: 1px solid #B22222;
             padding: 12px 18px;
             cursor: pointer;
             border-radius: 5px;
@@ -142,7 +141,7 @@
         }
 
         .channel-button:hover {
-            background-color: #B22222; /* Um vermelho um pouco mais claro ao passar o mouse */
+            background-color: #B22222;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
@@ -157,8 +156,8 @@
             border-top: 1px solid var(--border-color);
         }
         
-        /* --- ESTILOS PARA O SISTEMA DE LOGIN --- */
-        #auth-container {
+        /* --- ESTILOS PARA OS CONTAINERS DE TELA --- */
+        #auth-container, #recharge-container {
             max-width: 400px;
             margin: 50px auto;
             padding: 30px;
@@ -168,23 +167,23 @@
             border: 1px solid var(--border-color);
         }
 
-        .auth-form h2 {
+        .form-container h2 {
             text-align: center;
             color: var(--accent-color);
             margin-bottom: 25px;
         }
 
-        .auth-form .form-group {
+        .form-container .form-group {
             margin-bottom: 15px;
         }
 
-        .auth-form label {
+        .form-container label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
         }
 
-        .auth-form input {
+        .form-container input {
             width: 100%;
             padding: 10px;
             background-color: var(--background-color);
@@ -194,7 +193,7 @@
             box-sizing: border-box;
         }
 
-        .auth-form button {
+        .form-container button[type="submit"] {
             width: 100%;
             padding: 12px;
             background-color: var(--accent-color);
@@ -207,7 +206,7 @@
             transition: background-color 0.3s;
         }
 
-        .auth-form button:hover {
+        .form-container button[type="submit"]:hover {
             background-color: #cc0000;
         }
         
@@ -222,54 +221,61 @@
             cursor: pointer;
         }
 
-        .auth-message {
+        .message {
             text-align: center;
             margin-top: 15px;
             font-weight: bold;
         }
 
-        /* Classes para esconder/mostrar elementos */
+        #recharge-container p {
+            text-align: center;
+            line-height: 1.5;
+        }
+
         .hidden {
             display: none;
         }
-
     </style>
 </head>
 <body>
 
-    <div id="auth-container">
-        <div id="login-form-container" class="auth-form">
+    <div id="auth-container" class="hidden">
+        <div id="login-form-container" class="form-container">
             <form id="login-form">
                 <h2>Login</h2>
-                <div class="form-group">
-                    <label for="login-username">Usuário</label>
-                    <input type="text" id="login-username" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Senha</label>
-                    <input type="password" id="login-password" required>
-                </div>
+                <div class="form-group"><label for="login-username">Usuário</label><input type="text" id="login-username" required></div>
+                <div class="form-group"><label for="login-password">Senha</label><input type="password" id="login-password" required></div>
                 <button type="submit">Entrar</button>
-                <p id="login-message" class="auth-message"></p>
+                <p id="login-message" class="message"></p>
             </form>
             <p class="toggle-form">Não tem uma conta? <a id="show-register">Registre-se</a></p>
         </div>
         
-        <div id="register-form-container" class="auth-form hidden">
+        <div id="register-form-container" class="form-container hidden">
             <form id="register-form">
                 <h2>Registro</h2>
-                <div class="form-group">
-                    <label for="register-username">Usuário</label>
-                    <input type="text" id="register-username" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-password">Senha</label>
-                    <input type="password" id="register-password" required>
-                </div>
+                <div class="form-group"><label for="register-username">Usuário</label><input type="text" id="register-username" required></div>
+                <div class="form-group"><label for="register-password">Senha</label><input type="password" id="register-password" required></div>
                 <button type="submit">Criar Conta</button>
-                <p id="register-message" class="auth-message"></p>
+                <p id="register-message" class="message"></p>
             </form>
             <p class="toggle-form">Já tem uma conta? <a id="show-login">Faça Login</a></p>
+        </div>
+    </div>
+
+    <div id="recharge-container" class="hidden">
+        <div class="form-container">
+             <h2>Acesso Expirado</h2>
+             <p>Sua assinatura terminou ou nunca foi ativada. Insira um código de recarga para continuar.</p>
+             <form id="recharge-form">
+                 <div class="form-group">
+                     <label for="recharge-code">Código de Recarga</label>
+                     <input type="text" id="recharge-code" required>
+                 </div>
+                 <button type="submit">Ativar</button>
+                 <p id="recharge-message" class="message"></p>
+             </form>
+             <button class="logout-button" style="width: 100%; margin-top: 15px;">Sair</button>
         </div>
     </div>
 
@@ -278,18 +284,16 @@
             <h1>✰ KUROMI TV ✰</h1>
             <div id="user-session" class="hidden">
                  <span id="welcome-message"></span>
-                 <button id="logout-button">Sair</button>
+                 <button class="logout-button">Sair</button>
             </div>
         </header>
 
         <main>
-            <div class="player-container">
+             <div class="player-container">
                 <iframe id="tv-player" src="https://playertv.net/e/?v=globoPRalt" allowfullscreen allow="fullscreen"></iframe>
             </div>
             <p id="current-channel">Escolha Um Canal Abaixo</p>
-
             <div class="channel-grid-container">
-                
                 <div class="channel-category">
                     <h2>A Fazenda</h2>
                     <div class="channel-buttons">
@@ -301,7 +305,6 @@
                         <button class="channel-button" data-channel="sinal6" data-name="Câmera 6">Câmera 6</button>
                     </div>
                 </div>
-
                 <div class="channel-category">
                     <h2>Canais Abertos</h2>
                     <div class="channel-buttons">
@@ -311,219 +314,178 @@
                         <button class="channel-button" data-channel="bandAlt" data-name="Band">Band</button>
                     </div>
                 </div>
-
-                <div class="channel-category">
-                    <h2>Notícias</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="globonews" data-name="GloboNews">GloboNews</button>
-                        <button class="channel-button" data-channel="cnn" data-name="CNN">CNN</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Esportes</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="sportv" data-name="SporTV">SporTV</button>
-                        <button class="channel-button" data-channel="espn" data-name="ESPN">ESPN</button>
-                        <button class="channel-button" data-channel="premiere" data-name="Premiere Clubes">Premiere Clubes</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Filmes e Séries</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="tcTouch" data-name="Telecine">Telecine</button>
-                        <button class="channel-button" data-channel="megapix" data-name="Megapix">Megapix</button>
-                        <button class="channel-button" data-channel="paramountAlt" data-name="Paramount">Paramount</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Infantil</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="gloob" data-name="Gloob">Gloob</button>
-                        <button class="channel-button" data-channel="gloobinho" data-name="Gloobinho">Gloobinho</button>
-                        <button class="channel-button" data-channel="nickAlt" data-name="Nickelodeon">Nickelodeon</button>
-                        <button class="channel-button" data-channel="nickjrAlt" data-name="Nick Jr.">Nick Jr.</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Documentários e Cultura</h2>
-                    <div class="channel-buttons">                                           
-                        <button class="channel-button" data-channel="cultura" data-name="Cultura">Cultura</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Variedades e Música</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="bis" data-name="Canal BIS">BIS</button>
-                        <button class="channel-button" data-channel="mtvLiveAlt" data-name="MTV">MTV</button>
-                    </div>
-                </div>
-
             </div>
         </main>
-
-        <footer>
-            <p>&copy; Serviços Ainda Em Desenvolvimento Podendo Apresentar Falhas.</p>
-        </footer>
+        <footer><p>&copy; Serviços Ainda Em Desenvolvimento Podendo Apresentar Falhas.</p></footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // ELEMENTOS DA AUTENTICAÇÃO
-            const authContainer = document.getElementById('auth-container');
+            // --- CONSTANTES E ELEMENTOS DO DOM ---
             const mainContent = document.getElementById('main-content');
+            const authContainer = document.getElementById('auth-container');
+            const rechargeContainer = document.getElementById('recharge-container');
             
-            const loginFormContainer = document.getElementById('login-form-container');
-            const registerFormContainer = document.getElementById('register-form-container');
-            
-            const showRegisterLink = document.getElementById('show-register');
-            const showLoginLink = document.getElementById('show-login');
-            
+            // Formulários
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
+            const rechargeForm = document.getElementById('recharge-form');
             
+            // Links e Botões
+            const showRegisterLink = document.getElementById('show-register');
+            const showLoginLink = document.getElementById('show-login');
+            const logoutButtons = document.querySelectorAll('.logout-button');
+            
+            // Mensagens
             const loginMessage = document.getElementById('login-message');
             const registerMessage = document.getElementById('register-message');
-            
+            const rechargeMessage = document.getElementById('recharge-message');
+
+            // Sessão do Usuário
             const userSession = document.getElementById('user-session');
             const welcomeMessage = document.getElementById('welcome-message');
-            const logoutButton = document.getElementById('logout-button');
-            
-            // ELEMENTOS DO PLAYER
+
+            // Player de TV
             const player = document.getElementById('tv-player');
             const currentChannelDisplay = document.getElementById('current-channel');
             const channelButtons = document.querySelectorAll('.channel-button');
 
-            // --- LÓGICA DE AUTENTICAÇÃO ---
+            // --- CÓDIGOS DE RECARGA (SIMULAÇÃO) ---
+            const DAY_IN_MS = 24 * 60 * 60 * 1000;
+            const VALID_CODES = {
+                "KUROMI30": 30 * DAY_IN_MS,
+                "KUROMI90": 90 * DAY_IN_MS,
+                "KUROMI365": 365 * DAY_IN_MS,
+            };
 
-            // Função para alternar entre formulários
-            showRegisterLink.addEventListener('click', () => {
-                loginFormContainer.classList.add('hidden');
-                registerFormContainer.classList.remove('hidden');
-            });
+            // --- FUNÇÕES DE CONTROLE DE TELA ---
+            const showScreen = (screenName) => {
+                mainContent.classList.add('hidden');
+                authContainer.classList.add('hidden');
+                rechargeContainer.classList.add('hidden');
+
+                if (screenName === 'auth') document.getElementById('auth-container').classList.remove('hidden');
+                else if (screenName === 'recharge') document.getElementById('recharge-container').classList.remove('hidden');
+                else if (screenName === 'main') document.getElementById('main-content').classList.remove('hidden');
+            };
             
-            showLoginLink.addEventListener('click', () => {
-                registerFormContainer.classList.add('hidden');
-                loginFormContainer.classList.remove('hidden');
-            });
+            // --- LÓGICA DE AUTENTICAÇÃO E SESSÃO ---
 
-            // Lógica de Registro
+            // Checa a sessão ao carregar a página
+            const checkSession = () => {
+                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
+                if (!currentUser) {
+                    showScreen('auth');
+                    return;
+                }
+                
+                const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+                const userData = users[currentUser];
+
+                if (userData && userData.accessExpires && userData.accessExpires > Date.now()) {
+                    welcomeMessage.textContent = `Olá, ${currentUser}!`;
+                    userSession.classList.remove('hidden');
+                    showScreen('main');
+                } else {
+                    showScreen('recharge');
+                }
+            };
+
+            // Registro
             registerForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const username = document.getElementById('register-username').value;
                 const password = document.getElementById('register-password').value;
-
-                // Obtém usuários do localStorage ou cria um objeto vazio
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
 
                 if (users[username]) {
                     registerMessage.textContent = 'Este usuário já existe!';
                     registerMessage.style.color = 'var(--accent-color)';
                 } else {
-                    users[username] = password; // ATENÇÃO: Em um site real, a senha NUNCA deve ser salva assim.
+                    // Armazena a senha e a data de expiração nula
+                    users[username] = { password: password, accessExpires: null };
                     localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
-                    registerMessage.textContent = 'Conta criada com sucesso! Faça o login.';
+                    
+                    registerMessage.textContent = 'Conta criada! Faça o login.';
                     registerMessage.style.color = 'lightgreen';
-                    registerForm.reset();
-                    // Volta para a tela de login
-                    setTimeout(() => {
-                        registerFormContainer.classList.add('hidden');
-                        loginFormContainer.classList.remove('hidden');
-                        registerMessage.textContent = '';
-                    }, 2000);
+                    setTimeout(() => showLoginLink.click(), 2000);
                 }
             });
 
-            // Lógica de Login
+            // Login
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const username = document.getElementById('login-username').value;
                 const password = document.getElementById('login-password').value;
-                
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+                const userData = users[username];
 
-                if (users[username] && users[username] === password) {
-                    // Login bem-sucedido
+                if (userData && userData.password === password) {
                     localStorage.setItem('kuromi_tv_currentUser', username);
-                    showMainContent();
+                    checkSession(); // Re-checa a sessão para decidir entre a tela principal ou de recarga
                 } else {
                     loginMessage.textContent = 'Usuário ou senha incorretos!';
-                    loginMessage.style.color = 'var(--accent-color)';
                 }
             });
-            
-            // Lógica de Logout
-            logoutButton.addEventListener('click', () => {
-                localStorage.removeItem('kuromi_tv_currentUser');
-                showAuthContainer();
+
+            // Logout
+            logoutButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    localStorage.removeItem('kuromi_tv_currentUser');
+                    loginForm.reset();
+                    loginMessage.textContent = '';
+                    showScreen('auth');
+                });
             });
 
-            // Funções para mostrar/ocultar conteúdo
-            function showMainContent() {
+            // Recarga
+            rechargeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const code = document.getElementById('recharge-code').value.toUpperCase();
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
-                if (currentUser) {
-                    authContainer.classList.add('hidden');
-                    mainContent.classList.remove('hidden');
-                    userSession.classList.remove('hidden');
-                    welcomeMessage.textContent = `Olá, ${currentUser}!`;
-                }
-            }
+                
+                if (VALID_CODES[code]) {
+                    const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
+                    const duration = VALID_CODES[code];
+                    
+                    // Adiciona tempo a partir de agora
+                    users[currentUser].accessExpires = Date.now() + duration;
+                    localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
 
-            function showAuthContainer() {
-                mainContent.classList.add('hidden');
-                authContainer.classList.remove('hidden');
-                userSession.classList.add('hidden');
-                loginForm.reset();
-                loginMessage.textContent = '';
-            }
-            
-            // Verificação inicial ao carregar a página
-            function checkSession() {
-                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
-                if (currentUser) {
-                    showMainContent();
+                    rechargeMessage.textContent = 'Código ativado com sucesso!';
+                    rechargeMessage.style.color = 'lightgreen';
+                    
+                    setTimeout(() => checkSession(), 1500); // Redireciona para o conteúdo principal
                 } else {
-                    showAuthContainer();
+                    rechargeMessage.textContent = 'Código de recarga inválido!';
+                    rechargeMessage.style.color = 'var(--accent-color)';
                 }
-            }
-            
-            // --- LÓGICA DO PLAYER DE TV (SEU CÓDIGO ORIGINAL) ---
-            
-            function requestPlayerFullscreen(element) {
-                if (element.requestFullscreen) {
-                    element.requestFullscreen();
-                } else if (element.mozRequestFullScreen) { // Firefox
-                    element.mozRequestFullScreen();
-                } else if (element.webkitRequestFullscreen) { // Chrome, Safari e Opera
-                    element.webkitRequestFullscreen();
-                } else if (element.msRequestFullscreen) { // IE/Edge
-                    element.msRequestFullscreen();
-                }
-            }
+            });
 
+            // Alternar entre formulários de login/registro
+            showRegisterLink.addEventListener('click', () => {
+                document.getElementById('login-form-container').classList.add('hidden');
+                document.getElementById('register-form-container').classList.remove('hidden');
+            });
+            showLoginLink.addEventListener('click', () => {
+                document.getElementById('register-form-container').classList.add('hidden');
+                document.getElementById('login-form-container').classList.remove('hidden');
+            });
+
+            // --- LÓGICA DO PLAYER (Original) ---
             channelButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
-                    
-                    player.addEventListener('load', () => {
-                        requestPlayerFullscreen(player);
-                    }, { once: true });
-                    
                     player.src = `https://playertv.net/e/?v=${channelId}`;
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             });
             
-            // --- INICIA A APLICAÇÃO ---
+            // --- INICIALIZAÇÃO ---
             checkSession();
         });
     </script>
-
 </body>
 </html>
