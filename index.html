@@ -13,7 +13,6 @@
             --accent-color: #ff3333;    /* Vermelho vibrante para destaque */
             --border-color: #8b0000;    /* Vermelho escuro para bordas */
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--background-color);
@@ -21,7 +20,6 @@
             margin: 0;
             padding: 0;
         }
-
         .container {
             width: 100%;
             max-width: 1400px;
@@ -29,7 +27,6 @@
             padding: 20px;
             box-sizing: border-box;
         }
-
         header {
             display: flex;
             justify-content: center;
@@ -38,7 +35,6 @@
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
         }
-
         header h1 {
             margin: 0;
             font-size: 2.8em;
@@ -46,7 +42,6 @@
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-        
         #user-session {
             position: absolute;
             right: 0;
@@ -56,8 +51,7 @@
             align-items: center;
             gap: 15px;
         }
-
-        .logout-button { /* Renomeado para classe para ser reutilizado */
+        .logout-button {
             background-color: var(--accent-color);
             color: white;
             border: none;
@@ -67,11 +61,9 @@
             font-weight: bold;
             transition: background-color 0.3s;
         }
-
         .logout-button:hover {
             background-color: #cc0000;
         }
-        
         #current-channel {
             text-align: center;
             margin-top: 15px;
@@ -79,7 +71,6 @@
             color: var(--secondary-text-color);
             font-weight: 500;
         }
-
         .player-container {
             width: 100%;
             position: relative;
@@ -91,7 +82,6 @@
             border: 3px solid var(--border-color);
             box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
-
         .player-container iframe {
             position: absolute;
             top: 0;
@@ -100,11 +90,9 @@
             height: 100%;
             border: none;
         }
-        
         .channel-grid-container {
             margin-top: 30px;
         }
-        
         .channel-category {
             background-color: var(--surface-color);
             padding: 20px;
@@ -112,7 +100,6 @@
             margin-bottom: 25px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
-
         .channel-category h2 {
             margin-top: 0;
             margin-bottom: 20px;
@@ -121,13 +108,11 @@
             padding-bottom: 10px;
             display: inline-block;
         }
-
         .channel-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
         }
-
         .channel-button {
             background-color: #8B0000;
             color: #fff;
@@ -139,13 +124,11 @@
             font-weight: 500;
             transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
         }
-
         .channel-button:hover {
             background-color: #B22222;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-
         footer {
             text-align: center;
             padding: 20px;
@@ -155,8 +138,6 @@
             color: var(--secondary-text-color);
             border-top: 1px solid var(--border-color);
         }
-        
-        /* --- ESTILOS PARA OS CONTAINERS DE TELA --- */
         #auth-container, #recharge-container {
             max-width: 400px;
             margin: 50px auto;
@@ -166,23 +147,19 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             border: 1px solid var(--border-color);
         }
-
         .form-container h2 {
             text-align: center;
             color: var(--accent-color);
             margin-bottom: 25px;
         }
-
         .form-container .form-group {
             margin-bottom: 15px;
         }
-
         .form-container label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
         }
-
         .form-container input {
             width: 100%;
             padding: 10px;
@@ -192,7 +169,6 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
-
         .form-container button[type="submit"] {
             width: 100%;
             padding: 12px;
@@ -205,33 +181,27 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         .form-container button[type="submit"]:hover {
             background-color: #cc0000;
         }
-        
         .toggle-form {
             text-align: center;
             margin-top: 20px;
         }
-        
         .toggle-form a {
             color: var(--accent-color);
             text-decoration: underline;
             cursor: pointer;
         }
-
         .message {
             text-align: center;
             margin-top: 15px;
             font-weight: bold;
         }
-
         #recharge-container p {
             text-align: center;
             line-height: 1.5;
         }
-
         .hidden {
             display: none;
         }
@@ -298,143 +268,142 @@
             </div>
             <p id="current-channel">Escolha Um Canal Abaixo</p>
 
-            <div class="channel-grid-container">
-                
-                <div class="channel-category">
-                    <h2>A Fazenda</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="sinal1" data-name="Câmera 1">Câmera 1</button>
-                        <button class="channel-button" data-channel="sinal2" data-name="Câmera 2">Câmera 2</button>
-                        <button class="channel-button" data-channel="sinal3" data-name="Câmera 3">Câmera 3</button>
-                        <button class="channel-button" data-channel="sinal4" data-name="Câmera 4">Câmera 4</button>
-                        <button class="channel-button" data-channel="sinal5" data-name="Câmera 5">Câmera 5</button>
-                        <button class="channel-button" data-channel="sinal6" data-name="Câmera 6">Câmera 6</button>
-                    </div>
+            <div id="channel-grid" class="channel-grid-container">
                 </div>
-
-                <div class="channel-category">
-                    <h2>Canais Abertos</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="globoPRalt" data-name="Globo">Globo</button>
-                        <button class="channel-button" data-channel="sbt" data-name="SBT">SBT</button>
-                        <button class="channel-button" data-channel="recordSP" data-name="Record TV">Record TV</button>
-                        <button class="channel-button" data-channel="bandAlt" data-name="Band">Band</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Notícias</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="globonews" data-name="GloboNews">GloboNews</button>
-                        <button class="channel-button" data-channel="cnn" data-name="CNN">CNN</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Esportes</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="sportv" data-name="SporTV">SporTV</button>
-                        <button class="channel-button" data-channel="espn" data-name="ESPN">ESPN</button>
-                        <button class="channel-button" data-channel="premiere" data-name="Premiere Clubes">Premiere Clubes</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Filmes e Séries</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="tcTouch" data-name="Telecine">Telecine</button>
-                        <button class="channel-button" data-channel="megapix" data-name="Megapix">Megapix</button>
-                        <button class="channel-button" data-channel="paramountAlt" data-name="Paramount">Paramount</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Infantil</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="gloob" data-name="Gloob">Gloob</button>
-                        <button class="channel-button" data-channel="gloobinho" data-name="Gloobinho">Gloobinho</button>
-                        <button class="channel-button" data-channel="nickAlt" data-name="Nickelodeon">Nickelodeon</button>
-                        <button class="channel-button" data-channel="nickjrAlt" data-name="Nick Jr.">Nick Jr.</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Documentários e Cultura</h2>
-                    <div class="channel-buttons">                                           <button class="channel-button" data-channel="cultura" data-name="Cultura">Cultura</button>
-                    </div>
-                </div>
-
-                <div class="channel-category">
-                    <h2>Variedades e Música</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="bis" data-name="Canal BIS">BIS</button>
-                        <button class="channel-button" data-channel="mtvLiveAlt" data-name="MTV">MTV</button>
-                    </div>
-                </div>
-            </div>
         </main>
         <footer><p>&copy; Serviços Ainda Em Desenvolvimento Podendo Apresentar Falhas.</p></footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => { // Função principal agora é assíncrona
             // --- CONSTANTES E ELEMENTOS DO DOM ---
             const mainContent = document.getElementById('main-content');
             const authContainer = document.getElementById('auth-container');
             const rechargeContainer = document.getElementById('recharge-container');
-            
-            // Formulários
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
             const rechargeForm = document.getElementById('recharge-form');
-            
-            // Links e Botões
             const showRegisterLink = document.getElementById('show-register');
             const showLoginLink = document.getElementById('show-login');
             const logoutButtons = document.querySelectorAll('.logout-button');
-            
-            // Mensagens
             const loginMessage = document.getElementById('login-message');
             const registerMessage = document.getElementById('register-message');
             const rechargeMessage = document.getElementById('recharge-message');
-
-            // Sessão do Usuário
             const userSession = document.getElementById('user-session');
             const welcomeMessage = document.getElementById('welcome-message');
-
-            // Player de TV
             const player = document.getElementById('tv-player');
             const currentChannelDisplay = document.getElementById('current-channel');
-            const channelButtons = document.querySelectorAll('.channel-button');
+            const playerContainer = document.querySelector('.player-container');
+            const channelGridContainer = document.getElementById('channel-grid');
 
-            // --- CÓDIGOS DE RECARGA (SIMULAÇÃO) ---
+            // --- CÓDIGOS DE RECARGA ---
             const DAY_IN_MS = 24 * 60 * 60 * 1000;
-            const VALID_CODES = {
-                "KUROMI30": 30 * DAY_IN_MS,
-                "KUROMI90": 90 * DAY_IN_MS,
-                "KUROMI365": 365 * DAY_IN_MS,
+            let validRechargeCodes = {}; // Irá guardar os códigos carregados do JSON
+
+            // --- DADOS DOS CANAIS ---
+            const channelData = [
+                {
+                    category: "A Fazenda",
+                    channels: [
+                        { id: "sinal1", name: "Câmera 1" }, { id: "sinal2", name: "Câmera 2" },
+                        { id: "sinal3", name: "Câmera 3" }, { id: "sinal4", name: "Câmera 4" },
+                        { id: "sinal5", name: "Câmera 5" }, { id: "sinal6", name: "Câmera 6" },
+                    ]
+                },
+                {
+                    category: "Canais Abertos",
+                    channels: [
+                        { id: "globoPRalt", name: "Globo" }, { id: "sbt", name: "SBT" },
+                        { id: "recordSP", name: "Record TV" }, { id: "bandAlt", name: "Band" },
+                    ]
+                },
+                {
+                    category: "Notícias",
+                    channels: [ { id: "globonews", name: "GloboNews" }, { id: "cnn", name: "CNN" } ]
+                },
+                {
+                    category: "Esportes",
+                    channels: [
+                        { id: "sportv", name: "SporTV" }, { id: "espn", name: "ESPN" },
+                        { id: "premiere", name: "Premiere Clubes" },
+                    ]
+                },
+                {
+                    category: "Filmes e Séries",
+                    channels: [
+                        { id: "tcTouch", name: "Telecine" }, { id: "megapix", name: "Megapix" },
+                        { id: "paramountAlt", name: "Paramount" },
+                    ]
+                },
+                {
+                    category: "Infantil",
+                    channels: [
+                        { id: "gloob", name: "Gloob" }, { id: "gloobinho", name: "Gloobinho" },
+                        { id: "nickAlt", name: "Nickelodeon" }, { id: "nickjrAlt", name: "Nick Jr." },
+                    ]
+                },
+                {
+                    category: "Documentários e Cultura",
+                    channels: [ { id: "cultura", name: "Cultura" } ]
+                },
+                {
+                    category: "Variedades e Música",
+                    channels: [ { id: "bis", name: "Canal BIS" }, { id: "mtvLiveAlt", name: "MTV" } ]
+                }
+            ];
+
+            // --- FUNÇÕES ---
+
+            // Função para carregar os códigos do arquivo JSON
+            const loadRechargeCodes = async () => {
+                try {
+                    const response = await fetch('codes.json');
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    validRechargeCodes = await response.json();
+                    console.log("Códigos de recarga carregados com sucesso!");
+                } catch (error) {
+                    console.error("Não foi possível carregar os códigos de recarga:", error);
+                    rechargeMessage.textContent = "Erro ao carregar códigos. Tente mais tarde.";
+                }
             };
 
-            // --- FUNÇÕES DE CONTROLE DE TELA ---
+            // Função para mostrar a tela correta
             const showScreen = (screenName) => {
-                mainContent.classList.add('hidden');
-                authContainer.classList.add('hidden');
-                rechargeContainer.classList.add('hidden');
-
-                if (screenName === 'auth') document.getElementById('auth-container').classList.remove('hidden');
-                else if (screenName === 'recharge') document.getElementById('recharge-container').classList.remove('hidden');
-                else if (screenName === 'main') document.getElementById('main-content').classList.remove('hidden');
+                [mainContent, authContainer, rechargeContainer].forEach(el => el.classList.add('hidden'));
+                const screen = document.getElementById(`${screenName}-container`);
+                if (screen) screen.classList.remove('hidden');
             };
-            
-            // --- LÓGICA DE AUTENTICAÇÃO E SESSÃO ---
 
+            // Função para gerar os botões dos canais
+            const generateChannelGrid = () => {
+                channelGridContainer.innerHTML = ''; // Limpa a área antes de gerar
+                channelData.forEach(cat => {
+                    const categoryDiv = document.createElement('div');
+                    categoryDiv.className = 'channel-category';
+                    const title = document.createElement('h2');
+                    title.textContent = cat.category;
+                    const buttonsDiv = document.createElement('div');
+                    buttonsDiv.className = 'channel-buttons';
+                    cat.channels.forEach(channel => {
+                        const button = document.createElement('button');
+                        button.className = 'channel-button';
+                        button.textContent = channel.name;
+                        button.dataset.channel = channel.id;
+                        button.dataset.name = channel.name;
+                        buttonsDiv.appendChild(button);
+                    });
+                    categoryDiv.append(title, buttonsDiv);
+                    channelGridContainer.appendChild(categoryDiv);
+                });
+            };
+
+            // Função para verificar a sessão do usuário
             const checkSession = () => {
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 if (!currentUser) {
                     showScreen('auth');
                     return;
                 }
-                
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
                 const userData = users[currentUser];
 
@@ -442,32 +411,32 @@
                     welcomeMessage.textContent = `Olá, ${currentUser}!`;
                     userSession.classList.remove('hidden');
                     showScreen('main');
-                    // Inicia o timer de atualização do player quando o usuário loga com sucesso
                     startRefreshTimer();
                 } else {
                     showScreen('recharge');
                 }
             };
 
-            registerForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const username = document.getElementById('register-username').value;
-                const password = document.getElementById('register-password').value;
-                const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+            // Funções de atualização do player
+            let refreshInterval;
+            const REFRESH_INTERVAL_MS = 10 * 60 * 1000;
+            const refreshPlayer = () => {
+                console.log(`Atualizando o player (${new Date().toLocaleTimeString()})`);
+                player.src = player.src;
+            };
+            const startRefreshTimer = () => {
+                if (refreshInterval) clearInterval(refreshInterval);
+                refreshInterval = setInterval(refreshPlayer, REFRESH_INTERVAL_MS);
+            };
+            const openFullscreen = (elem) => {
+                if (elem.requestFullscreen) elem.requestFullscreen();
+                else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+                else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+            };
 
-                if (users[username]) {
-                    registerMessage.textContent = 'Este usuário já existe!';
-                    registerMessage.style.color = 'var(--accent-color)';
-                } else {
-                    users[username] = { password: password, accessExpires: null };
-                    localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
-                    
-                    registerMessage.textContent = 'Conta criada! Faça o login.';
-                    registerMessage.style.color = 'lightgreen';
-                    setTimeout(() => showLoginLink.click(), 2000);
-                }
-            });
+            // --- EVENT LISTENERS (OUVINTES DE EVENTOS) ---
 
+            // Login
             loginForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const username = document.getElementById('login-username').value;
@@ -482,33 +451,43 @@
                     loginMessage.textContent = 'Usuário ou senha incorretos!';
                 }
             });
+            
+            // Registro
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('register-username').value;
+                const password = document.getElementById('register-password').value;
+                let users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
 
-            logoutButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    localStorage.removeItem('kuromi_tv_currentUser');
-                    // Para o timer de atualização ao fazer logout
-                    if(refreshInterval) clearInterval(refreshInterval);
-                    loginForm.reset();
-                    loginMessage.textContent = '';
-                    showScreen('auth');
-                });
+                if (users[username]) {
+                    registerMessage.textContent = 'Este usuário já existe!';
+                    registerMessage.style.color = 'var(--accent-color)';
+                } else {
+                    users[username] = { password: password, accessExpires: null };
+                    localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
+                    
+                    registerMessage.textContent = 'Conta criada! Faça o login.';
+                    registerMessage.style.color = 'lightgreen';
+                    setTimeout(() => showLoginLink.click(), 2000);
+                }
             });
 
+            // Recarga
             rechargeForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const code = document.getElementById('recharge-code').value.toUpperCase();
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 
-                if (VALID_CODES[code]) {
+                if (validRechargeCodes[code]) {
                     const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
-                    const duration = VALID_CODES[code];
+                    const durationInDays = validRechargeCodes[code];
+                    const durationInMs = durationInDays * DAY_IN_MS;
                     
-                    users[currentUser].accessExpires = Date.now() + duration;
+                    users[currentUser].accessExpires = Date.now() + durationInMs;
                     localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
 
                     rechargeMessage.textContent = 'Código ativado com sucesso!';
                     rechargeMessage.style.color = 'lightgreen';
-                    
                     setTimeout(() => checkSession(), 1500);
                 } else {
                     rechargeMessage.textContent = 'Código de recarga inválido!';
@@ -516,6 +495,18 @@
                 }
             });
 
+            // Logout
+            logoutButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    localStorage.removeItem('kuromi_tv_currentUser');
+                    if(refreshInterval) clearInterval(refreshInterval);
+                    loginForm.reset();
+                    loginMessage.textContent = '';
+                    showScreen('auth');
+                });
+            });
+
+            // Troca entre formulários de Login e Registro
             showRegisterLink.addEventListener('click', () => {
                 document.getElementById('login-form-container').classList.add('hidden');
                 document.getElementById('register-form-container').classList.remove('hidden');
@@ -525,60 +516,26 @@
                 document.getElementById('login-form-container').classList.remove('hidden');
             });
 
-            // --- LÓGICA DO PLAYER ---
-            const playerContainer = document.querySelector('.player-container');
-
-            const openFullscreen = (elem) => {
-                if (elem.requestFullscreen) {
-                    elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) { /* Safari */
-                    elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { /* IE11 */
-                    elem.msRequestFullscreen();
-                }
-            };
-            
-            // =========================================================================
-            // MELHORIA 2: Lógica de atualização automática do player
-            // =========================================================================
-            let refreshInterval;
-            const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // 10 minutos
-
-            const refreshPlayer = () => {
-                console.log(`Atualizando o player (${new Date().toLocaleTimeString()}) para manter a conexão estável.`);
-                // Recarrega o iframe redefinindo seu próprio src. É uma forma simples e eficaz.
-                player.src = player.src;
-            };
-
-            const startRefreshTimer = () => {
-                // Se já existir um timer, limpa antes de criar um novo.
-                // Isso evita múltiplos timers rodando ao mesmo tempo.
-                if (refreshInterval) {
-                    clearInterval(refreshInterval);
-                }
-                // Inicia o novo timer.
-                refreshInterval = setInterval(refreshPlayer, REFRESH_INTERVAL_MS);
-            };
-
-            channelButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const channelId = button.getAttribute('data-channel');
-                    const channelName = button.getAttribute('data-name');
+            // Clique nos botões de canal (delegação de evento)
+            channelGridContainer.addEventListener('click', (e) => {
+                const button = e.target.closest('.channel-button');
+                if (button) {
+                    const channelId = button.dataset.channel;
+                    const channelName = button.dataset.name;
                     
                     player.src = `https://playertv.net/e/?v=${channelId}`;
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     
                     openFullscreen(playerContainer);
-
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                    
-                    // Reinicia o timer toda vez que o canal é trocado
                     startRefreshTimer();
-                });
+                }
             });
             
             // --- INICIALIZAÇÃO ---
-            checkSession();
+            await loadRechargeCodes(); // 1. Espera os códigos carregarem
+            generateChannelGrid();     // 2. Cria os botões dos canais
+            checkSession();            // 3. Inicia a aplicação
         });
     </script>
 </body>
