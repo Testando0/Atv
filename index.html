@@ -3,38 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✰ KUROMI TV ✰</title>
+    <title>Servidor Offline - Kuromi</title>
     <style>
-        :root {
-            --background-color: #3f0000; /* Vermelho escuro */
-            --surface-color: #5a0000;   /* Vermelho um pouco mais claro para as categorias */
-            --primary-text-color: #ffffff; /* Texto principal branco */
-            --secondary-text-color: #e0e0e0; /* Texto secundário levemente acinzentado */
-            --accent-color: #ff3333;    /* Vermelho vibrante para destaque */
-            --border-color: #8b0000;    /* Vermelho escuro para bordas */
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--background-color);
-            color: var(--primary-text-color);
-            margin: 0;
-            padding: 0;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        header {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'VT323', monospace;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: linear-gradient(145deg, #2c2c2c, #1e1e1e);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5), 0 0 40px rgba(138, 43, 226, 0.5);
+            border: 2px solid #ff69b4;
+            animation: fadeIn 1.5s ease-in-out;
+            max-width: 600px;
+            width: 90%;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .kuromi-img {
+            width: 150px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        h1 {
+            font-family: 'Press Start 2P', cursive;
+            color: #ff69b4;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px #ff69b4;
+        }
+
+        p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .message {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #8a2be2;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        a {
+            color: #ff69b4;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://i.imgur.com/gR2Y2p2.png" alt="Kuromi" class="kuromi-img">
+        <h1>Servidor Offline!</h1>
+        <div class="message">
+            <p>E aí, pessoal! A Kuromi tomou conta por um tempinho. Parece que os servidores resolveram tirar uma soneca.</p>
+            <p>Mas não se preocupem, meus ajudantes (a equipe técnica) já estão dando um jeito nisso. Volto já com a programação normal!</p>
+        </div>
+        <footer>
+            <p>Enquanto isso, que tal planejar sua próxima travessura? ;)</p>
+        </footer>
+    </div>
+
+</body>
+</html>            position: relative;
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
         }
