@@ -411,9 +411,9 @@
             const DAY_IN_MS = 24 * 60 * 60 * 1000;
             const VALID_CODES = {
                 "HENRI24": 1 * DAY_IN_MS,
-                "KUROMI30": 30 * DAY_IN_MS,
-                "KUROMI90": 90 * DAY_IN_MS,
-                "KUROMI365": 365 * DAY_IN_MS,
+                "30DAYSK": 30 * DAY_IN_MS,
+                "90DAYSK": 90 * DAY_IN_MS,
+                "365DAYSK": 365 * DAY_IN_MS,
             };
 
             // --- FUNÇÕES DE CONTROLE DE TELA ---
@@ -540,24 +540,20 @@
             };
             
             // =========================================================================
-            // MELHORIA 2: Lógica de atualização automática do player
+            // Lógica de atualização automática do player
             // =========================================================================
             let refreshInterval;
             const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // 10 minutos
 
             const refreshPlayer = () => {
                 console.log(`Atualizando o player (${new Date().toLocaleTimeString()}) para manter a conexão estável.`);
-                // Recarrega o iframe redefinindo seu próprio src. É uma forma simples e eficaz.
                 player.src = player.src;
             };
 
             const startRefreshTimer = () => {
-                // Se já existir um timer, limpa antes de criar um novo.
-                // Isso evita múltiplos timers rodando ao mesmo tempo.
                 if (refreshInterval) {
                     clearInterval(refreshInterval);
                 }
-                // Inicia o novo timer.
                 refreshInterval = setInterval(refreshPlayer, REFRESH_INTERVAL_MS);
             };
 
@@ -566,9 +562,16 @@
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
                     
-                    player.src = `https://playertv.net/e/?v=${channelId}`;
+                    // ======================================================================================
+                    // === ALTERAÇÃO PRINCIPAL AQUI ===
+                    // Adicionamos `&autoplay=1` na URL para pedir ao player que inicie com som.
+                    // Isso funciona pois a ação é resultado direto de um clique do usuário.
+                    player.src = `https://playertv.net/e/?v=${channelId}&autoplay=1`;
+                    // ======================================================================================
+
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     
+                    // A função de tela cheia já estava correta e é chamada aqui.
                     openFullscreen(playerContainer);
 
                     window.scrollTo({ top: 0, behavior: 'smooth' });
