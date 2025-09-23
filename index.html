@@ -7,13 +7,12 @@
     <style>
         :root {
             --background-color: #3f0000; /* Vermelho escuro */
-            --surface-color: #5a0000;   /* Vermelho um pouco mais claro para as categorias */
+            --surface-color: #5a0000;    /* Vermelho um pouco mais claro para as categorias */
             --primary-text-color: #ffffff; /* Texto principal branco */
             --secondary-text-color: #e0e0e0; /* Texto secundário levemente acinzentado */
-            --accent-color: #ff3333;    /* Vermelho vibrante para destaque */
-            --border-color: #8b0000;    /* Vermelho escuro para bordas */
+            --accent-color: #ff3333;     /* Vermelho vibrante para destaque */
+            --border-color: #8b0000;     /* Vermelho escuro para bordas */
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--background-color);
@@ -21,7 +20,6 @@
             margin: 0;
             padding: 0;
         }
-
         .container {
             width: 100%;
             max-width: 1400px;
@@ -29,7 +27,6 @@
             padding: 20px;
             box-sizing: border-box;
         }
-
         header {
             display: flex;
             justify-content: center;
@@ -38,7 +35,6 @@
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
         }
-
         header h1 {
             margin: 0;
             font-size: 2.8em;
@@ -46,7 +42,6 @@
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-        
         #user-session {
             position: absolute;
             right: 0;
@@ -56,8 +51,7 @@
             align-items: center;
             gap: 15px;
         }
-
-        .logout-button { /* Renomeado para classe para ser reutilizado */
+        .logout-button {
             background-color: var(--accent-color);
             color: white;
             border: none;
@@ -67,11 +61,9 @@
             font-weight: bold;
             transition: background-color 0.3s;
         }
-
         .logout-button:hover {
             background-color: #cc0000;
         }
-        
         #current-channel {
             text-align: center;
             margin-top: 15px;
@@ -79,7 +71,6 @@
             color: var(--secondary-text-color);
             font-weight: 500;
         }
-
         .player-container {
             width: 100%;
             position: relative;
@@ -91,7 +82,6 @@
             border: 3px solid var(--border-color);
             box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
-
         .player-container iframe {
             position: absolute;
             top: 0;
@@ -100,11 +90,9 @@
             height: 100%;
             border: none;
         }
-        
         .channel-grid-container {
             margin-top: 30px;
         }
-        
         .channel-category {
             background-color: var(--surface-color);
             padding: 20px;
@@ -112,7 +100,6 @@
             margin-bottom: 25px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
-
         .channel-category h2 {
             margin-top: 0;
             margin-bottom: 20px;
@@ -121,13 +108,11 @@
             padding-bottom: 10px;
             display: inline-block;
         }
-
         .channel-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
         }
-
         .channel-button {
             background-color: #8B0000;
             color: #fff;
@@ -139,13 +124,11 @@
             font-weight: 500;
             transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
         }
-
         .channel-button:hover {
             background-color: #B22222;
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-
         footer {
             text-align: center;
             padding: 20px;
@@ -155,8 +138,6 @@
             color: var(--secondary-text-color);
             border-top: 1px solid var(--border-color);
         }
-        
-        /* --- ESTILOS PARA OS CONTAINERS DE TELA --- */
         #auth-container, #recharge-container {
             max-width: 400px;
             margin: 50px auto;
@@ -166,23 +147,19 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             border: 1px solid var(--border-color);
         }
-
         .form-container h2 {
             text-align: center;
             color: var(--accent-color);
             margin-bottom: 25px;
         }
-
         .form-container .form-group {
             margin-bottom: 15px;
         }
-
         .form-container label {
             display: block;
             margin-bottom: 5px;
             font-weight: 500;
         }
-
         .form-container input {
             width: 100%;
             padding: 10px;
@@ -192,7 +169,6 @@
             border-radius: 5px;
             box-sizing: border-box;
         }
-
         .form-container button[type="submit"] {
             width: 100%;
             padding: 12px;
@@ -205,33 +181,27 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-
         .form-container button[type="submit"]:hover {
             background-color: #cc0000;
         }
-        
         .toggle-form {
             text-align: center;
             margin-top: 20px;
         }
-        
         .toggle-form a {
             color: var(--accent-color);
             text-decoration: underline;
             cursor: pointer;
         }
-
         .message {
             text-align: center;
             margin-top: 15px;
             font-weight: bold;
         }
-
         #recharge-container p {
             text-align: center;
             line-height: 1.5;
         }
-
         .hidden {
             display: none;
         }
@@ -268,12 +238,12 @@
              <h2>Acesso Expirado</h2>
              <p>Sua assinatura terminou ou nunca foi ativada. Insira um código de recarga para continuar.</p>
              <form id="recharge-form">
-                 <div class="form-group">
-                     <label for="recharge-code">Código de Recarga</label>
-                     <input type="text" id="recharge-code" required>
-                 </div>
-                 <button type="submit">Ativar</button>
-                 <p id="recharge-message" class="message"></p>
+                  <div class="form-group">
+                       <label for="recharge-code">Código de Recarga</label>
+                       <input type="text" id="recharge-code" required>
+                  </div>
+                  <button type="submit">Ativar</button>
+                  <p id="recharge-message" class="message"></p>
              </form>
              <button class="logout-button" style="width: 100%; margin-top: 15px;">Sair</button>
         </div>
@@ -290,88 +260,89 @@
 
         <main>
              <div class="player-container">
-                <iframe id="tv-player" 
-                        src="https://playertv.net/e/?v=globoPRalt" 
-                        allow="autoplay; encrypted-media; fullscreen" 
-                        allowfullscreen>
-                </iframe>
-            </div>
-            <p id="current-channel">Escolha Um Canal Abaixo</p>
+                 <iframe id="tv-player" 
+                         src="https://playertv.net/e/?v=globoPRalt" 
+                         allow="autoplay; encrypted-media; fullscreen" 
+                         allowfullscreen>
+                 </iframe>
+             </div>
+             <p id="current-channel">Escolha Um Canal Abaixo</p>
 
-            <div class="channel-grid-container">
-                
-                <div class="channel-category">
-                    <h2>A Fazenda</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="sinal1" data-name="Câmera 1">Câmera 1</button>
-                        <button class="channel-button" data-channel="sinal2" data-name="Câmera 2">Câmera 2</button>
-                        <button class="channel-button" data-channel="sinal3" data-name="Câmera 3">Câmera 3</button>
-                        <button class="channel-button" data-channel="sinal4" data-name="Câmera 4">Câmera 4</button>
-                        <button class="channel-button" data-channel="sinal5" data-name="Câmera 5">Câmera 5</button>
-                        <button class="channel-button" data-channel="sinal6" data-name="Câmera 6">Câmera 6</button>
-                    </div>
-                </div>
+             <div class="channel-grid-container">
+                 
+                 <div class="channel-category">
+                     <h2>A Fazenda</h2>
+                     <div class="channel-buttons">
+                         <button class="channel-button" data-channel="sinal1" data-name="Câmera 1">Câmera 1</button>
+                         <button class="channel-button" data-channel="sinal2" data-name="Câmera 2">Câmera 2</button>
+                         <button class="channel-button" data-channel="sinal3" data-name="Câmera 3">Câmera 3</button>
+                         <button class="channel-button" data-channel="sinal4" data-name="Câmera 4">Câmera 4</button>
+                         <button class="channel-button" data-channel="sinal5" data-name="Câmera 5">Câmera 5</button>
+                         <button class="channel-button" data-channel="sinal6" data-name="Câmera 6">Câmera 6</button>
+                     </div>
+                 </div>
 
-                <div class="channel-category">
-                    <h2>Canais Abertos</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="globoPRalt" data-name="Globo">Globo</button>
-                        <button class="channel-button" data-channel="sbt" data-name="SBT">SBT</button>
-                        <button class="channel-button" data-channel="recordSP" data-name="Record TV">Record TV</button>
-                        <button class="channel-button" data-channel="bandAlt" data-name="Band">Band</button>
-                    </div>
-                </div>
+                 <div class="channel-category">
+                     <h2>Canais Abertos</h2>
+                     <div class="channel-buttons">
+                         <button class="channel-button" data-channel="globoPRalt" data-name="Globo">Globo</button>
+                         <button class="channel-button" data-channel="sbt" data-name="SBT">SBT</button>
+                         <button class="channel-button" data-channel="recordSP" data-name="Record TV">Record TV</button>
+                         <button class="channel-button" data-channel="bandAlt" data-name="Band">Band</button>
+                     </div>
+                 </div>
 
-                <div class="channel-category">
-                    <h2>Notícias</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="globonews" data-name="GloboNews">GloboNews</button>
-                        <button class="channel-button" data-channel="cnn" data-name="CNN">CNN</button>
-                    </div>
-                </div>
+                 <div class="channel-category">
+                     <h2>Notícias</h2>
+                     <div class="channel-buttons">
+                         <button class="channel-button" data-channel="globonews" data-name="GloboNews">GloboNews</button>
+                         <button class="channel-button" data-channel="cnn" data-name="CNN">CNN</button>
+                     </div>
+                 </div>
 
-                <div class="channel-category">
-                    <h2>Esportes</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="sportv" data-name="SporTV">SporTV</button>
-                        <button class="channel-button" data-channel="espn" data-name="ESPN">ESPN</button>
-                        <button class="channel-button" data-channel="premiere" data-name="Premiere Clubes">Premiere Clubes</button>
-                    </div>
-                </div>
+                 <div class="channel-category">
+                     <h2>Esportes</h2>
+                     <div class="channel-buttons">
+                         <button class="channel-button" data-channel="sportv" data-name="SporTV">SporTV</button>
+                         <button class="channel-button" data-channel="espn" data-name="ESPN">ESPN</button>
+                         <button class="channel-button" data-channel="premiere" data-name="Premiere Clubes">Premiere Clubes</button>
+                     </div>
+                 </div>
 
-                <div class="channel-category">
-                    <h2>Filmes e Séries</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="tcTouch" data-name="Telecine">Telecine</button>
-                        <button class="channel-button" data-channel="megapix" data-name="Megapix">Megapix</button>
-                        <button class="channel-button" data-channel="paramountAlt" data-name="Paramount">Paramount</button>
-                    </div>
-                </div>
+                 <div class="channel-category">
+                     <h2>Filmes e Séries</h2>
+                     <div class="channel-buttons">
+                         <button class="channel-button" data-channel="tcTouch" data-name="Telecine">Telecine</button>
+                         <button class="channel-button" data-channel="megapix" data-name="Megapix">Megapix</button>
+                         <button class="channel-button" data-channel="paramountAlt" data-name="Paramount">Paramount</button>
+                     </div>
+                 </div>
 
-                <div class="channel-category">
-                    <h2>Infantil</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="gloob" data-name="Gloob">Gloob</button>
-                        <button class="channel-button" data-channel="gloobinho" data-name="Gloobinho">Gloobinho</button>
-                        <button class="channel-button" data-channel="nickAlt" data-name="Nickelodeon">Nickelodeon</button>
-                        <button class="channel-button" data-channel="nickjrAlt" data-name="Nick Jr.">Nick Jr.</button>
-                    </div>
-                </div>
+                 <div class="channel-category">
+                     <h2>Infantil</h2>
+                     <div class="channel-buttons">
+                         <button class="channel-button" data-channel="gloob" data-name="Gloob">Gloob</button>
+                         <button class="channel-button" data-channel="gloobinho" data-name="Gloobinho">Gloobinho</button>
+                         <button class="channel-button" data-channel="nickAlt" data-name="Nickelodeon">Nickelodeon</button>
+                         <button class="channel-button" data-channel="nickjrAlt" data-name="Nick Jr.">Nick Jr.</button>
+                     </div>
+                 </div>
 
-                <div class="channel-category">
-                    <h2>Documentários e Cultura</h2>
-                    <div class="channel-buttons">                                           <button class="channel-button" data-channel="cultura" data-name="Cultura">Cultura</button>
-                    </div>
-                </div>
+                 <div class="channel-category">
+                     <h2>Documentários e Cultura</h2>
+                     <div class="channel-buttons">
+                         <button class="channel-button" data-channel="cultura" data-name="Cultura">Cultura</button>
+                     </div>
+                 </div>
 
-                <div class="channel-category">
-                    <h2>Variedades e Música</h2>
-                    <div class="channel-buttons">
-                        <button class="channel-button" data-channel="bis" data-name="Canal BIS">BIS</button>
-                        <button class="channel-button" data-channel="mtvLiveAlt" data-name="MTV">MTV</button>
-                    </div>
-                </div>
-            </div>
+                 <div class="channel-category">
+                     <h2>Variedades e Música</h2>
+                     <div class="channel-buttons">
+                         <button class="channel-button" data-channel="bis" data-name="Canal BIS">BIS</button>
+                         <button class="channel-button" data-channel="mtvLiveAlt" data-name="MTV">MTV</button>
+                     </div>
+                 </div>
+             </div>
         </main>
         <footer><p>&copy; Serviços Ainda Em Desenvolvimento Podendo Apresentar Falhas.</p></footer>
     </div>
@@ -443,7 +414,6 @@
                     welcomeMessage.textContent = `Olá, ${currentUser}!`;
                     userSession.classList.remove('hidden');
                     showScreen('main');
-                    // Inicia o timer de atualização do player quando o usuário loga com sucesso
                     startRefreshTimer();
                 } else {
                     showScreen('recharge');
@@ -460,7 +430,12 @@
                     registerMessage.textContent = 'Este usuário já existe!';
                     registerMessage.style.color = 'var(--accent-color)';
                 } else {
-                    users[username] = { password: password, accessExpires: null };
+                    // ⭐ MUDANÇA 1: Adiciona um array 'usedCodes' para o novo usuário.
+                    users[username] = { 
+                        password: password, 
+                        accessExpires: null,
+                        usedCodes: [] // Array para guardar os códigos já usados
+                    };
                     localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
                     
                     registerMessage.textContent = 'Conta criada! Faça o login.';
@@ -487,7 +462,6 @@
             logoutButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     localStorage.removeItem('kuromi_tv_currentUser');
-                    // Para o timer de atualização ao fazer logout
                     if(refreshInterval) clearInterval(refreshInterval);
                     loginForm.reset();
                     loginMessage.textContent = '';
@@ -495,26 +469,53 @@
                 });
             });
 
+            // ⭐ MUDANÇA 2: Lógica de recarga completamente reescrita
             rechargeForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const code = document.getElementById('recharge-code').value.toUpperCase();
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
-                
-                if (VALID_CODES[code]) {
-                    const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
-                    const duration = VALID_CODES[code];
-                    
-                    users[currentUser].accessExpires = Date.now() + duration;
-                    localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
+                const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
+                const userData = users[currentUser];
 
-                    rechargeMessage.textContent = 'Código ativado com sucesso!';
-                    rechargeMessage.style.color = 'lightgreen';
-                    
-                    setTimeout(() => checkSession(), 1500);
-                } else {
+                // 1. Verifica se o código é válido
+                if (!VALID_CODES[code]) {
                     rechargeMessage.textContent = 'Código de recarga inválido!';
                     rechargeMessage.style.color = 'var(--accent-color)';
+                    return; // Para a execução se o código não existe
                 }
+
+                // 2. Verifica se o usuário já usou este código
+                // Garante que userData.usedCodes existe para evitar erros
+                if (userData.usedCodes && userData.usedCodes.includes(code)) {
+                    rechargeMessage.textContent = 'Este código já foi utilizado por você!';
+                    rechargeMessage.style.color = 'var(--accent-color)';
+                    return; // Para a execução se o código já foi usado
+                }
+
+                // Se o código é válido e não foi usado, continua...
+                const duration = VALID_CODES[code];
+                
+                // Melhoria: Se o usuário já tem tempo, o novo tempo é somado.
+                // Se o acesso expirou, o tempo começa a contar de agora.
+                const startTime = (userData.accessExpires && userData.accessExpires > Date.now()) 
+                                ? userData.accessExpires 
+                                : Date.now();
+                
+                userData.accessExpires = startTime + duration;
+                
+                // 3. Adiciona o código à lista de códigos usados pelo usuário
+                if (!userData.usedCodes) { // Garante que a lista exista para usuários antigos
+                    userData.usedCodes = [];
+                }
+                userData.usedCodes.push(code);
+
+                // 4. Salva todas as alterações
+                localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
+
+                rechargeMessage.textContent = 'Código ativado com sucesso!';
+                rechargeMessage.style.color = 'lightgreen';
+                
+                setTimeout(() => checkSession(), 1500);
             });
 
             showRegisterLink.addEventListener('click', () => {
@@ -539,9 +540,6 @@
                 }
             };
             
-            // =========================================================================
-            // Lógica de atualização automática do player
-            // =========================================================================
             let refreshInterval;
             const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // 10 minutos
 
@@ -562,21 +560,12 @@
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
                     
-                    // ======================================================================================
-                    // === ALTERAÇÃO PRINCIPAL AQUI ===
-                    // Adicionamos `&autoplay=1` na URL para pedir ao player que inicie com som.
-                    // Isso funciona pois a ação é resultado direto de um clique do usuário.
                     player.src = `https://playertv.net/e/?v=${channelId}&autoplay=1`;
-                    // ======================================================================================
-
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     
-                    // A função de tela cheia já estava correta e é chamada aqui.
                     openFullscreen(playerContainer);
-
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     
-                    // Reinicia o timer toda vez que o canal é trocado
                     startRefreshTimer();
                 });
             });
