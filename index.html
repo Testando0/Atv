@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>✰ TV EXPRESS - KUROMI ✰</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>✰ KUROMI TV ✰</title>
     <style>
         :root {
-            --background-color: #0C162A; /* Azul marinho escuro, base do TV Express */
-            --surface-color: #1A253A;    /* Azul escuro para caixas e cards */
+            --background-color: #3f0000; /* Vermelho escuro */
+            --surface-color: #5a0000;    /* Vermelho um pouco mais claro para as categorias */
             --primary-text-color: #ffffff; /* Texto principal branco */
-            --secondary-text-color: #a0a0a0; /* Texto secundário cinza claro */
-            --accent-color: #00AEEF;     /* Azul vibrante para destaque */
-            --border-color: #304169;     /* Azul escuro para bordas */
+            --secondary-text-color: #e0e0e0; /* Texto secundário levemente acinzentado */
+            --accent-color: #ff3333;     /* Vermelho vibrante para destaque */
+            --border-color: #8b0000;     /* Vermelho escuro para bordas */
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -20,7 +19,6 @@
             color: var(--primary-text-color);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
         }
         .container {
             width: 100%;
@@ -29,62 +27,60 @@
             padding: 20px;
             box-sizing: border-box;
         }
-
-        /* HEADER */
         header {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
+            position: relative;
             padding-bottom: 20px;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 20px;
         }
         header h1 {
             margin: 0;
-            font-size: 1.8em;
+            font-size: 2.8em;
             color: var(--accent-color);
-            font-weight: 600;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .logo i {
-            color: var(--accent-color);
-            font-size: 1.5em;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
         #user-session {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             align-items: center;
             gap: 15px;
         }
         .logout-button {
             background-color: var(--accent-color);
-            color: var(--primary-text-color);
+            color: white;
             border: none;
             padding: 8px 15px;
-            border-radius: 20px;
+            border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: background-color 0.3s;
         }
         .logout-button:hover {
-            background-color: #008fbc;
-            transform: scale(1.05);
+            background-color: #cc0000;
         }
-
-        /* PLAYER E CANAL ATUAL */
+        #current-channel {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.3em;
+            color: var(--secondary-text-color);
+            font-weight: 500;
+        }
         .player-container {
             width: 100%;
             position: relative;
             padding-top: 56.25%;
             background-color: #000;
-            margin-bottom: 20px;
-            border-radius: 12px;
+            margin-top: 20px;
+            border-radius: 8px;
             overflow: hidden;
-            border: 2px solid var(--border-color);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            border: 3px solid var(--border-color);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
         }
         .player-container iframe {
             position: absolute;
@@ -94,120 +90,99 @@
             height: 100%;
             border: none;
         }
-        #current-channel {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.1em;
-            color: var(--secondary-text-color);
-            font-weight: 500;
-        }
-        
-        /* GRADE DE CANAIS */
         .channel-grid-container {
-            display: grid;
-            gap: 25px;
+            margin-top: 30px;
         }
         .channel-category {
             background-color: var(--surface-color);
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
         }
         .channel-category h2 {
             margin-top: 0;
             margin-bottom: 20px;
-            font-size: 1.5em;
+            font-size: 1.8em;
             border-bottom: 2px solid var(--accent-color);
             padding-bottom: 10px;
             display: inline-block;
-            color: var(--accent-color);
         }
         .channel-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
         }
         .channel-button {
-            background-color: #304169;
+            background-color: #8B0000;
             color: #fff;
-            border: 1px solid var(--border-color);
-            padding: 15px;
+            border: 1px solid #B22222;
+            padding: 12px 18px;
             cursor: pointer;
-            border-radius: 8px;
+            border-radius: 5px;
             font-size: 1em;
             font-weight: 500;
-            text-align: center;
             transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .channel-button .icon {
-            font-size: 1.5em;
-            color: var(--accent-color);
         }
         .channel-button:hover {
-            background-color: #405273;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+            background-color: #B22222;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-
-        /* TELAS DE LOGIN/RECarga */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            width: 100%;
+            font-size: 0.9em;
+            color: var(--secondary-text-color);
+            border-top: 1px solid var(--border-color);
+        }
         #auth-container, #recharge-container {
-            max-width: 450px;
+            max-width: 400px;
             margin: 50px auto;
-            padding: 40px;
+            padding: 30px;
             background-color: var(--surface-color);
-            border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             border: 1px solid var(--border-color);
         }
         .form-container h2 {
             text-align: center;
             color: var(--accent-color);
             margin-bottom: 25px;
-            font-weight: 600;
         }
         .form-container .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .form-container label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
             font-weight: 500;
-            color: var(--secondary-text-color);
         }
         .form-container input {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background-color: var(--background-color);
             border: 1px solid var(--border-color);
             color: var(--primary-text-color);
-            border-radius: 8px;
+            border-radius: 5px;
             box-sizing: border-box;
-            transition: border-color 0.3s;
-        }
-        .form-container input:focus {
-            outline: none;
-            border-color: var(--accent-color);
         }
         .form-container button[type="submit"] {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             background-color: var(--accent-color);
             border: none;
             color: white;
             font-size: 1.1em;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
+            transition: background-color 0.3s;
         }
         .form-container button[type="submit"]:hover {
-            background-color: #008fbc;
-            transform: scale(1.02);
+            background-color: #cc0000;
         }
         .toggle-form {
             text-align: center;
@@ -215,13 +190,8 @@
         }
         .toggle-form a {
             color: var(--accent-color);
-            text-decoration: none;
+            text-decoration: underline;
             cursor: pointer;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        .toggle-form a:hover {
-            color: #008fbc;
         }
         .message {
             text-align: center;
@@ -231,21 +201,9 @@
         #recharge-container p {
             text-align: center;
             line-height: 1.5;
-            color: var(--secondary-text-color);
         }
         .hidden {
             display: none;
-        }
-
-        /* RODAPÉ */
-        footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 30px;
-            width: 100%;
-            font-size: 0.8em;
-            color: var(--secondary-text-color);
-            border-top: 1px solid var(--border-color);
         }
     </style>
 </head>
@@ -254,18 +212,18 @@
     <div id="auth-container" class="hidden">
         <div id="login-form-container" class="form-container">
             <form id="login-form">
-                <h2>Acessar sua Conta</h2>
+                <h2>Login</h2>
                 <div class="form-group"><label for="login-username">Usuário</label><input type="text" id="login-username" required></div>
                 <div class="form-group"><label for="login-password">Senha</label><input type="password" id="login-password" required></div>
                 <button type="submit">Entrar</button>
                 <p id="login-message" class="message"></p>
             </form>
-            <p class="toggle-form">Não tem uma conta? <a id="show-register">Registre-se agora</a></p>
+            <p class="toggle-form">Não tem uma conta? <a id="show-register">Registre-se</a></p>
         </div>
         
         <div id="register-form-container" class="form-container hidden">
             <form id="register-form">
-                <h2>Criar uma Conta</h2>
+                <h2>Registro</h2>
                 <div class="form-group"><label for="register-username">Usuário</label><input type="text" id="register-username" required></div>
                 <div class="form-group"><label for="register-password">Senha</label><input type="password" id="register-password" required></div>
                 <button type="submit">Criar Conta</button>
@@ -278,7 +236,7 @@
     <div id="recharge-container" class="hidden">
         <div class="form-container">
              <h2>Acesso Expirado</h2>
-             <p>Sua assinatura expirou. Insira um código de recarga para continuar assistindo!</p>
+             <p>Sua assinatura terminou ou nunca foi ativada. Insira um código de recarga para continuar.</p>
              <form id="recharge-form">
                   <div class="form-group">
                        <label for="recharge-code">Código de Recarga</label>
@@ -293,13 +251,10 @@
 
     <div id="main-content" class="container hidden">
         <header>
-            <div class="logo">
-                <i class="fa-solid fa-tv"></i>
-                <h1>TV EXPRESS - KUROMI</h1>
-            </div>
+            <h1>✰ KUROMI TV ✰</h1>
             <div id="user-session" class="hidden">
                  <span id="welcome-message"></span>
-                 <button class="logout-button"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+                 <button class="logout-button">Sair</button>
             </div>
         </header>
 
@@ -311,85 +266,85 @@
                          allowfullscreen>
                  </iframe>
              </div>
-             <p id="current-channel">Escolha um canal abaixo</p>
+             <p id="current-channel">Escolha Um Canal Abaixo</p>
 
              <div class="channel-grid-container">
                  
                  <div class="channel-category">
-                     <h2><i class="fa-solid fa-camera"></i> A Fazenda</h2>
+                     <h2>A Fazenda</h2>
                      <div class="channel-buttons">
-                         <button class="channel-button" data-channel="sinal1" data-name="Câmera 1"><span class="icon"><i class="fa-solid fa-video"></i></span> Câmera 1</button>
-                         <button class="channel-button" data-channel="sinal2" data-name="Câmera 2"><span class="icon"><i class="fa-solid fa-video"></i></span> Câmera 2</button>
-                         <button class="channel-button" data-channel="sinal3" data-name="Câmera 3"><span class="icon"><i class="fa-solid fa-video"></i></span> Câmera 3</button>
-                         <button class="channel-button" data-channel="sinal4" data-name="Câmera 4"><span class="icon"><i class="fa-solid fa-video"></i></span> Câmera 4</button>
-                         <button class="channel-button" data-channel="sinal5" data-name="Câmera 5"><span class="icon"><i class="fa-solid fa-video"></i></span> Câmera 5</button>
-                         <button class="channel-button" data-channel="sinal6" data-name="Câmera 6"><span class="icon"><i class="fa-solid fa-video"></i></span> Câmera 6</button>
+                         <button class="channel-button" data-channel="sinal1" data-name="Câmera 1">Câmera 1</button>
+                         <button class="channel-button" data-channel="sinal2" data-name="Câmera 2">Câmera 2</button>
+                         <button class="channel-button" data-channel="sinal3" data-name="Câmera 3">Câmera 3</button>
+                         <button class="channel-button" data-channel="sinal4" data-name="Câmera 4">Câmera 4</button>
+                         <button class="channel-button" data-channel="sinal5" data-name="Câmera 5">Câmera 5</button>
+                         <button class="channel-button" data-channel="sinal6" data-name="Câmera 6">Câmera 6</button>
                      </div>
                  </div>
 
                  <div class="channel-category">
-                     <h2><i class="fa-solid fa-earth-americas"></i> Canais Abertos</h2>
+                     <h2>Canais Abertos</h2>
                      <div class="channel-buttons">
-                         <button class="channel-button" data-channel="globoPRalt" data-name="Globo"><span class="icon"><i class="fa-solid fa-play"></i></span> Globo</button>
-                         <button class="channel-button" data-channel="sbt" data-name="SBT"><span class="icon"><i class="fa-solid fa-play"></i></span> SBT</button>
-                         <button class="channel-button" data-channel="recordSP" data-name="Record TV"><span class="icon"><i class="fa-solid fa-play"></i></span> Record TV</button>
-                         <button class="channel-button" data-channel="bandAlt" data-name="Band"><span class="icon"><i class="fa-solid fa-play"></i></span> Band</button>
+                         <button class="channel-button" data-channel="globoPRalt" data-name="Globo">Globo</button>
+                         <button class="channel-button" data-channel="sbt" data-name="SBT">SBT</button>
+                         <button class="channel-button" data-channel="recordSP" data-name="Record TV">Record TV</button>
+                         <button class="channel-button" data-channel="bandAlt" data-name="Band">Band</button>
                      </div>
                  </div>
 
                  <div class="channel-category">
-                     <h2><i class="fa-solid fa-newspaper"></i> Notícias</h2>
+                     <h2>Notícias</h2>
                      <div class="channel-buttons">
-                         <button class="channel-button" data-channel="globonews" data-name="GloboNews"><span class="icon"><i class="fa-solid fa-play"></i></span> GloboNews</button>
-                         <button class="channel-button" data-channel="cnn" data-name="CNN"><span class="icon"><i class="fa-solid fa-play"></i></span> CNN</button>
+                         <button class="channel-button" data-channel="globonews" data-name="GloboNews">GloboNews</button>
+                         <button class="channel-button" data-channel="cnn" data-name="CNN">CNN</button>
                      </div>
                  </div>
 
                  <div class="channel-category">
-                     <h2><i class="fa-solid fa-futbol"></i> Esportes</h2>
+                     <h2>Esportes</h2>
                      <div class="channel-buttons">
-                         <button class="channel-button" data-channel="sportv" data-name="SporTV"><span class="icon"><i class="fa-solid fa-play"></i></span> SporTV</button>
-                         <button class="channel-button" data-channel="espn" data-name="ESPN"><span class="icon"><i class="fa-solid fa-play"></i></span> ESPN</button>
-                         <button class="channel-button" data-channel="premiere" data-name="Premiere Clubes"><span class="icon"><i class="fa-solid fa-play"></i></span> Premiere Clubes</button>
+                         <button class="channel-button" data-channel="sportv" data-name="SporTV">SporTV</button>
+                         <button class="channel-button" data-channel="espn" data-name="ESPN">ESPN</button>
+                         <button class="channel-button" data-channel="premiere" data-name="Premiere Clubes">Premiere Clubes</button>
                      </div>
                  </div>
 
                  <div class="channel-category">
-                     <h2><i class="fa-solid fa-film"></i> Filmes e Séries</h2>
+                     <h2>Filmes e Séries</h2>
                      <div class="channel-buttons">
-                         <button class="channel-button" data-channel="tcTouch" data-name="Telecine"><span class="icon"><i class="fa-solid fa-play"></i></span> Telecine</button>
-                         <button class="channel-button" data-channel="megapix" data-name="Megapix"><span class="icon"><i class="fa-solid fa-play"></i></span> Megapix</button>
-                         <button class="channel-button" data-channel="paramountAlt" data-name="Paramount"><span class="icon"><i class="fa-solid fa-play"></i></span> Paramount</button>
+                         <button class="channel-button" data-channel="tcTouch" data-name="Telecine">Telecine</button>
+                         <button class="channel-button" data-channel="megapix" data-name="Megapix">Megapix</button>
+                         <button class="channel-button" data-channel="paramountAlt" data-name="Paramount">Paramount</button>
                      </div>
                  </div>
 
                  <div class="channel-category">
-                     <h2><i class="fa-solid fa-child"></i> Infantil</h2>
+                     <h2>Infantil</h2>
                      <div class="channel-buttons">
-                         <button class="channel-button" data-channel="gloob" data-name="Gloob"><span class="icon"><i class="fa-solid fa-play"></i></span> Gloob</button>
-                         <button class="channel-button" data-channel="gloobinho" data-name="Gloobinho"><span class="icon"><i class="fa-solid fa-play"></i></span> Gloobinho</button>
-                         <button class="channel-button" data-channel="nickAlt" data-name="Nickelodeon"><span class="icon"><i class="fa-solid fa-play"></i></span> Nickelodeon</button>
-                         <button class="channel-button" data-channel="nickjrAlt" data-name="Nick Jr."><span class="icon"><i class="fa-solid fa-play"></i></span> Nick Jr.</button>
+                         <button class="channel-button" data-channel="gloob" data-name="Gloob">Gloob</button>
+                         <button class="channel-button" data-channel="gloobinho" data-name="Gloobinho">Gloobinho</button>
+                         <button class="channel-button" data-channel="nickAlt" data-name="Nickelodeon">Nickelodeon</button>
+                         <button class="channel-button" data-channel="nickjrAlt" data-name="Nick Jr.">Nick Jr.</button>
                      </div>
                  </div>
 
                  <div class="channel-category">
-                     <h2><i class="fa-solid fa-book-open"></i> Documentários e Cultura</h2>
+                     <h2>Documentários e Cultura</h2>
                      <div class="channel-buttons">
-                         <button class="channel-button" data-channel="cultura" data-name="Cultura"><span class="icon"><i class="fa-solid fa-play"></i></span> Cultura</button>
+                         <button class="channel-button" data-channel="cultura" data-name="Cultura">Cultura</button>
                      </div>
                  </div>
 
                  <div class="channel-category">
-                     <h2><i class="fa-solid fa-music"></i> Variedades e Música</h2>
+                     <h2>Variedades e Música</h2>
                      <div class="channel-buttons">
-                         <button class="channel-button" data-channel="bis" data-name="Canal BIS"><span class="icon"><i class="fa-solid fa-play"></i></span> BIS</button>
-                         <button class="channel-button" data-channel="mtvLiveAlt" data-name="MTV"><span class="icon"><i class="fa-solid fa-play"></i></span> MTV</button>
+                         <button class="channel-button" data-channel="bis" data-name="Canal BIS">BIS</button>
+                         <button class="channel-button" data-channel="mtvLiveAlt" data-name="MTV">MTV</button>
                      </div>
                  </div>
              </div>
         </main>
-        <footer><p>&copy; 2024 TV Express - Kuromi. Todos os direitos reservados.</p></footer>
+        <footer><p>&copy; Serviços Ainda Em Desenvolvimento Podendo Apresentar Falhas.</p></footer>
     </div>
 
     <script>
