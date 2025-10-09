@@ -50,10 +50,11 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            /* Adicionado: Para posicionar o menu corretamente */
             z-index: 100; 
         }
         
-        /* NOVO ESTILO PARA O ÍCONE/MENU */
+        /* ESTILO PARA O ÍCONE/MENU */
         #settings-icon {
             cursor: pointer;
             font-size: 24px;
@@ -67,14 +68,14 @@
 
         #account-menu {
             position: absolute;
-            top: 100%; 
+            top: 100%; /* Posiciona abaixo do ícone */
             right: 0;
             background-color: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: 5px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             overflow: hidden;
-            width: 170px; /* Aumentado para o novo botão */
+            width: 180px; /* Aumentado para o novo botão */
             margin-top: 10px;
         }
 
@@ -109,7 +110,7 @@
         .logout-button:hover {
             background-color: #cc0000;
         }
-        /* FIM DOS NOVOS ESTILOS */
+        /* FIM DOS ESTILOS DE MENU */
 
         #current-channel {
             text-align: center;
@@ -136,29 +137,6 @@
             width: 100%;
             height: 100%;
             border: none;
-        }
-        /* Nova seção de recarga no Main Content */
-        #main-recharge-section {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: var(--surface-color);
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            text-align: center;
-        }
-        #main-recharge-section p {
-            font-size: 1.1em;
-            margin-bottom: 15px;
-        }
-        #main-recharge-section form {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        #main-recharge-section input {
-            flex-grow: 1;
         }
         .channel-grid-container {
             margin-top: 30px;
@@ -208,7 +186,7 @@
             color: var(--secondary-text-color);
             border-top: 1px solid var(--border-color);
         }
-        #auth-container, #recharge-container {
+        #auth-container, #recharge-container, #redeem-code-modal {
             max-width: 400px;
             margin: 50px auto;
             padding: 30px;
@@ -217,6 +195,28 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             border: 1px solid var(--border-color);
         }
+        /* Adicionado para o modal de Resgate */
+        #redeem-code-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 200;
+            max-width: 450px;
+            width: 90%;
+            margin: 0; /* Override do margin: 50px auto */
+        }
+        /* Overlay para o modal */
+        #modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 150;
+        }
+
         .form-container h2 {
             text-align: center;
             color: var(--accent-color);
@@ -240,6 +240,7 @@
             box-sizing: border-box;
         }
         .form-container button[type="submit"] {
+            width: 100%;
             padding: 12px;
             background-color: var(--accent-color);
             border: none;
@@ -250,13 +251,6 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
-        #recharge-form button[type="submit"] {
-             width: 100%;
-        }
-        #main-recharge-form button[type="submit"] {
-            width: 120px; /* Ajustado para o flexbox */
-        }
-
         .form-container button[type="submit"]:hover {
             background-color: #cc0000;
         }
@@ -333,21 +327,30 @@
                  
                  <span id="settings-icon">⚙️</span>
                  <div id="account-menu" class="hidden">
-                     <button id="menu-recharge">Resgatar Código</button> <button id="menu-logout">Sair</button>
+                     <button id="menu-redeem-code">Resgatar Código</button> <button id="menu-logout">Sair</button>
                      <button id="menu-delete-account" style="color: var(--accent-color);">Deletar Conta</button>
                  </div>
-            </div>
+                 </div>
         </header>
 
         <main>
-             <div id="main-recharge-section">
-                <p id="access-status">Status do Acesso:</p>
-                <form id="main-recharge-form">
-                    <input type="text" id="main-recharge-code" placeholder="Insira o Código de Recarga" required>
-                    <button type="submit">Resgatar</button>
-                </form>
-                <p id="main-recharge-message" class="message"></p>
+             <div id="redeem-code-modal" class="hidden">
+                 <div class="form-container">
+                      <h2>Resgatar Código</h2>
+                      <p style="text-align: center; font-size: 0.9em; color: var(--secondary-text-color);">Adicione mais dias à sua assinatura.</p>
+                      <form id="redeem-form">
+                           <div class="form-group">
+                                <label for="redeem-code">Código de Recarga</label>
+                                <input type="text" id="redeem-code" required>
+                           </div>
+                           <button type="submit">Resgatar</button>
+                           <p id="redeem-message" class="message"></p>
+                      </form>
+                      <button id="close-redeem-modal" class="logout-button" style="width: 100%; margin-top: 15px; background-color: var(--surface-color);">Fechar</button>
+                 </div>
              </div>
+             <div id="modal-overlay" class="hidden"></div>
+
              <div class="player-container">
                  <iframe id="tv-player" 
                          src="https://playertv.net/e/?v=globoPRalt" 
@@ -358,6 +361,7 @@
              <p id="current-channel">Escolha Um Canal Abaixo</p>
 
              <div class="channel-grid-container">
+                 
                  <div class="channel-category">
                      <h2>A Fazenda</h2>
                      <div class="channel-buttons">
@@ -442,30 +446,34 @@
             const authContainer = document.getElementById('auth-container');
             const rechargeContainer = document.getElementById('recharge-container');
             
-            // Formulários e Inputs
+            // Formulários
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
-            const rechargeFormExpired = document.getElementById('recharge-form'); // Form da tela de expiração
-            const rechargeCodeExpired = document.getElementById('recharge-code');
-            const rechargeFormMain = document.getElementById('main-recharge-form'); // Form da tela principal
-            const rechargeCodeMain = document.getElementById('main-recharge-code');
+            const rechargeForm = document.getElementById('recharge-form');
+            const redeemForm = document.getElementById('redeem-form'); // NOVO: Formulário de Resgate
             
             // Links e Botões
             const showRegisterLink = document.getElementById('show-register');
             const showLoginLink = document.getElementById('show-login');
-            const logoutButtons = document.querySelectorAll('.logout-button');
+            
+            // Botões de Ação
+            const logoutButtons = document.querySelectorAll('.logout-button'); // Botão na tela de recarga
             const settingsIcon = document.getElementById('settings-icon');
             const accountMenu = document.getElementById('account-menu');
             const menuLogoutButton = document.getElementById('menu-logout');
             const menuDeleteButton = document.getElementById('menu-delete-account');
-            const menuRechargeButton = document.getElementById('menu-recharge'); // Novo botão
+            const menuRedeemCodeButton = document.getElementById('menu-redeem-code'); // NOVO: Botão Resgatar Código no menu
+            const closeRedeemModalButton = document.getElementById('close-redeem-modal'); // NOVO: Botão Fechar Modal
+            
+            // Modals/Containers Extras
+            const redeemCodeModal = document.getElementById('redeem-code-modal'); // NOVO: Modal de Resgate
+            const modalOverlay = document.getElementById('modal-overlay'); // NOVO: Overlay
 
             // Mensagens
             const loginMessage = document.getElementById('login-message');
             const registerMessage = document.getElementById('register-message');
-            const rechargeMessageExpired = document.getElementById('recharge-message');
-            const rechargeMessageMain = document.getElementById('main-recharge-message');
-            const accessStatusDisplay = document.getElementById('access-status'); // Novo status
+            const rechargeMessage = document.getElementById('recharge-message');
+            const redeemMessage = document.getElementById('redeem-message'); // NOVO: Mensagem de Resgate
 
             // Sessão do Usuário
             const userSession = document.getElementById('user-session');
@@ -492,8 +500,8 @@
                     };
                 } catch (error) {
                     console.error('Falha ao carregar códigos de recarga:', error);
-                    rechargeMessageExpired.textContent = 'Erro ao carregar dados de recarga. Tente novamente mais tarde.';
-                    rechargeMessageExpired.style.color = 'var(--accent-color)';
+                    rechargeMessage.textContent = 'Erro ao carregar dados de recarga. Tente novamente mais tarde.';
+                    rechargeMessage.style.color = 'var(--accent-color)';
                     return { VALID_CODES: {}, MS_PER_DAY: 0 };
                 }
             };
@@ -506,7 +514,9 @@
                 mainContent.classList.add('hidden');
                 authContainer.classList.add('hidden');
                 rechargeContainer.classList.add('hidden');
-                accountMenu.classList.add('hidden');
+                accountMenu.classList.add('hidden'); // Fecha o menu ao trocar de tela
+                redeemCodeModal.classList.add('hidden'); // Esconde o modal de resgate
+                modalOverlay.classList.add('hidden'); // Esconde o overlay
 
                 if (screenName === 'auth') document.getElementById('auth-container').classList.remove('hidden');
                 else if (screenName === 'recharge') document.getElementById('recharge-container').classList.remove('hidden');
@@ -532,26 +542,6 @@
                 }
             };
 
-            const updateAccessStatus = (accessExpires) => {
-                 if (!accessExpires) {
-                    accessStatusDisplay.textContent = 'Status do Acesso: Não Ativo';
-                    return;
-                 }
-                 const remainingTime = accessExpires - Date.now();
-                 const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
-                 const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                 
-                 if (days > 0) {
-                     accessStatusDisplay.textContent = `Status do Acesso: Expira em ${days} dia(s) e ${hours} hora(s)`;
-                 } else if (hours > 0) {
-                     accessStatusDisplay.textContent = `Status do Acesso: Expira em ${hours} hora(s)`;
-                 } else if (remainingTime > 0) {
-                      accessStatusDisplay.textContent = `Status do Acesso: Expira em menos de 1 hora`;
-                 } else {
-                     accessStatusDisplay.textContent = 'Status do Acesso: Expirado';
-                 }
-            };
-
             const checkSession = () => {
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 if (!currentUser) {
@@ -565,17 +555,21 @@
                 if (userData && userData.accessExpires && userData.accessExpires > Date.now()) {
                     welcomeMessage.textContent = `Olá, ${currentUser}!`;
                     userSession.classList.remove('hidden');
-                    updateAccessStatus(userData.accessExpires); // Atualiza o status
                     showScreen('main');
                     startRefreshTimer();
                 } else {
                     showScreen('recharge');
                 }
             };
-
-            // Função Centralizada de Recarga
-            const handleRecharge = (code, successCallback, errorCallback) => {
-                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
+            
+            /**
+             * Função para processar a ativação de um código, usada tanto na tela de 'recharge' quanto no 'redeem'.
+             * @param {string} code O código de recarga.
+             * @param {string} currentUser O nome do usuário logado.
+             * @param {HTMLElement} messageElement O elemento onde a mensagem de status será exibida.
+             * @param {boolean} isRechargeScreen Indica se a chamada veio da tela de expiração (recharge).
+             */
+            const processRechargeCode = (code, currentUser, messageElement, isRechargeScreen = false) => {
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
                 const userData = users[currentUser];
 
@@ -583,19 +577,20 @@
                 const MS_PER_DAY = rechargeData.MS_PER_DAY; 
 
                 if (!validCodes[code]) {
-                    errorCallback('Código de recarga inválido!');
+                    messageElement.textContent = 'Código de recarga inválido!';
+                    messageElement.style.color = 'var(--accent-color)';
                     return; 
                 }
                 if (userData.usedCodes && userData.usedCodes.includes(code)) {
-                    errorCallback('Este código já foi utilizado por você!');
+                    messageElement.textContent = 'Este código já foi utilizado por você!';
+                    messageElement.style.color = 'var(--accent-color)';
                     return; 
                 }
 
                 const durationInDays = validCodes[code]; 
                 const durationInMs = durationInDays * MS_PER_DAY; 
                 
-                // Lógica de ACÚMULO: Se o acesso atual ainda é válido, o novo tempo é adicionado ao tempo de expiração.
-                // Caso contrário, o novo tempo começa a contar a partir de agora.
+                // O tempo de acesso começa a contar a partir de agora ou a partir do fim do acesso atual.
                 const startTime = (userData.accessExpires && userData.accessExpires > Date.now()) 
                                 ? userData.accessExpires 
                                 : Date.now();
@@ -609,12 +604,23 @@
 
                 localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
 
-                successCallback();
+                messageElement.textContent = `Código ativado! Adicionado ${durationInDays} dia(s) de acesso.`;
+                messageElement.style.color = 'lightgreen';
                 
-                // Recheca a sessão para atualizar a tela principal
-                setTimeout(() => checkSession(), 1500);
+                // Se for a tela de recarga (acesso expirado), redireciona para a tela principal
+                if (isRechargeScreen) {
+                    setTimeout(() => checkSession(), 1500);
+                } else {
+                    // Se for o modal de resgate, fecha o modal e limpa o formulário
+                    setTimeout(() => {
+                        redeemCodeModal.classList.add('hidden');
+                        modalOverlay.classList.add('hidden');
+                        redeemForm.reset();
+                        redeemMessage.textContent = '';
+                    }, 2000);
+                }
             };
-
+            
             // --- EVENT LISTENERS DE AUTENTICAÇÃO E RECARGA ---
 
             registerForm.addEventListener('submit', (e) => {
@@ -655,74 +661,64 @@
                 }
             });
 
-            // Recarga na tela de EXPIRADO
-            rechargeFormExpired.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const code = rechargeCodeExpired.value.toUpperCase();
-                
-                rechargeMessageExpired.textContent = ''; // Limpa mensagens anteriores
-                
-                handleRecharge(
-                    code,
-                    () => { // Success
-                        rechargeMessageExpired.textContent = 'Código ativado com sucesso!';
-                        rechargeMessageExpired.style.color = 'lightgreen';
-                    },
-                    (errorMsg) => { // Error
-                        rechargeMessageExpired.textContent = errorMsg;
-                        rechargeMessageExpired.style.color = 'var(--accent-color)';
-                    }
-                );
-            });
-
-            // Recarga na tela PRINCIPAL (Antecipada)
-            rechargeFormMain.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const code = rechargeCodeMain.value.toUpperCase();
-                
-                rechargeMessageMain.textContent = ''; // Limpa mensagens anteriores
-                
-                handleRecharge(
-                    code,
-                    () => { // Success
-                        rechargeMessageMain.textContent = 'Recarga acumulada com sucesso!';
-                        rechargeMessageMain.style.color = 'lightgreen';
-                        rechargeCodeMain.value = ''; // Limpa o campo
-                    },
-                    (errorMsg) => { // Error
-                        rechargeMessageMain.textContent = errorMsg;
-                        rechargeMessageMain.style.color = 'var(--accent-color)';
-                    }
-                );
-            });
-
-
-            // --- Eventos de Menu e Ações da Conta ---
-            
+            // Adiciona evento de Sair para todos os botões de logout
             logoutButtons.forEach(button => {
                 button.addEventListener('click', logoutSession);
             });
             
+            // Eventos do Menu de Configuração
             settingsIcon.addEventListener('click', (e) => {
-                e.stopPropagation();
+                e.stopPropagation(); // Previne que o clique no ícone feche o menu imediatamente
                 accountMenu.classList.toggle('hidden');
             });
 
             menuLogoutButton.addEventListener('click', logoutSession);
             menuDeleteButton.addEventListener('click', deleteAccount);
-
-            // Novo: Clicar no botão de recarga do menu leva para a seção principal de recarga.
-            menuRechargeButton.addEventListener('click', () => {
-                accountMenu.classList.add('hidden');
-                // Rola suavemente para a seção de recarga antecipada
-                document.getElementById('main-recharge-section').scrollIntoView({ behavior: 'smooth' });
-                rechargeCodeMain.focus();
+            
+            // NOVO: Exibir o modal de resgate
+            menuRedeemCodeButton.addEventListener('click', () => {
+                accountMenu.classList.add('hidden'); // Fecha o menu
+                redeemCodeModal.classList.remove('hidden');
+                modalOverlay.classList.remove('hidden');
+                redeemForm.reset();
+                redeemMessage.textContent = '';
             });
 
+            // NOVO: Fechar o modal de resgate
+            closeRedeemModalButton.addEventListener('click', () => {
+                redeemCodeModal.classList.add('hidden');
+                modalOverlay.classList.add('hidden');
+            });
+
+            // Fecha o menu/modal se o usuário clicar fora deles (no documento)
             document.addEventListener('click', (e) => {
                 if (!accountMenu.classList.contains('hidden') && !e.target.closest('#user-session')) {
                     accountMenu.classList.add('hidden');
                 }
+                if (!redeemCodeModal.classList.contains('hidden') && e.target.id === 'modal-overlay') {
+                    redeemCodeModal.classList.add('hidden');
+                    modalOverlay.classList.add('hidden');
+                }
+            });
+
+
+            rechargeForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const code = document.getElementById('recharge-code').value.toUpperCase();
+                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
+                
+                // Usando a função unificada de processamento de código
+                processRechargeCode(code, currentUser, rechargeMessage, true);
+            });
+            
+            // NOVO: Listener para o formulário de Resgatar Código (dentro do Main Content)
+            redeemForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const code = document.getElementById('redeem-code').value.toUpperCase();
+                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
+                
+                // Usando a função unificada de processamento de código
+                processRechargeCode(code, currentUser, redeemMessage, false);
             });
 
 
@@ -741,9 +737,9 @@
             const openFullscreen = (elem) => {
                 if (elem.requestFullscreen) {
                     elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) {
+                } else if (elem.webkitRequestFullscreen) { /* Safari */
                     elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { 
+                } else if (elem.msRequestFullscreen) { /* IE11 */
                     elem.msRequestFullscreen();
                 }
             };
@@ -753,7 +749,17 @@
 
             const refreshPlayer = () => {
                 console.log(`Atualizando o player (${new Date().toLocaleTimeString()}) para manter a conexão estável.`);
-                player.src = player.src;
+                // Verifica o acesso antes de atualizar para evitar recarregar o player de um usuário expirado
+                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
+                const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+                const userData = users[currentUser];
+                
+                if (userData && userData.accessExpires && userData.accessExpires > Date.now()) {
+                    player.src = player.src; // Recarrega o iFrame
+                } else {
+                    clearInterval(refreshInterval);
+                    checkSession(); // Redireciona se o acesso expirou
+                }
             };
 
             const startRefreshTimer = () => {
