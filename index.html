@@ -50,7 +50,6 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            /* Adicionado: Para posicionar o menu corretamente */
             z-index: 100; 
         }
         
@@ -68,14 +67,14 @@
 
         #account-menu {
             position: absolute;
-            top: 100%; /* Posiciona abaixo do ícone */
+            top: 100%; 
             right: 0;
             background-color: var(--surface-color);
             border: 1px solid var(--border-color);
             border-radius: 5px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             overflow: hidden;
-            width: 150px;
+            width: 170px; /* Aumentado para o novo botão */
             margin-top: 10px;
         }
 
@@ -137,6 +136,29 @@
             width: 100%;
             height: 100%;
             border: none;
+        }
+        /* Nova seção de recarga no Main Content */
+        #main-recharge-section {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        #main-recharge-section p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        #main-recharge-section form {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        #main-recharge-section input {
+            flex-grow: 1;
         }
         .channel-grid-container {
             margin-top: 30px;
@@ -218,7 +240,6 @@
             box-sizing: border-box;
         }
         .form-container button[type="submit"] {
-            width: 100%;
             padding: 12px;
             background-color: var(--accent-color);
             border: none;
@@ -229,6 +250,13 @@
             cursor: pointer;
             transition: background-color 0.3s;
         }
+        #recharge-form button[type="submit"] {
+             width: 100%;
+        }
+        #main-recharge-form button[type="submit"] {
+            width: 120px; /* Ajustado para o flexbox */
+        }
+
         .form-container button[type="submit"]:hover {
             background-color: #cc0000;
         }
@@ -305,13 +333,21 @@
                  
                  <span id="settings-icon">⚙️</span>
                  <div id="account-menu" class="hidden">
-                     <button id="menu-logout">Sair</button>
+                     <button id="menu-recharge">Resgatar Código</button> <button id="menu-logout">Sair</button>
                      <button id="menu-delete-account" style="color: var(--accent-color);">Deletar Conta</button>
                  </div>
-                 </div>
+            </div>
         </header>
 
         <main>
+             <div id="main-recharge-section">
+                <p id="access-status">Status do Acesso:</p>
+                <form id="main-recharge-form">
+                    <input type="text" id="main-recharge-code" placeholder="Insira o Código de Recarga" required>
+                    <button type="submit">Resgatar</button>
+                </form>
+                <p id="main-recharge-message" class="message"></p>
+             </div>
              <div class="player-container">
                  <iframe id="tv-player" 
                          src="https://playertv.net/e/?v=globoPRalt" 
@@ -322,7 +358,6 @@
              <p id="current-channel">Escolha Um Canal Abaixo</p>
 
              <div class="channel-grid-container">
-                 
                  <div class="channel-category">
                      <h2>A Fazenda</h2>
                      <div class="channel-buttons">
@@ -407,26 +442,30 @@
             const authContainer = document.getElementById('auth-container');
             const rechargeContainer = document.getElementById('recharge-container');
             
-            // Formulários
+            // Formulários e Inputs
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
-            const rechargeForm = document.getElementById('recharge-form');
+            const rechargeFormExpired = document.getElementById('recharge-form'); // Form da tela de expiração
+            const rechargeCodeExpired = document.getElementById('recharge-code');
+            const rechargeFormMain = document.getElementById('main-recharge-form'); // Form da tela principal
+            const rechargeCodeMain = document.getElementById('main-recharge-code');
             
             // Links e Botões
             const showRegisterLink = document.getElementById('show-register');
             const showLoginLink = document.getElementById('show-login');
-            
-            // Botões de Ação
-            const logoutButtons = document.querySelectorAll('.logout-button'); // Botão na tela de recarga
+            const logoutButtons = document.querySelectorAll('.logout-button');
             const settingsIcon = document.getElementById('settings-icon');
             const accountMenu = document.getElementById('account-menu');
             const menuLogoutButton = document.getElementById('menu-logout');
             const menuDeleteButton = document.getElementById('menu-delete-account');
+            const menuRechargeButton = document.getElementById('menu-recharge'); // Novo botão
 
             // Mensagens
             const loginMessage = document.getElementById('login-message');
             const registerMessage = document.getElementById('register-message');
-            const rechargeMessage = document.getElementById('recharge-message');
+            const rechargeMessageExpired = document.getElementById('recharge-message');
+            const rechargeMessageMain = document.getElementById('main-recharge-message');
+            const accessStatusDisplay = document.getElementById('access-status'); // Novo status
 
             // Sessão do Usuário
             const userSession = document.getElementById('user-session');
@@ -453,8 +492,8 @@
                     };
                 } catch (error) {
                     console.error('Falha ao carregar códigos de recarga:', error);
-                    rechargeMessage.textContent = 'Erro ao carregar dados de recarga. Tente novamente mais tarde.';
-                    rechargeMessage.style.color = 'var(--accent-color)';
+                    rechargeMessageExpired.textContent = 'Erro ao carregar dados de recarga. Tente novamente mais tarde.';
+                    rechargeMessageExpired.style.color = 'var(--accent-color)';
                     return { VALID_CODES: {}, MS_PER_DAY: 0 };
                 }
             };
@@ -467,7 +506,7 @@
                 mainContent.classList.add('hidden');
                 authContainer.classList.add('hidden');
                 rechargeContainer.classList.add('hidden');
-                accountMenu.classList.add('hidden'); // Fecha o menu ao trocar de tela
+                accountMenu.classList.add('hidden');
 
                 if (screenName === 'auth') document.getElementById('auth-container').classList.remove('hidden');
                 else if (screenName === 'recharge') document.getElementById('recharge-container').classList.remove('hidden');
@@ -493,6 +532,26 @@
                 }
             };
 
+            const updateAccessStatus = (accessExpires) => {
+                 if (!accessExpires) {
+                    accessStatusDisplay.textContent = 'Status do Acesso: Não Ativo';
+                    return;
+                 }
+                 const remainingTime = accessExpires - Date.now();
+                 const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+                 const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                 
+                 if (days > 0) {
+                     accessStatusDisplay.textContent = `Status do Acesso: Expira em ${days} dia(s) e ${hours} hora(s)`;
+                 } else if (hours > 0) {
+                     accessStatusDisplay.textContent = `Status do Acesso: Expira em ${hours} hora(s)`;
+                 } else if (remainingTime > 0) {
+                      accessStatusDisplay.textContent = `Status do Acesso: Expira em menos de 1 hora`;
+                 } else {
+                     accessStatusDisplay.textContent = 'Status do Acesso: Expirado';
+                 }
+            };
+
             const checkSession = () => {
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 if (!currentUser) {
@@ -506,13 +565,56 @@
                 if (userData && userData.accessExpires && userData.accessExpires > Date.now()) {
                     welcomeMessage.textContent = `Olá, ${currentUser}!`;
                     userSession.classList.remove('hidden');
+                    updateAccessStatus(userData.accessExpires); // Atualiza o status
                     showScreen('main');
                     startRefreshTimer();
                 } else {
                     showScreen('recharge');
                 }
             };
-            
+
+            // Função Centralizada de Recarga
+            const handleRecharge = (code, successCallback, errorCallback) => {
+                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
+                const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
+                const userData = users[currentUser];
+
+                const validCodes = rechargeData.VALID_CODES;
+                const MS_PER_DAY = rechargeData.MS_PER_DAY; 
+
+                if (!validCodes[code]) {
+                    errorCallback('Código de recarga inválido!');
+                    return; 
+                }
+                if (userData.usedCodes && userData.usedCodes.includes(code)) {
+                    errorCallback('Este código já foi utilizado por você!');
+                    return; 
+                }
+
+                const durationInDays = validCodes[code]; 
+                const durationInMs = durationInDays * MS_PER_DAY; 
+                
+                // Lógica de ACÚMULO: Se o acesso atual ainda é válido, o novo tempo é adicionado ao tempo de expiração.
+                // Caso contrário, o novo tempo começa a contar a partir de agora.
+                const startTime = (userData.accessExpires && userData.accessExpires > Date.now()) 
+                                ? userData.accessExpires 
+                                : Date.now();
+                
+                userData.accessExpires = startTime + durationInMs;
+                
+                if (!userData.usedCodes) { 
+                    userData.usedCodes = [];
+                }
+                userData.usedCodes.push(code);
+
+                localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
+
+                successCallback();
+                
+                // Recheca a sessão para atualizar a tela principal
+                setTimeout(() => checkSession(), 1500);
+            };
+
             // --- EVENT LISTENERS DE AUTENTICAÇÃO E RECARGA ---
 
             registerForm.addEventListener('submit', (e) => {
@@ -553,70 +655,76 @@
                 }
             });
 
-            // Adiciona evento de Sair para todos os botões de logout
+            // Recarga na tela de EXPIRADO
+            rechargeFormExpired.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const code = rechargeCodeExpired.value.toUpperCase();
+                
+                rechargeMessageExpired.textContent = ''; // Limpa mensagens anteriores
+                
+                handleRecharge(
+                    code,
+                    () => { // Success
+                        rechargeMessageExpired.textContent = 'Código ativado com sucesso!';
+                        rechargeMessageExpired.style.color = 'lightgreen';
+                    },
+                    (errorMsg) => { // Error
+                        rechargeMessageExpired.textContent = errorMsg;
+                        rechargeMessageExpired.style.color = 'var(--accent-color)';
+                    }
+                );
+            });
+
+            // Recarga na tela PRINCIPAL (Antecipada)
+            rechargeFormMain.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const code = rechargeCodeMain.value.toUpperCase();
+                
+                rechargeMessageMain.textContent = ''; // Limpa mensagens anteriores
+                
+                handleRecharge(
+                    code,
+                    () => { // Success
+                        rechargeMessageMain.textContent = 'Recarga acumulada com sucesso!';
+                        rechargeMessageMain.style.color = 'lightgreen';
+                        rechargeCodeMain.value = ''; // Limpa o campo
+                    },
+                    (errorMsg) => { // Error
+                        rechargeMessageMain.textContent = errorMsg;
+                        rechargeMessageMain.style.color = 'var(--accent-color)';
+                    }
+                );
+            });
+
+
+            // --- Eventos de Menu e Ações da Conta ---
+            
             logoutButtons.forEach(button => {
                 button.addEventListener('click', logoutSession);
             });
             
-            // Novo: Eventos do Menu de Configuração
             settingsIcon.addEventListener('click', (e) => {
-                e.stopPropagation(); // Previne que o clique no ícone feche o menu imediatamente
+                e.stopPropagation();
                 accountMenu.classList.toggle('hidden');
             });
 
             menuLogoutButton.addEventListener('click', logoutSession);
             menuDeleteButton.addEventListener('click', deleteAccount);
 
-            // Fecha o menu se o usuário clicar fora dele
+            // Novo: Clicar no botão de recarga do menu leva para a seção principal de recarga.
+            menuRechargeButton.addEventListener('click', () => {
+                accountMenu.classList.add('hidden');
+                // Rola suavemente para a seção de recarga antecipada
+                document.getElementById('main-recharge-section').scrollIntoView({ behavior: 'smooth' });
+                rechargeCodeMain.focus();
+            });
+
             document.addEventListener('click', (e) => {
                 if (!accountMenu.classList.contains('hidden') && !e.target.closest('#user-session')) {
                     accountMenu.classList.add('hidden');
                 }
             });
 
-
-            rechargeForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const code = document.getElementById('recharge-code').value.toUpperCase();
-                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
-                const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
-                const userData = users[currentUser];
-
-                const validCodes = rechargeData.VALID_CODES;
-                const MS_PER_DAY = rechargeData.MS_PER_DAY; 
-
-                if (!validCodes[code]) {
-                    rechargeMessage.textContent = 'Código de recarga inválido!';
-                    rechargeMessage.style.color = 'var(--accent-color)';
-                    return; 
-                }
-                if (userData.usedCodes && userData.usedCodes.includes(code)) {
-                    rechargeMessage.textContent = 'Este código já foi utilizado por você!';
-                    rechargeMessage.style.color = 'var(--accent-color)';
-                    return; 
-                }
-
-                const durationInDays = validCodes[code]; 
-                const durationInMs = durationInDays * MS_PER_DAY; 
-                
-                const startTime = (userData.accessExpires && userData.accessExpires > Date.now()) 
-                                ? userData.accessExpires 
-                                : Date.now();
-                
-                userData.accessExpires = startTime + durationInMs;
-                
-                if (!userData.usedCodes) { 
-                    userData.usedCodes = [];
-                }
-                userData.usedCodes.push(code);
-
-                localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
-
-                rechargeMessage.textContent = 'Código ativado com sucesso!';
-                rechargeMessage.style.color = 'lightgreen';
-                
-                setTimeout(() => checkSession(), 1500);
-            });
 
             showRegisterLink.addEventListener('click', () => {
                 document.getElementById('login-form-container').classList.add('hidden');
@@ -633,9 +741,9 @@
             const openFullscreen = (elem) => {
                 if (elem.requestFullscreen) {
                     elem.requestFullscreen();
-                } else if (elem.webkitRequestFullscreen) { /* Safari */
+                } else if (elem.webkitRequestFullscreen) {
                     elem.webkitRequestFullscreen();
-                } else if (elem.msRequestFullscreen) { /* IE11 */
+                } else if (elem.msRequestFullscreen) { 
                     elem.msRequestFullscreen();
                 }
             };
