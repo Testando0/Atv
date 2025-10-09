@@ -96,6 +96,7 @@
             background-color: #8B0000;
         }
         
+        /* Classe para o botão de SAIR, mantendo-a específica para logout */
         .logout-button {
             background-color: var(--accent-color);
             color: white;
@@ -275,7 +276,7 @@
             display: none;
         }
         
-        /* NOVO ESTILO PARA O BOTÃO FECHAR DO MODAL, SUBSTITUINDO .logout-button */
+        /* Estilo para o botão que deve APENAS fechar o modal */
         .modal-close-button {
             width: 100%; 
             padding: 12px; 
@@ -331,7 +332,7 @@
                   <button type="submit">Ativar</button>
                   <p id="recharge-message" class="message"></p>
              </form>
-             <button class="logout-button" style="width: 100%; margin-top: 15px;">Sair</button>
+             <button id="recharge-logout-button" class="logout-button" style="width: 100%; margin-top: 15px;">Sair</button>
         </div>
     </div>
 
@@ -474,7 +475,8 @@
             const showLoginLink = document.getElementById('show-login');
             
             // Botões de Ação
-            const logoutButtons = document.querySelectorAll('.logout-button'); 
+            // Corrigido: Agora selecionamos TODOS os botões de logout PELO ID para maior precisão.
+            const rechargeLogoutButton = document.getElementById('recharge-logout-button'); 
             const settingsIcon = document.getElementById('settings-icon');
             const accountMenu = document.getElementById('account-menu');
             const menuLogoutButton = document.getElementById('menu-logout');
@@ -580,7 +582,7 @@
             };
             
             /**
-             * Função para processar a ativação de um código, usada tanto na tela de 'recharge' quanto no 'redeem'.
+             * Função para processar a ativação de um código.
              */
             const processRechargeCode = (code, currentUser, messageElement, isRechargeScreen = false) => {
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
@@ -603,7 +605,6 @@
                 const durationInDays = validCodes[code]; 
                 const durationInMs = durationInDays * MS_PER_DAY; 
                 
-                // O tempo de acesso começa a contar a partir de agora ou a partir do fim do acesso atual.
                 const startTime = (userData.accessExpires && userData.accessExpires > Date.now()) 
                                 ? userData.accessExpires 
                                 : Date.now();
@@ -620,11 +621,9 @@
                 messageElement.textContent = `Código ativado! Adicionado ${durationInDays} dia(s) de acesso.`;
                 messageElement.style.color = 'lightgreen';
                 
-                // Se for a tela de recarga (acesso expirado), redireciona para a tela principal
                 if (isRechargeScreen) {
                     setTimeout(() => checkSession(), 1500);
                 } else {
-                    // Se for o modal de resgate, fecha o modal e limpa o formulário
                     setTimeout(() => {
                         redeemCodeModal.classList.add('hidden');
                         modalOverlay.classList.add('hidden');
@@ -674,10 +673,9 @@
                 }
             });
 
-            // Adiciona evento de Sair APENAS aos botões com a classe .logout-button
-            logoutButtons.forEach(button => {
-                button.addEventListener('click', logoutSession);
-            });
+            // ATRIBUINDO LOGOUT ESPECIFICAMENTE PARA CADA BOTÃO DE SAIR
+            rechargeLogoutButton.addEventListener('click', logoutSession);
+            menuLogoutButton.addEventListener('click', logoutSession);
             
             // Eventos do Menu de Configuração
             settingsIcon.addEventListener('click', (e) => {
@@ -685,7 +683,6 @@
                 accountMenu.classList.toggle('hidden');
             });
 
-            menuLogoutButton.addEventListener('click', logoutSession);
             menuDeleteButton.addEventListener('click', deleteAccount);
             
             // Exibir o modal de resgate
@@ -697,7 +694,7 @@
                 redeemMessage.textContent = '';
             });
 
-            // Fechar o modal de resgate (CORRIGIDO: Não chama logoutSession)
+            // CORRIGIDO: O botão de fechar APENAS FECHA o modal, sem chamar logoutSession.
             closeRedeemModalButton.addEventListener('click', () => {
                 redeemCodeModal.classList.add('hidden');
                 modalOverlay.classList.add('hidden');
