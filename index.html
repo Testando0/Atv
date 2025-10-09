@@ -287,7 +287,7 @@
                      <div class="channel-buttons">
                          <button class="channel-button" data-channel="globoPRalt" data-name="Globo">Globo</button>
                          <button class="channel-button" data-channel="sbt" data-name="SBT">SBT</button>
-                         <button class="channel-button" data-full-url="https://playtvonline.net/recordtv-sp-ao-vivo/" data-name="Record TV">Record TV</button>
+                         <button class="channel-button" data-channel="record" data-name="Record TV">Record TV</button>
                          <button class="channel-button" data-channel="bandAlt" data-name="Band">Band</button>
                      </div>
                  </div>
@@ -535,11 +535,7 @@
 
             const refreshPlayer = () => {
                 console.log(`Atualizando o player (${new Date().toLocaleTimeString()}) para manter a conexão estável.`);
-                const fullUrl = player.src;
-                // Apenas atualiza se não for um URL especial que possa quebrar com autoplay
-                if (fullUrl.includes('playertv.net')) {
-                   player.src = fullUrl;
-                }
+                player.src = player.src;
             };
 
             const startRefreshTimer = () => {
@@ -552,13 +548,12 @@
             channelButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const channelName = button.getAttribute('data-name');
-                    const fullUrl = button.getAttribute('data-full-url'); // Pega o URL completo, se existir
+                    const fullUrl = button.getAttribute('data-full-url');
 
-                    // ⭐ ATUALIZADO: Verifica se o botão tem um URL completo.
+                    // A lógica para URL especial foi mantida, mas a Record agora usa o método padrão.
                     if (fullUrl) {
                         player.src = fullUrl;
                     } else {
-                        // Se não tiver, usa a lógica antiga com data-channel.
                         const channelId = button.getAttribute('data-channel');
                         player.src = `https://playertv.net/e/?v=${channelId}&autoplay=1`;
                     }
@@ -577,4 +572,4 @@
         });
     </script>
 </body>
-                                                                                     </html>
+            </html>
