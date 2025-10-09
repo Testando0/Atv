@@ -50,7 +50,6 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            /* Adicionado: Para posicionar o menu corretamente */
             z-index: 100; 
         }
         
@@ -75,7 +74,7 @@
             border-radius: 5px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             overflow: hidden;
-            width: 180px; /* Aumentado para o novo botão */
+            width: 180px; 
             margin-top: 10px;
         }
 
@@ -195,7 +194,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             border: 1px solid var(--border-color);
         }
-        /* Adicionado para o modal de Resgate */
+        /* Estilo do modal de Resgate */
         #redeem-code-modal {
             position: fixed;
             top: 50%;
@@ -204,7 +203,7 @@
             z-index: 200;
             max-width: 450px;
             width: 90%;
-            margin: 0; /* Override do margin: 50px auto */
+            margin: 0; 
         }
         /* Overlay para o modal */
         #modal-overlay {
@@ -275,6 +274,23 @@
         .hidden {
             display: none;
         }
+        
+        /* NOVO ESTILO PARA O BOTÃO FECHAR DO MODAL, SUBSTITUINDO .logout-button */
+        .modal-close-button {
+            width: 100%; 
+            padding: 12px; 
+            font-weight: bold; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            background-color: var(--surface-color); 
+            border: 1px solid var(--border-color); 
+            color: var(--primary-text-color); 
+            margin-top: 15px;
+        }
+        .modal-close-button:hover {
+            background-color: #4a0000;
+        }
     </style>
 </head>
 <body>
@@ -327,7 +343,8 @@
                  
                  <span id="settings-icon">⚙️</span>
                  <div id="account-menu" class="hidden">
-                     <button id="menu-redeem-code">Resgatar Código</button> <button id="menu-logout">Sair</button>
+                     <button id="menu-redeem-code">Resgatar Código</button>
+                     <button id="menu-logout">Sair</button>
                      <button id="menu-delete-account" style="color: var(--accent-color);">Deletar Conta</button>
                  </div>
                  </div>
@@ -346,7 +363,7 @@
                            <button type="submit">Resgatar</button>
                            <p id="redeem-message" class="message"></p>
                       </form>
-                      <button id="close-redeem-modal" class="logout-button" style="width: 100%; margin-top: 15px; background-color: var(--surface-color);">Fechar</button>
+                      <button id="close-redeem-modal" class="modal-close-button">Fechar</button>
                  </div>
              </div>
              <div id="modal-overlay" class="hidden"></div>
@@ -450,30 +467,30 @@
             const loginForm = document.getElementById('login-form');
             const registerForm = document.getElementById('register-form');
             const rechargeForm = document.getElementById('recharge-form');
-            const redeemForm = document.getElementById('redeem-form'); // NOVO: Formulário de Resgate
+            const redeemForm = document.getElementById('redeem-form'); 
             
             // Links e Botões
             const showRegisterLink = document.getElementById('show-register');
             const showLoginLink = document.getElementById('show-login');
             
             // Botões de Ação
-            const logoutButtons = document.querySelectorAll('.logout-button'); // Botão na tela de recarga
+            const logoutButtons = document.querySelectorAll('.logout-button'); 
             const settingsIcon = document.getElementById('settings-icon');
             const accountMenu = document.getElementById('account-menu');
             const menuLogoutButton = document.getElementById('menu-logout');
             const menuDeleteButton = document.getElementById('menu-delete-account');
-            const menuRedeemCodeButton = document.getElementById('menu-redeem-code'); // NOVO: Botão Resgatar Código no menu
-            const closeRedeemModalButton = document.getElementById('close-redeem-modal'); // NOVO: Botão Fechar Modal
+            const menuRedeemCodeButton = document.getElementById('menu-redeem-code'); 
+            const closeRedeemModalButton = document.getElementById('close-redeem-modal'); 
             
             // Modals/Containers Extras
-            const redeemCodeModal = document.getElementById('redeem-code-modal'); // NOVO: Modal de Resgate
-            const modalOverlay = document.getElementById('modal-overlay'); // NOVO: Overlay
+            const redeemCodeModal = document.getElementById('redeem-code-modal'); 
+            const modalOverlay = document.getElementById('modal-overlay'); 
 
             // Mensagens
             const loginMessage = document.getElementById('login-message');
             const registerMessage = document.getElementById('register-message');
             const rechargeMessage = document.getElementById('recharge-message');
-            const redeemMessage = document.getElementById('redeem-message'); // NOVO: Mensagem de Resgate
+            const redeemMessage = document.getElementById('redeem-message'); 
 
             // Sessão do Usuário
             const userSession = document.getElementById('user-session');
@@ -514,9 +531,9 @@
                 mainContent.classList.add('hidden');
                 authContainer.classList.add('hidden');
                 rechargeContainer.classList.add('hidden');
-                accountMenu.classList.add('hidden'); // Fecha o menu ao trocar de tela
-                redeemCodeModal.classList.add('hidden'); // Esconde o modal de resgate
-                modalOverlay.classList.add('hidden'); // Esconde o overlay
+                accountMenu.classList.add('hidden'); 
+                redeemCodeModal.classList.add('hidden'); 
+                modalOverlay.classList.add('hidden'); 
 
                 if (screenName === 'auth') document.getElementById('auth-container').classList.remove('hidden');
                 else if (screenName === 'recharge') document.getElementById('recharge-container').classList.remove('hidden');
@@ -564,10 +581,6 @@
             
             /**
              * Função para processar a ativação de um código, usada tanto na tela de 'recharge' quanto no 'redeem'.
-             * @param {string} code O código de recarga.
-             * @param {string} currentUser O nome do usuário logado.
-             * @param {HTMLElement} messageElement O elemento onde a mensagem de status será exibida.
-             * @param {boolean} isRechargeScreen Indica se a chamada veio da tela de expiração (recharge).
              */
             const processRechargeCode = (code, currentUser, messageElement, isRechargeScreen = false) => {
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
@@ -661,30 +674,30 @@
                 }
             });
 
-            // Adiciona evento de Sair para todos os botões de logout
+            // Adiciona evento de Sair APENAS aos botões com a classe .logout-button
             logoutButtons.forEach(button => {
                 button.addEventListener('click', logoutSession);
             });
             
             // Eventos do Menu de Configuração
             settingsIcon.addEventListener('click', (e) => {
-                e.stopPropagation(); // Previne que o clique no ícone feche o menu imediatamente
+                e.stopPropagation(); 
                 accountMenu.classList.toggle('hidden');
             });
 
             menuLogoutButton.addEventListener('click', logoutSession);
             menuDeleteButton.addEventListener('click', deleteAccount);
             
-            // NOVO: Exibir o modal de resgate
+            // Exibir o modal de resgate
             menuRedeemCodeButton.addEventListener('click', () => {
-                accountMenu.classList.add('hidden'); // Fecha o menu
+                accountMenu.classList.add('hidden'); 
                 redeemCodeModal.classList.remove('hidden');
                 modalOverlay.classList.remove('hidden');
                 redeemForm.reset();
                 redeemMessage.textContent = '';
             });
 
-            // NOVO: Fechar o modal de resgate
+            // Fechar o modal de resgate (CORRIGIDO: Não chama logoutSession)
             closeRedeemModalButton.addEventListener('click', () => {
                 redeemCodeModal.classList.add('hidden');
                 modalOverlay.classList.add('hidden');
@@ -707,17 +720,15 @@
                 const code = document.getElementById('recharge-code').value.toUpperCase();
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 
-                // Usando a função unificada de processamento de código
                 processRechargeCode(code, currentUser, rechargeMessage, true);
             });
             
-            // NOVO: Listener para o formulário de Resgatar Código (dentro do Main Content)
+            // Listener para o formulário de Resgatar Código (dentro do Main Content)
             redeemForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const code = document.getElementById('redeem-code').value.toUpperCase();
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 
-                // Usando a função unificada de processamento de código
                 processRechargeCode(code, currentUser, redeemMessage, false);
             });
 
@@ -749,7 +760,7 @@
 
             const refreshPlayer = () => {
                 console.log(`Atualizando o player (${new Date().toLocaleTimeString()}) para manter a conexão estável.`);
-                // Verifica o acesso antes de atualizar para evitar recarregar o player de um usuário expirado
+                
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
                 const userData = users[currentUser];
