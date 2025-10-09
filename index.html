@@ -50,7 +50,53 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            /* Adicionado: Para posicionar o menu corretamente */
+            z-index: 100; 
         }
+        
+        /* NOVO ESTILO PARA O ÍCONE/MENU */
+        #settings-icon {
+            cursor: pointer;
+            font-size: 24px;
+            line-height: 1;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+        #settings-icon:hover {
+            color: var(--accent-color);
+        }
+
+        #account-menu {
+            position: absolute;
+            top: 100%; /* Posiciona abaixo do ícone */
+            right: 0;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            overflow: hidden;
+            width: 150px;
+            margin-top: 10px;
+        }
+
+        #account-menu button {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            text-align: left;
+            background: none;
+            border: none;
+            color: var(--primary-text-color);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        #account-menu button:hover {
+            background-color: #8B0000;
+        }
+        
         .logout-button {
             background-color: var(--accent-color);
             color: white;
@@ -64,6 +110,8 @@
         .logout-button:hover {
             background-color: #cc0000;
         }
+        /* FIM DOS NOVOS ESTILOS */
+
         #current-channel {
             text-align: center;
             margin-top: 15px;
@@ -254,8 +302,13 @@
             <h1>✰ KUROMI TV ✰</h1>
             <div id="user-session" class="hidden">
                  <span id="welcome-message"></span>
-                 <button class="logout-button">Sair</button>
-            </div>
+                 
+                 <span id="settings-icon">⚙️</span>
+                 <div id="account-menu" class="hidden">
+                     <button id="menu-logout">Sair</button>
+                     <button id="menu-delete-account" style="color: var(--accent-color);">Deletar Conta</button>
+                 </div>
+                 </div>
         </header>
 
         <main>
@@ -362,8 +415,14 @@
             // Links e Botões
             const showRegisterLink = document.getElementById('show-register');
             const showLoginLink = document.getElementById('show-login');
-            const logoutButtons = document.querySelectorAll('.logout-button');
             
+            // Botões de Ação
+            const logoutButtons = document.querySelectorAll('.logout-button'); // Botão na tela de recarga
+            const settingsIcon = document.getElementById('settings-icon');
+            const accountMenu = document.getElementById('account-menu');
+            const menuLogoutButton = document.getElementById('menu-logout');
+            const menuDeleteButton = document.getElementById('menu-delete-account');
+
             // Mensagens
             const loginMessage = document.getElementById('login-message');
             const registerMessage = document.getElementById('register-message');
@@ -378,16 +437,11 @@
             const currentChannelDisplay = document.getElementById('current-channel');
             const channelButtons = document.querySelectorAll('.channel-button');
 
-            // --- CÓDIGOS DE RECARGA (AGORA SÃO CARREGADOS DE UM ARQUIVO) ---
+            // --- CÓDIGOS DE RECARGA ---
             let rechargeData = { VALID_CODES: {}, MS_PER_DAY: 0 }; 
             
-            /**
-             * Carrega os códigos de recarga do arquivo codes.json.
-             * @returns {object} O objeto com VALID_CODES (em dias) e MS_PER_DAY (em ms).
-             */
             const loadRechargeCodes = async () => {
                 try {
-                    // Chama o arquivo JSON
                     const response = await fetch('codes.json');
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
@@ -405,21 +459,39 @@
                 }
             };
 
-            // Carrega os dados logo no início (assincronamente)
             rechargeData = await loadRechargeCodes();
 
-            // --- FUNÇÕES DE CONTROLE DE TELA ---
+            // --- FUNÇÕES DE CONTROLE DE TELA E SESSÃO ---
+            
             const showScreen = (screenName) => {
                 mainContent.classList.add('hidden');
                 authContainer.classList.add('hidden');
                 rechargeContainer.classList.add('hidden');
+                accountMenu.classList.add('hidden'); // Fecha o menu ao trocar de tela
 
                 if (screenName === 'auth') document.getElementById('auth-container').classList.remove('hidden');
                 else if (screenName === 'recharge') document.getElementById('recharge-container').classList.remove('hidden');
                 else if (screenName === 'main') document.getElementById('main-content').classList.remove('hidden');
             };
-            
-            // --- LÓGICA DE AUTENTICAÇÃO E SESSÃO ---
+
+            const logoutSession = () => {
+                localStorage.removeItem('kuromi_tv_currentUser');
+                if(refreshInterval) clearInterval(refreshInterval);
+                loginForm.reset();
+                loginMessage.textContent = '';
+                showScreen('auth');
+            };
+
+            const deleteAccount = () => {
+                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
+                if (confirm(`Tem certeza que deseja DELETAR a conta "${currentUser}"? Esta ação é irreversível.`)) {
+                    const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+                    delete users[currentUser];
+                    localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
+                    alert("Conta deletada com sucesso.");
+                    logoutSession();
+                }
+            };
 
             const checkSession = () => {
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
@@ -440,6 +512,8 @@
                     showScreen('recharge');
                 }
             };
+            
+            // --- EVENT LISTENERS DE AUTENTICAÇÃO E RECARGA ---
 
             registerForm.addEventListener('submit', (e) => {
                 e.preventDefault();
@@ -479,17 +553,28 @@
                 }
             });
 
+            // Adiciona evento de Sair para todos os botões de logout
             logoutButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    localStorage.removeItem('kuromi_tv_currentUser');
-                    if(refreshInterval) clearInterval(refreshInterval);
-                    loginForm.reset();
-                    loginMessage.textContent = '';
-                    showScreen('auth');
-                });
+                button.addEventListener('click', logoutSession);
+            });
+            
+            // Novo: Eventos do Menu de Configuração
+            settingsIcon.addEventListener('click', (e) => {
+                e.stopPropagation(); // Previne que o clique no ícone feche o menu imediatamente
+                accountMenu.classList.toggle('hidden');
             });
 
-            // ⭐ Lógica de recarga usando os dados carregados do JSON
+            menuLogoutButton.addEventListener('click', logoutSession);
+            menuDeleteButton.addEventListener('click', deleteAccount);
+
+            // Fecha o menu se o usuário clicar fora dele
+            document.addEventListener('click', (e) => {
+                if (!accountMenu.classList.contains('hidden') && !e.target.closest('#user-session')) {
+                    accountMenu.classList.add('hidden');
+                }
+            });
+
+
             rechargeForm.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const code = document.getElementById('recharge-code').value.toUpperCase();
@@ -500,23 +585,19 @@
                 const validCodes = rechargeData.VALID_CODES;
                 const MS_PER_DAY = rechargeData.MS_PER_DAY; 
 
-                // 1. Verifica se o código é válido
                 if (!validCodes[code]) {
                     rechargeMessage.textContent = 'Código de recarga inválido!';
                     rechargeMessage.style.color = 'var(--accent-color)';
                     return; 
                 }
-
-                // 2. Verifica se o usuário já usou este código
                 if (userData.usedCodes && userData.usedCodes.includes(code)) {
                     rechargeMessage.textContent = 'Este código já foi utilizado por você!';
                     rechargeMessage.style.color = 'var(--accent-color)';
                     return; 
                 }
 
-                // Se o código é válido e não foi usado, continua...
-                const durationInDays = validCodes[code]; // Duração em dias (do JSON)
-                const durationInMs = durationInDays * MS_PER_DAY; // Conversão para milissegundos
+                const durationInDays = validCodes[code]; 
+                const durationInMs = durationInDays * MS_PER_DAY; 
                 
                 const startTime = (userData.accessExpires && userData.accessExpires > Date.now()) 
                                 ? userData.accessExpires 
@@ -524,13 +605,11 @@
                 
                 userData.accessExpires = startTime + durationInMs;
                 
-                // 3. Adiciona o código à lista de códigos usados pelo usuário
                 if (!userData.usedCodes) { 
                     userData.usedCodes = [];
                 }
                 userData.usedCodes.push(code);
 
-                // 4. Salva todas as alterações
                 localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
 
                 rechargeMessage.textContent = 'Código ativado com sucesso!';
