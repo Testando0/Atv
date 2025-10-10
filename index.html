@@ -371,7 +371,7 @@
 
              <div class="player-container">
                  <iframe id="tv-player" 
-                         src="https://playertv.net/e/?v=globoPRalt" 
+                         src="https://playertv.net/e/?v=globoPRalt&autoplay=1" 
                          allow="autoplay; encrypted-media; fullscreen" 
                          allowfullscreen>
                  </iframe>
@@ -475,7 +475,6 @@
             const showLoginLink = document.getElementById('show-login');
             
             // Botões de Ação
-            // Corrigido: Agora selecionamos TODOS os botões de logout PELO ID para maior precisão.
             const rechargeLogoutButton = document.getElementById('recharge-logout-button'); 
             const settingsIcon = document.getElementById('settings-icon');
             const accountMenu = document.getElementById('account-menu');
@@ -694,7 +693,7 @@
                 redeemMessage.textContent = '';
             });
 
-            // CORRIGIDO: O botão de fechar APENAS FECHA o modal, sem chamar logoutSession.
+            // O botão de fechar APENAS FECHA o modal
             closeRedeemModalButton.addEventListener('click', () => {
                 redeemCodeModal.classList.add('hidden');
                 modalOverlay.classList.add('hidden');
@@ -782,6 +781,7 @@
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
                     
+                    // CORREÇÃO APLICADA AQUI: Adicionado &autoplay=1 no src.
                     player.src = `https://playertv.net/e/?v=${channelId}&autoplay=1`;
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     
