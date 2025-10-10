@@ -371,7 +371,7 @@
 
              <div class="player-container">
                  <iframe id="tv-player" 
-                         src="https://playertv.net/e/?v=nickAlt&autoplay=1" 
+                         src="https://playertv.net/e/?v=nickAlt&autoplay=1&mute=0" 
                          allow="autoplay; encrypted-media; fullscreen" 
                          allowfullscreen>
                  </iframe>
@@ -782,7 +782,7 @@
                     const channelName = button.getAttribute('data-name');
                     
                     // CORREÇÃO APLICADA AQUI: Adicionado &autoplay=1 no src.
-                    player.src = `https://playertv.net/e/?v=${channelId}&autoplay=1`;
+                    player.src = `https://playertv.net/e/?v=${channelId}&autoplay=1&mute=0`;
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     
                     openFullscreen(playerContainer);
