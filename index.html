@@ -178,7 +178,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         
-        /* NOVO: Estilo para o canal ativo quando usando o controle remoto */
+        /* Estilo para o canal ativo quando usando o controle remoto */
         .channel-button.active-channel {
             background-color: var(--accent-color);
             border-color: #ffffff;
@@ -839,21 +839,20 @@
                     player.src = `https://playertv.net/e/?v=${channelId}&autoplay=1&mute=0`;
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     
-                    // A linha abaixo para abrir em tela cheia foi comentada pois pode ser intrusiva.
-                    // Descomente se quiser que o player sempre tente abrir em tela cheia.
-                    // openFullscreen(playerContainer); 
+                    // CORREÇÃO: Linha da tela cheia foi reativada
+                    openFullscreen(playerContainer); 
 
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     
                     startRefreshTimer();
                     
-                    // NOVO: Atualiza o índice do canal atual para navegação pelo controle
+                    // Atualiza o índice do canal atual para navegação pelo controle
                     currentChannelIndex = allChannels.indexOf(button);
                     updateActiveChannelVisuals();
                 });
             });
             
-            // --- NOVO: LÓGICA PARA CONTROLE REMOTO ---
+            // --- LÓGICA PARA CONTROLE REMOTO ---
             const allChannels = Array.from(channelButtons);
             let currentChannelIndex = -1; // -1 significa que nenhum canal foi selecionado ainda
 
