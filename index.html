@@ -177,6 +177,15 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
+        
+        /* NOVO: Estilo para o canal ativo quando usando o controle remoto */
+        .channel-button.active-channel {
+            background-color: var(--accent-color);
+            border-color: #ffffff;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 12px rgba(255, 51, 51, 0.4);
+        }
+
         footer {
             text-align: center;
             padding: 20px;
@@ -827,17 +836,81 @@
                     const channelId = button.getAttribute('data-channel');
                     const channelName = button.getAttribute('data-name');
                     
-                    // CORREÇÃO APLICADA AQUI: Adicionado &autoplay=1 no src.
                     player.src = `https://playertv.net/e/?v=${channelId}&autoplay=1&mute=0`;
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     
-                    openFullscreen(playerContainer);
+                    // A linha abaixo para abrir em tela cheia foi comentada pois pode ser intrusiva.
+                    // Descomente se quiser que o player sempre tente abrir em tela cheia.
+                    // openFullscreen(playerContainer); 
+
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     
                     startRefreshTimer();
+                    
+                    // NOVO: Atualiza o índice do canal atual para navegação pelo controle
+                    currentChannelIndex = allChannels.indexOf(button);
+                    updateActiveChannelVisuals();
                 });
             });
             
+            // --- NOVO: LÓGICA PARA CONTROLE REMOTO ---
+            const allChannels = Array.from(channelButtons);
+            let currentChannelIndex = -1; // -1 significa que nenhum canal foi selecionado ainda
+
+            // Função para atualizar o visual do botão ativo
+            const updateActiveChannelVisuals = () => {
+                allChannels.forEach((btn, index) => {
+                    if (index === currentChannelIndex) {
+                        btn.classList.add('active-channel');
+                        // Garante que o botão ativo esteja visível na tela
+                        btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    } else {
+                        btn.classList.remove('active-channel');
+                    }
+                });
+            };
+            
+            // "Ouvinte" para as teclas do controle remoto/teclado
+            document.addEventListener('keydown', (e) => {
+                // Só funciona se o conteúdo principal (player) estiver visível
+                if (mainContent.classList.contains('hidden')) {
+                    return;
+                }
+                
+                // Ignora se um campo de texto estiver focado
+                if (e.target.tagName === 'INPUT') {
+                    return;
+                }
+
+                let newIndex = currentChannelIndex;
+                const totalChannels = allChannels.length;
+
+                // Seta para Cima ou Esquerda: vai para o canal ANTERIOR
+                if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                    e.preventDefault(); // Impede a página de rolar
+                    if (currentChannelIndex <= 0) {
+                        newIndex = totalChannels - 1; // Volta para o último canal
+                    } else {
+                        newIndex = currentChannelIndex - 1;
+                    }
+                } 
+                // Seta para Baixo ou Direita: vai para o PRÓXIMO canal
+                else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                    e.preventDefault(); // Impede a página de rolar
+                    if (currentChannelIndex >= totalChannels - 1) {
+                        newIndex = 0; // Vai para o primeiro canal
+                    } else {
+                        newIndex = currentChannelIndex + 1;
+                    }
+                }
+
+                // Se o índice mudou, clica no novo botão de canal
+                if (newIndex !== currentChannelIndex) {
+                    allChannels[newIndex].click();
+                }
+            });
+
+
             // --- INICIALIZAÇÃO ---
             checkSession();
         });
