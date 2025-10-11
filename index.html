@@ -368,7 +368,7 @@
                       <form id="redeem-form">
                            <div class="form-group">
                                 <label for="redeem-code">Código de Recarga</label>
-                                <input type="text" id="redeem-code" required>
+                                <input type="text" id="redeem-code-input" required>
                            </div>
                            <button type="submit">Resgatar</button>
                            <p id="redeem-message" class="message"></p>
@@ -560,6 +560,9 @@
             // --- CÓDIGOS DE RECARGA ---
             let rechargeData = { VALID_CODES: {}, MS_PER_DAY: 0 }; 
             
+            // --- ESTADO DO PLAYER ---
+            let isPotentiallyMuted = true; // Flag para controlar o unmute via controle remoto
+
             const loadRechargeCodes = async () => {
                 try {
                     const response = await fetch('codes.json');
@@ -635,9 +638,6 @@
                 }
             };
             
-            /**
-             * Função para processar a ativação de um código.
-             */
             const processRechargeCode = (code, currentUser, messageElement, isRechargeScreen = false) => {
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users'));
                 const userData = users[currentUser];
@@ -727,11 +727,9 @@
                 }
             });
 
-            // ATRIBUINDO LOGOUT ESPECIFICAMENTE PARA CADA BOTÃO DE SAIR
             rechargeLogoutButton.addEventListener('click', logoutSession);
             menuLogoutButton.addEventListener('click', logoutSession);
             
-            // Eventos do Menu de Configuração
             settingsIcon.addEventListener('click', (e) => {
                 e.stopPropagation(); 
                 accountMenu.classList.toggle('hidden');
@@ -739,7 +737,6 @@
 
             menuDeleteButton.addEventListener('click', deleteAccount);
             
-            // Exibir o modal de resgate
             menuRedeemCodeButton.addEventListener('click', () => {
                 accountMenu.classList.add('hidden'); 
                 redeemCodeModal.classList.remove('hidden');
@@ -748,13 +745,11 @@
                 redeemMessage.textContent = '';
             });
 
-            // O botão de fechar APENAS FECHA o modal
             closeRedeemModalButton.addEventListener('click', () => {
                 redeemCodeModal.classList.add('hidden');
                 modalOverlay.classList.add('hidden');
             });
 
-            // Fecha o menu/modal se o usuário clicar fora deles (no documento)
             document.addEventListener('click', (e) => {
                 if (!accountMenu.classList.contains('hidden') && !e.target.closest('#user-session')) {
                     accountMenu.classList.add('hidden');
@@ -774,10 +769,9 @@
                 processRechargeCode(code, currentUser, rechargeMessage, true);
             });
             
-            // Listener para o formulário de Resgatar Código (dentro do Main Content)
             redeemForm.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const code = document.getElementById('redeem-code').value.toUpperCase();
+                const code = document.getElementById('redeem-code-input').value.toUpperCase();
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 
                 processRechargeCode(code, currentUser, redeemMessage, false);
@@ -807,27 +801,23 @@
             };
             
             let refreshInterval;
-            const REFRESH_INTERVAL_MS = 10 * 60 * 1000; // 10 minutos
+            const REFRESH_INTERVAL_MS = 10 * 60 * 1000;
 
             const refreshPlayer = () => {
                 console.log(`Atualizando o player (${new Date().toLocaleTimeString()}) para manter a conexão estável.`);
-                
                 const currentUser = localStorage.getItem('kuromi_tv_currentUser');
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
                 const userData = users[currentUser];
-                
                 if (userData && userData.accessExpires && userData.accessExpires > Date.now()) {
-                    player.src = player.src; // Recarrega o iFrame
+                    player.src = player.src;
                 } else {
                     clearInterval(refreshInterval);
-                    checkSession(); // Redireciona se o acesso expirou
+                    checkSession();
                 }
             };
 
             const startRefreshTimer = () => {
-                if (refreshInterval) {
-                    clearInterval(refreshInterval);
-                }
+                if (refreshInterval) clearInterval(refreshInterval);
                 refreshInterval = setInterval(refreshPlayer, REFRESH_INTERVAL_MS);
             };
 
@@ -839,14 +829,13 @@
                     player.src = `https://playertv.net/e/?v=${channelId}&autoplay=1&mute=0`;
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     
-                    // CORREÇÃO: Linha da tela cheia foi reativada
                     openFullscreen(playerContainer); 
-
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                     
                     startRefreshTimer();
                     
-                    // Atualiza o índice do canal atual para navegação pelo controle
+                    isPotentiallyMuted = true; // Resetamos a flag para o novo canal
+
                     currentChannelIndex = allChannels.indexOf(button);
                     updateActiveChannelVisuals();
                 });
@@ -854,14 +843,12 @@
             
             // --- LÓGICA PARA CONTROLE REMOTO ---
             const allChannels = Array.from(channelButtons);
-            let currentChannelIndex = -1; // -1 significa que nenhum canal foi selecionado ainda
+            let currentChannelIndex = -1; 
 
-            // Função para atualizar o visual do botão ativo
             const updateActiveChannelVisuals = () => {
                 allChannels.forEach((btn, index) => {
                     if (index === currentChannelIndex) {
                         btn.classList.add('active-channel');
-                        // Garante que o botão ativo esteja visível na tela
                         btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     } else {
                         btn.classList.remove('active-channel');
@@ -869,41 +856,35 @@
                 });
             };
             
-            // "Ouvinte" para as teclas do controle remoto/teclado
             document.addEventListener('keydown', (e) => {
-                // Só funciona se o conteúdo principal (player) estiver visível
-                if (mainContent.classList.contains('hidden')) {
+                if (mainContent.classList.contains('hidden') || e.target.tagName === 'INPUT') {
                     return;
                 }
                 
-                // Ignora se um campo de texto estiver focado
-                if (e.target.tagName === 'INPUT') {
-                    return;
-                }
-
                 let newIndex = currentChannelIndex;
                 const totalChannels = allChannels.length;
 
-                // Seta para Cima ou Esquerda: vai para o canal ANTERIOR
                 if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
-                    e.preventDefault(); // Impede a página de rolar
-                    if (currentChannelIndex <= 0) {
-                        newIndex = totalChannels - 1; // Volta para o último canal
-                    } else {
-                        newIndex = currentChannelIndex - 1;
-                    }
+                    e.preventDefault();
+                    if (currentChannelIndex <= 0) newIndex = totalChannels - 1;
+                    else newIndex = currentChannelIndex - 1;
                 } 
-                // Seta para Baixo ou Direita: vai para o PRÓXIMO canal
                 else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-                    e.preventDefault(); // Impede a página de rolar
-                    if (currentChannelIndex >= totalChannels - 1) {
-                        newIndex = 0; // Vai para o primeiro canal
-                    } else {
-                        newIndex = currentChannelIndex + 1;
-                    }
+                    e.preventDefault();
+                    if (currentChannelIndex >= totalChannels - 1) newIndex = 0;
+                    else newIndex = currentChannelIndex + 1;
+                }
+                // --- ⭐ NOVA LÓGICA PARA ATIVAR O SOM ---
+                else if (
+                    (e.key === 'AudioVolumeUp' || e.key === 'AudioVolumeDown' || e.key === '+' || e.key === '-') && 
+                    isPotentiallyMuted
+                ) {
+                    e.preventDefault();
+                    console.log('Botão de volume pressionado. Tentando ativar o áudio recarregando o player.');
+                    player.src = player.src; // Recarrega o iframe
+                    isPotentiallyMuted = false; // Define a flag como false para não recarregar novamente
                 }
 
-                // Se o índice mudou, clica no novo botão de canal
                 if (newIndex !== currentChannelIndex) {
                     allChannels[newIndex].click();
                 }
