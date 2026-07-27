@@ -412,8 +412,8 @@
             // ⚙️ CONFIGURAÇÃO CENTRALIZADA DA CRISÁLIDA
             // ==========================================
             const tvConfig = {
-                enabled: true, // Define se a grade de canais deve ser exibida
-                baseUrl: "https://embedtv.vercel.app",
+    enabled: true,
+    baseUrl: "https://sinalpublicoetv.vercel.app",
                 categorias: [
                     {
                         nome: "A Fazenda (Câmeras)",
@@ -781,7 +781,7 @@
                     const channelId = e.target.getAttribute('data-channel');
                     const channelName = e.target.getAttribute('data-name');
                     
-                    player.src = `${tvConfig.baseUrl}/?v=${channelId}&autoplay=1&mute=0`;
+                    player.src = `${tvConfig.baseUrl}/?id=${channelId}`;
                     
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     openFullscreen(playerContainer);
