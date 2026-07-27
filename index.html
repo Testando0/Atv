@@ -2,15 +2,14 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- ➕ ADIÇÃO: compatibilidade TVs antigas -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- ➕ compatibilidade TVs antigas -->
 
-    <!-- ➕ ADIÇÃO INÍCIO: viewport otimizado para TV (sem zoom, tela cheia) -->
+    <!-- ➕ viewport otimizado para TV -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <!-- ➕ ADIÇÃO FIM -->
 
     <title>✰ KUROMI TV ✰</title>
 
-    <!-- ➕ ADIÇÃO INÍCIO: PWA / APP NATIVO + LOGO -->
+    <!-- ➕ PWA / APP NATIVO — a imagem entra SÓ como ícone do app -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#3f0000">
     <meta name="mobile-web-app-capable" content="yes">          <!-- Samsung Tizen / Android TV -->
@@ -20,7 +19,6 @@
     <meta name="apple-mobile-web-app-title" content="KUROMI TV">
     <link rel="apple-touch-icon" href="https://i.ibb.co/1YSRRTV9/1003980527.jpg">
     <link rel="icon" type="image/jpeg" href="https://i.ibb.co/1YSRRTV9/1003980527.jpg">
-    <!-- ➕ ADIÇÃO FIM -->
 
     <style>
         :root {
@@ -60,13 +58,6 @@
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-        /* ➕ ADIÇÃO INÍCIO: logo no cabeçalho */
-        .header-brand { display: flex; align-items: center; gap: 14px; }
-        .header-brand img {
-            width: 58px; height: 58px; border-radius: 14px; object-fit: cover;
-            box-shadow: 0 0 14px rgba(255,51,51,.6); border: 2px solid var(--border-color);
-        }
-        /* ➕ ADIÇÃO FIM */
         #user-session {
             position: absolute;
             right: 0;
@@ -200,7 +191,7 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-        /* ➕ ADIÇÃO INÍCIO: foco visível para controle remoto / D-pad de TV */
+        /* ➕ foco visível para controle remoto / D-pad de TV */
         .channel-button:focus, .channel-button:focus-visible {
             background-color: #B22222;
             transform: translateY(-2px) scale(1.05);
@@ -212,7 +203,6 @@
             outline: 3px solid var(--accent-color);
             outline-offset: 2px;
         }
-        /* ➕ ADIÇÃO FIM */
         footer {
             text-align: center;
             padding: 20px;
@@ -371,12 +361,7 @@
 
     <div id="main-content" class="container hidden">
         <header>
-            <!-- ➕ ADIÇÃO INÍCIO: agrupa logo + título -->
-            <div class="header-brand">
-                <img src="https://i.ibb.co/1YSRRTV9/1003980527.jpg" alt="KUROMI TV">
-                <h1>✰ KUROMI TV ✰</h1>
-            </div>
-            <!-- ➕ ADIÇÃO FIM -->
+            <h1>✰ KUROMI TV ✰</h1>
             <div id="user-session" class="hidden">
                  <span id="welcome-message"></span>
                  <span id="settings-icon">⚙️</span>
@@ -796,8 +781,6 @@
                     const channelId = e.target.getAttribute('data-channel');
                     const channelName = e.target.getAttribute('data-name');
                     
-                    // Atualiza o player para usar o embedtv.vercel.app
-                    // Nota: Ajuste o sufixo da URL (/?v=, /embed/, etc) conforme a documentação exata do embedtv
                     player.src = `${tvConfig.baseUrl}/?v=${channelId}&autoplay=1&mute=0`;
                     
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
@@ -807,14 +790,13 @@
                 }
             });
 
-            // ➕ ADIÇÃO INÍCIO: ativar canal também com ENTER no controle remoto (D-pad)
+            // ➕ ativar canal também com ENTER no controle remoto (D-pad)
             dynamicChannelsContainer.addEventListener('keydown', (e) => {
                 if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('channel-button')) {
                     e.preventDefault();
                     e.target.click();
                 }
             });
-            // ➕ ADIÇÃO FIM
 
             const openFullscreen = (elem) => {
                 if (elem.requestFullscreen) elem.requestFullscreen();
@@ -845,8 +827,8 @@
             };
 
             // ==========================================
-            // ➕ ADIÇÃO INÍCIO: NAVEGAÇÃO POR SETAS (controle remoto / D-pad de qualquer TV)
-            // Não interfere em campos de texto e só age sobre elementos visíveis.
+            // ➕ NAVEGAÇÃO POR SETAS (controle remoto / D-pad de qualquer TV)
+            // Não interfere nos campos de texto; só age sobre elementos visíveis.
             // ==========================================
             document.addEventListener('keydown', (e) => {
                 const navKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
@@ -854,12 +836,11 @@
 
                 const active = document.activeElement;
                 const tag = (active && active.tagName) || '';
-                // Deixa o usuário digitar normalmente nos inputs
-                if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+                if (tag === 'INPUT' || tag === 'TEXTAREA') return; // deixa digitar
 
                 let focusables = Array.prototype.slice.call(
                     document.querySelectorAll('button:not([disabled]), a, input, .channel-button')
-                ).filter(el => el.offsetParent !== null); // apenas visíveis
+                ).filter(el => el.offsetParent !== null); // só visíveis
 
                 if (!focusables.length) return;
 
@@ -875,7 +856,6 @@
                     e.preventDefault();
                 }
             });
-            // ➕ ADIÇÃO FIM
             
             // --- INICIALIZAÇÃO ---
             renderChannels(); // Renderiza a grade de canais
@@ -883,8 +863,8 @@
         });
 
         // ==========================================
-        // ➕ ADIÇÃO INÍCIO: REGISTRO DO SERVICE WORKER (app nativo / offline)
-        // Protegido: TVs antigas sem suporte continuam funcionando normalmente.
+        // ➕ REGISTRO DO SERVICE WORKER (app nativo / offline)
+        // TVs antigas sem suporte continuam funcionando normalmente.
         // ==========================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function () {
@@ -893,7 +873,6 @@
                     .catch(function (err) { console.warn('[KUROMI TV] SW não suportado:', err); });
             });
         }
-        // ➕ ADIÇÃO FIM
     </script>
 </body>
-    </html>
+        </html>
