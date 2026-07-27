@@ -6,12 +6,12 @@
     <title>✰ KUROMI TV ✰</title>
     <style>
         :root {
-            --background-color: #3f0000; /* Vermelho escuro */
-            --surface-color: #5a0000;    /* Vermelho um pouco mais claro para as categorias */
-            --primary-text-color: #ffffff; /* Texto principal branco */
-            --secondary-text-color: #e0e0e0; /* Texto secundário levemente acinzentado */
-            --accent-color: #ff3333;     /* Vermelho vibrante para destaque */
-            --border-color: #8b0000;     /* Vermelho escuro para bordas */
+            --background-color: #3f0000;
+            --surface-color: #5a0000;
+            --primary-text-color: #ffffff;
+            --secondary-text-color: #e0e0e0;
+            --accent-color: #ff3333;
+            --border-color: #8b0000;
         }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
@@ -52,8 +52,6 @@
             gap: 15px;
             z-index: 100; 
         }
-        
-        /* ESTILO PARA O ÍCONE/MENU */
         #settings-icon {
             cursor: pointer;
             font-size: 24px;
@@ -64,10 +62,9 @@
         #settings-icon:hover {
             color: var(--accent-color);
         }
-
         #account-menu {
             position: absolute;
-            top: 100%; /* Posiciona abaixo do ícone */
+            top: 100%;
             right: 0;
             background-color: var(--surface-color);
             border: 1px solid var(--border-color);
@@ -77,7 +74,6 @@
             width: 180px; 
             margin-top: 10px;
         }
-
         #account-menu button {
             display: block;
             width: 100%;
@@ -91,11 +87,9 @@
             font-weight: 500;
             font-size: 0.95em;
         }
-
         #account-menu button:hover {
             background-color: #8B0000;
         }
-        
         .logout-button {
             background-color: var(--accent-color);
             color: white;
@@ -109,7 +103,6 @@
         .logout-button:hover {
             background-color: #cc0000;
         }
-
         #current-channel {
             text-align: center;
             margin-top: 15px;
@@ -212,7 +205,6 @@
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 150;
         }
-
         .form-container h2 {
             text-align: center;
             color: var(--accent-color);
@@ -271,7 +263,6 @@
         .hidden {
             display: none;
         }
-        
         .modal-close-button {
             width: 100%; 
             padding: 12px; 
@@ -364,15 +355,19 @@
              <div id="modal-overlay" class="hidden"></div>
 
              <div class="player-container">
+                 <!-- IFRAME CORRIGIDO E OTIMIZADO -->
                  <iframe id="tv-player" 
                          src="about:blank" 
                          allow="autoplay; encrypted-media; fullscreen" 
+                         width="100%" 
+                         height="100%" 
+                         frameborder="0" 
                          allowfullscreen>
                  </iframe>
              </div>
              <p id="current-channel">Escolha Um Canal Abaixo</p>
 
-             <!-- CONTAINER DINÂMICO DE CANAIS (Substitui a grade estática) -->
+             <!-- CONTAINER DINÂMICO DE CANAIS -->
              <div id="dynamic-channels-container" class="channel-grid-container"></div>
         </main>
         <footer><p>&copy; Serviços Ainda Em Desenvolvimento Podendo Apresentar Falhas.</p></footer>
@@ -384,98 +379,99 @@
             // ⚙️ CONFIGURAÇÃO CENTRALIZADA DA CRISÁLIDA
             // ==========================================
             const tvConfig = {
-                enabled: true, // Define se a grade de canais deve ser exibida
-                baseUrl: "https://embedtv.vercel.app",
+                enabled: true, // Controle mestre: defina como false para desativar a grade de canais
+                baseUrl: "https://sinalpublicoetv.vercel.app",
                 categorias: [
-                    {
-                        nome: "A Fazenda (Câmeras)",
-                        canais: [
-                            { id: "afazenda1", nome: "Câmera 1" },
-                            { id: "afazenda2", nome: "Câmera 2" },
-                            { id: "afazenda3", nome: "Câmera 3" },
-                            { id: "afazenda4", nome: "Câmera 4" }
-                        ]
-                    },
                     {
                         nome: "Canais Abertos",
                         canais: [
-                            { id: "globo", nome: "Globo" },
-                            { id: "sbt", nome: "SBT" },
-                            { id: "record", nome: "Record TV" },
-                            { id: "band", nome: "Band" }
+                            { id: "globorj", nome: "Globo RJ" }, { id: "globosp", nome: "Globo SP" },
+                            { id: "globomg", nome: "Globo MG" }, { id: "globope", nome: "Globo PE" },
+                            { id: "globopb", nome: "Globo PB" }, { id: "globors", nome: "Globo RS" },
+                            { id: "globoes", nome: "Globo ES" }, { id: "globoam", nome: "Globo AM" },
+                            { id: "globoce", nome: "Globo CE" }, { id: "sbt", nome: "SBT" },
+                            { id: "sbtsp", nome: "SBT SP" }, { id: "sbtrj", nome: "SBT RJ" },
+                            { id: "record", nome: "Record TV" }, { id: "recordsp", nome: "Record SP" },
+                            { id: "recordrj", nome: "Record RJ" }, { id: "recordmg", nome: "Record MG" },
+                            { id: "band", nome: "Band" }, { id: "bandsp", nome: "Band SP" },
+                            { id: "bandrj", nome: "Band RJ" }, { id: "redetv", nome: "Rede TV" },
+                            { id: "cultura", nome: "Cultura" }
                         ]
                     },
                     {
                         nome: "Notícias",
                         canais: [
-                            { id: "globonews", nome: "GloboNews" },
-                            { id: "bandnews", nome: "BandNews" },
-                            { id: "cnnbrasil", nome: "CNN Brasil" },
-                            { id: "jovempan", nome: "Jovem Pan News" }
+                            { id: "globonews", nome: "Globo News" }, { id: "bandnews", nome: "Band News" },
+                            { id: "cnnbrasil", nome: "CNN Brasil" }, { id: "recordnews", nome: "Record News" },
+                            { id: "sbtnews", nome: "SBT News" }
                         ]
                     },
                     {
                         nome: "Esportes",
                         canais: [
-                            { id: "sportv", nome: "SporTV" },
-                            { id: "sportv2", nome: "SporTV 2" },
-                            { id: "sportv3", nome: "SporTV 3" },
-                            { id: "espn", nome: "ESPN" },
-                            { id: "espn2", nome: "ESPN 2" },
-                            { id: "espn3", nome: "ESPN 3" },
-                            { id: "espn4", nome: "ESPN 4" },
-                            { id: "premiere", nome: "Premiere" },
-                            { id: "combate", nome: "Combate" },
-                            { id: "cazetv", nome: "Cazé TV" },
-                            { id: "bandsports", nome: "Band Sports" }
+                            { id: "sportv", nome: "SporTV" }, { id: "sportv2", nome: "SporTV 2" },
+                            { id: "sportv3", nome: "SporTV 3" }, { id: "sportv4", nome: "SporTV 4" },
+                            { id: "espn", nome: "ESPN" }, { id: "espn2", nome: "ESPN 2" },
+                            { id: "espn3", nome: "ESPN 3" }, { id: "espn4", nome: "ESPN 4" },
+                            { id: "espn5", nome: "ESPN 5" }, { id: "espn6", nome: "ESPN 6" },
+                            { id: "premiereclubes", nome: "Premiere Clubes" }, { id: "premiere2", nome: "Premiere 2" },
+                            { id: "premiere3", nome: "Premiere 3" }, { id: "premiere4", nome: "Premiere 4" },
+                            { id: "premiere5", nome: "Premiere 5" }, { id: "premiere6", nome: "Premiere 6" },
+                            { id: "premiere7", nome: "Premiere 7" }, { id: "premiere8", nome: "Premiere 8" },
+                            { id: "combate", nome: "Combate" }, { id: "cazetv1", nome: "Cazé TV 1" },
+                            { id: "cazetv2", nome: "Cazé TV 2" }, { id: "bandsports", nome: "Band Sports" },
+                            { id: "getv", nome: "Ge TV" }, { id: "sportynet", nome: "SportyNet" },
+                            { id: "eleven1", nome: "ELEVEN 1" }, { id: "ufcfightpass", nome: "UFC Fight Pass" }
                         ]
                     },
                     {
                         nome: "Filmes e Séries",
                         canais: [
-                            { id: "telecine", nome: "Telecine" },
-                            { id: "telecinepremium", nome: "Telecine Premium" },
-                            { id: "telecinepipoca", nome: "Telecine Pipoca" },
-                            { id: "telecineaction", nome: "Telecine Action" },
-                            { id: "universal", nome: "Universal TV" },
-                            { id: "studiouniversal", nome: "Studio Universal" },
-                            { id: "megapix", nome: "Megapix" },
-                            { id: "amc", nome: "AMC" },
-                            { id: "paramount", nome: "Paramount Network" },
-                            { id: "axn", nome: "AXN" },
-                            { id: "syfy", nome: "Syfy" }
+                            { id: "telecinepremium", nome: "Telecine Premium" }, { id: "telecineaction", nome: "Telecine Action" },
+                            { id: "telecinepipoca", nome: "Telecine Pipoca" }, { id: "telecinetouch", nome: "Telecine Touch" },
+                            { id: "telecinefun", nome: "Telecine Fun" }, { id: "telecinecult", nome: "Telecine Cult" },
+                            { id: "hbo", nome: "HBO" }, { id: "hbo2", nome: "HBO 2" },
+                            { id: "hbofamily", nome: "HBO Family" }, { id: "hboplus", nome: "HBO Plus" },
+                            { id: "hbomundi", nome: "HBO Mundi" }, { id: "hbopop", nome: "HBO Pop" },
+                            { id: "hboxtreme", nome: "HBO Xtreme" }, { id: "hbosignature", nome: "HBO Signature" },
+                            { id: "universaltv", nome: "Universal TV" }, { id: "studiouniversal", nome: "Studio Universal" },
+                            { id: "cinemax", nome: "Cinemax" }, { id: "amc", nome: "AMC" },
+                            { id: "axn", nome: "AXN" }, { id: "sonychannel", nome: "Sony Channel" },
+                            { id: "space", nome: "Space" }, { id: "tnt", nome: "TNT" },
+                            { id: "tntseries", nome: "TNT Series" }, { id: "tntnovelas", nome: "TNT Novelas" },
+                            { id: "warnertv", nome: "Warner TV" }, { id: "ae", nome: "A&E" },
+                            { id: "lifetime", nome: "Lifetime" }, { id: "megapix", nome: "Megapix" },
+                            { id: "paramount1", nome: "Paramount+ 1" }, { id: "max1", nome: "MAX 1" }
                         ]
                     },
                     {
                         nome: "Infantil",
                         canais: [
-                            { id: "gloob", nome: "Gloob" },
-                            { id: "gloobinho", nome: "Gloobinho" },
-                            { id: "nickelodeon", nome: "Nickelodeon" },
-                            { id: "nickjr", nome: "Nick Jr." },
-                            { id: "cartoonnetwork", nome: "Cartoon Network" },
-                            { id: "discoverykids", nome: "Discovery Kids" },
-                            { id: "ratimbum", nome: "Rá-Tim-Bum" }
+                            { id: "gloob", nome: "Gloob" }, { id: "discoverykids", nome: "Discovery Kids" },
+                            { id: "cartoonnetwork", nome: "Cartoon Network" }, { id: "cartoonito", nome: "Cartoonito" },
+                            { id: "disney1", nome: "Disney+ 1" }, { id: "primevideo1", nome: "Prime Video 1" }
                         ]
                     },
                     {
-                        nome: "Documentários e Cultura",
+                        nome: "Documentários e Variedades",
                         canais: [
-                            { id: "canalbrasil", nome: "Canal Brasil" },
-                            { id: "arte1", nome: "Arte 1" },
-                            { id: "discovery", nome: "Discovery Channel" },
-                            { id: "history", nome: "History Channel" },
-                            { id: "animalplanet", nome: "Animal Planet" },
-                            { id: "natgeo", nome: "National Geographic" }
+                            { id: "discoverychannel", nome: "Discovery Channel" }, { id: "discoveryhomehealth", nome: "Discovery Home & Health" },
+                            { id: "discoveryscience", nome: "Discovery Science" }, { id: "discoveryturbo", nome: "Discovery Turbo" },
+                            { id: "history1", nome: "History 1" }, { id: "history2", nome: "History 2" },
+                            { id: "animalplanet", nome: "Animal Planet" }, { id: "hgtv", nome: "HGTV" },
+                            { id: "foodnetwork", nome: "Food Network" }, { id: "gnt", nome: "GNT" },
+                            { id: "multishow", nome: "Multishow" }, { id: "bis", nome: "BIS" },
+                            { id: "arte1", nome: "Arte 1" }, { id: "modoviagem", nome: "Modo Viagem" },
+                            { id: "tlc", nome: "TLC" }, { id: "curta", nome: "Curta!" }, { id: "off", nome: "Off" }
                         ]
                     },
                     {
-                        nome: "Variedades e Música",
+                        nome: "Entretenimento 24h",
                         canais: [
-                            { id: "multishow", nome: "Multishow" },
-                            { id: "gnt", nome: "GNT" },
-                            { id: "bis", nome: "BIS" },
-                            { id: "mtv", nome: "MTV" }
+                            { id: "24hnaruto", nome: "24H Naruto" }, { id: "24hdragonball", nome: "24H Dragonball" },
+                            { id: "24hosimpsons", nome: "24H Os Simpsons" }, { id: "24hchaves", nome: "24H Chaves" },
+                            { id: "24htodomundoodeiachris", nome: "24H Todo Mundo Odeia o Chris" },
+                            { id: "adultswim", nome: "Adult Swim" }
                         ]
                     }
                 ]
@@ -747,15 +743,14 @@
                 `).join('');
             };
 
-            // Event Delegation para os botões de canal (mais performático que forEach)
+            // Event Delegation para os botões de canal (alta performance)
             dynamicChannelsContainer.addEventListener('click', (e) => {
                 if (e.target.classList.contains('channel-button')) {
                     const channelId = e.target.getAttribute('data-channel');
                     const channelName = e.target.getAttribute('data-name');
                     
-                    // Atualiza o player para usar o embedtv.vercel.app
-                    // Nota: Ajuste o sufixo da URL (/?v=, /embed/, etc) conforme a documentação exata do embedtv
-                    player.src = `${tvConfig.baseUrl}/?v=${channelId}&autoplay=1&mute=0`;
+                    // URL CORRIGIDA PARA O IFRAME SOLICITADO
+                    player.src = `${tvConfig.baseUrl}/?id=${channelId}`;
                     
                     currentChannelDisplay.textContent = `Canal Atual: ${channelName}`;
                     openFullscreen(playerContainer);
@@ -766,8 +761,8 @@
 
             const openFullscreen = (elem) => {
                 if (elem.requestFullscreen) elem.requestFullscreen();
-                else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen(); /* Safari */
-                else if (elem.msRequestFullscreen) elem.msRequestFullscreen(); /* IE11 */
+                else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+                else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
             };
             
             let refreshInterval;
@@ -793,9 +788,9 @@
             };
             
             // --- INICIALIZAÇÃO ---
-            renderChannels(); // Renderiza a grade de canais
+            renderChannels();
             checkSession();
         });
     </script>
 </body>
-                                                         </html>
+                      </html>
