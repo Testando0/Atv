@@ -5,570 +5,126 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>✰ KUROMI TV ✰</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
         :root {
-            --bg-dark: #0a0a0f;
-            --bg-surface: #12121a;
-            --bg-card: #1a1a26;
-            --bg-hover: #22222f;
-            --bg-sidebar: #0e0e16;
-            --accent: #e63946;
-            --accent-glow: rgba(230, 57, 70, 0.3);
-            --accent-soft: rgba(230, 57, 70, 0.12);
-            --text-primary: #f1f1f4;
-            --text-secondary: #8a8a9a;
-            --text-muted: #55556a;
-            --border: #2a2a3a;
-            --border-light: #333348;
-            --success: #2ecc71;
-            --sidebar-width: 340px;
-            --header-height: 56px;
-            --radius: 10px;
-            --radius-sm: 6px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --background-color: #3f0000;
+            --surface-color: #5a0000;
+            --primary-text-color: #ffffff;
+            --secondary-text-color: #e0e0e0;
+            --accent-color: #ff3333;
+            --border-color: #8b0000;
         }
-
         body {
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            background: var(--bg-dark);
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--primary-text-color);
+            margin: 0;
+            padding: 0;
             overflow-x: hidden;
-            min-height: 100vh;
         }
-
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
-
-        .hidden { display: none !important; }
-
-        /* ═══════════════════ AUTH SCREENS ═══════════════════ */
-        .auth-wrapper {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(ellipse at 50% 0%, rgba(230,57,70,0.08) 0%, transparent 60%),
-                        var(--bg-dark);
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
             padding: 20px;
+            box-sizing: border-box;
         }
-
-        .auth-card {
-            width: 100%;
-            max-width: 400px;
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 40px 32px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-        }
-
-        .auth-card .logo {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .auth-card .logo h1 {
-            font-size: 1.8em;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), #ff6b7a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .auth-card .logo p {
-            color: var(--text-muted);
-            font-size: 0.85em;
-            margin-top: 6px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.8em;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: var(--text-secondary);
-            margin-bottom: 7px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--bg-dark);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 0.95em;
-            transition: border-color var(--transition);
-            outline: none;
-        }
-
-        .form-group input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-soft);
-        }
-
-        .btn-primary {
-            width: 100%;
-            padding: 13px;
-            background: var(--accent);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-size: 1em;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all var(--transition);
-            letter-spacing: 0.3px;
-        }
-
-        .btn-primary:hover {
-            background: #c62d3a;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 20px var(--accent-glow);
-        }
-
-        .btn-secondary {
-            width: 100%;
-            padding: 11px;
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            font-size: 0.9em;
-            cursor: pointer;
-            transition: all var(--transition);
-            margin-top: 10px;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--text-secondary);
-            color: var(--text-primary);
-        }
-
-        .toggle-link {
-            text-align: center;
-            margin-top: 22px;
-            font-size: 0.88em;
-            color: var(--text-muted);
-        }
-
-        .toggle-link a {
-            color: var(--accent);
-            cursor: pointer;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .toggle-link a:hover { text-decoration: underline; }
-
-        .message {
-            text-align: center;
-            margin-top: 14px;
-            font-size: 0.88em;
-            font-weight: 600;
-            min-height: 20px;
-        }
-
-        /* ═══════════════════ MAIN APP LAYOUT ═══════════════════ */
-        #main-content {
+        header {
             display: flex;
-            flex-direction: column;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* ── Top Bar ── */
-        .top-bar {
-            height: var(--header-height);
-            background: var(--bg-surface);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            flex-shrink: 0;
-            z-index: 50;
-        }
-
-        .top-bar-left {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .btn-menu-toggle {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 22px;
-            cursor: pointer;
-            padding: 6px;
-            border-radius: var(--radius-sm);
-            transition: all var(--transition);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            width: 38px;
-            height: 38px;
-        }
-
-        .btn-menu-toggle:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-        }
-
-        .top-bar-logo {
-            font-size: 1.15em;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent), #ff6b7a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .top-bar-right {
-            display: flex;
             align-items: center;
-            gap: 12px;
             position: relative;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
         }
-
-        .now-playing {
-            font-size: 0.82em;
-            color: var(--text-muted);
-            max-width: 200px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .now-playing strong {
-            color: var(--text-secondary);
-        }
-
-        .btn-icon {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 19px;
-            cursor: pointer;
-            padding: 7px;
-            border-radius: var(--radius-sm);
-            transition: all var(--transition);
-            line-height: 1;
-        }
-
-        .btn-icon:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-        }
-
-        /* ── Account Dropdown ── */
-        .account-dropdown {
-            position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
-            width: 230px;
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-            overflow: hidden;
-            z-index: 200;
-        }
-
-        .account-dropdown .dropdown-header {
-            padding: 14px 16px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.82em;
-            color: var(--text-muted);
-        }
-
-        .account-dropdown .dropdown-header strong {
-            display: block;
-            color: var(--text-primary);
-            font-size: 1.1em;
-            margin-bottom: 2px;
-        }
-
-        .account-dropdown button {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 11px 16px;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 0.88em;
-            cursor: pointer;
-            transition: all var(--transition);
-            text-align: left;
-        }
-
-        .account-dropdown button:hover {
-            background: var(--bg-hover);
-            color: var(--text-primary);
-        }
-
-        .account-dropdown button.danger { color: var(--accent); }
-        .account-dropdown button.danger:hover { background: var(--accent-soft); }
-
-        /* ── Content Area ── */
-        .content-area {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* ═══════════════════ SIDEBAR (TV Express Style) ═══════════════════ */
-        .sidebar {
-            width: var(--sidebar-width);
-            min-width: var(--sidebar-width);
-            background: var(--bg-sidebar);
-            border-right: 1px solid var(--border);
-            display: flex;
-            flex-direction: column;
-            transition: margin-left var(--transition), opacity var(--transition);
-            z-index: 40;
-            overflow: hidden;
-        }
-
-        .sidebar.collapsed {
-            margin-left: calc(-1 * var(--sidebar-width));
-            opacity: 0;
-        }
-
-        .sidebar-header {
-            padding: 16px 18px 12px;
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
-        }
-
-        .sidebar-header h2 {
-            font-size: 0.78em;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            color: var(--text-muted);
+        header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            color: var(--accent-color);
             font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
-
-        .sidebar-search {
-            padding: 10px 14px;
-            border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
-        }
-
-        .sidebar-search input {
-            width: 100%;
-            padding: 9px 14px 9px 36px;
-            background: var(--bg-dark);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            color: var(--text-primary);
-            font-size: 0.85em;
-            outline: none;
-            transition: border-color var(--transition);
-        }
-
-        .sidebar-search input:focus {
-            border-color: var(--accent);
-        }
-
-        .sidebar-search {
-            position: relative;
-        }
-
-        .sidebar-search::before {
-            content: '🔍';
+        #user-session {
             position: absolute;
-            left: 26px;
+            right: 0;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 0.8em;
-            pointer-events: none;
-        }
-
-        .sidebar-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 8px 0;
-        }
-
-        /* Category */
-        .sidebar-category {
-            margin-bottom: 2px;
-        }
-
-        .category-header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 10px 18px;
+            gap: 15px;
+            z-index: 100; 
+        }
+        #settings-icon {
             cursor: pointer;
-            user-select: none;
-            transition: background var(--transition);
+            font-size: 24px;
+            line-height: 1;
+            padding: 5px;
+            transition: color 0.3s;
         }
-
-        .category-header:hover {
-            background: var(--bg-hover);
+        #settings-icon:hover {
+            color: var(--accent-color);
         }
-
-        .category-header h3 {
-            font-size: 0.78em;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: var(--text-muted);
-            font-weight: 700;
-        }
-
-        .category-header .cat-count {
-            font-size: 0.7em;
-            color: var(--text-muted);
-            background: var(--bg-dark);
-            padding: 2px 8px;
-            border-radius: 10px;
-        }
-
-        .category-header .cat-arrow {
-            font-size: 0.65em;
-            color: var(--text-muted);
-            transition: transform var(--transition);
-            margin-left: 8px;
-        }
-
-        .category-header.open .cat-arrow {
-            transform: rotate(90deg);
-        }
-
-        .category-channels {
+        #account-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
             overflow: hidden;
-            max-height: 0;
-            transition: max-height 0.4s ease;
+            width: 220px; 
+            margin-top: 10px;
+            z-index: 101;
         }
-
-        .category-channels.open {
-            max-height: 2000px;
-        }
-
-        /* Channel Item */
-        .channel-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 9px 18px 9px 22px;
+        #account-menu button {
+            display: block;
+            width: 100%;
+            padding: 12px 15px;
+            text-align: left;
+            background: none;
+            border: none;
+            color: var(--primary-text-color);
             cursor: pointer;
-            transition: all var(--transition);
-            border-left: 3px solid transparent;
-            position: relative;
+            transition: background-color 0.2s;
+            font-weight: 500;
+            font-size: 0.95em;
         }
-
-        .channel-item:hover {
-            background: var(--bg-hover);
+        #account-menu button:hover {
+            background-color: #8B0000;
         }
-
-        .channel-item.active {
-            background: var(--accent-soft);
-            border-left-color: var(--accent);
-        }
-
-        .channel-item.active .ch-name {
-            color: var(--accent);
-            font-weight: 700;
-        }
-
-        .ch-number {
-            font-size: 0.72em;
-            font-weight: 700;
-            color: var(--text-muted);
-            min-width: 26px;
-            text-align: right;
-            font-variant-numeric: tabular-nums;
-        }
-
-        .channel-item.active .ch-number {
-            color: var(--accent);
-        }
-
-        .ch-icon {
-            width: 32px;
-            height: 32px;
-            border-radius: var(--radius-sm);
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75em;
-            font-weight: 800;
-            color: var(--text-secondary);
-            flex-shrink: 0;
-        }
-
-        .channel-item.active .ch-icon {
-            background: var(--accent);
-            border-color: var(--accent);
+        .logout-button {
+            background-color: var(--accent-color);
             color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
         }
-
-        .ch-name {
-            font-size: 0.88em;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            transition: color var(--transition);
+        .logout-button:hover {
+            background-color: #cc0000;
         }
-
-        .channel-item:hover .ch-name {
-            color: var(--text-primary);
+        #current-channel {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.3em;
+            color: var(--secondary-text-color);
+            font-weight: 500;
         }
-
-        .ch-live {
-            margin-left: auto;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--success);
-            flex-shrink: 0;
-            animation: pulse-live 2s infinite;
-        }
-
-        @keyframes pulse-live {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        /* ═══════════════════ PLAYER AREA ═══════════════════ */
-        .player-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: #000;
+        .player-container {
+            width: 100%;
             position: relative;
+            padding-top: 56.25%;
+            background-color: #000;
+            margin-top: 20px;
+            border-radius: 8px;
             overflow: hidden;
+            border: 3px solid var(--border-color);
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
         }
-
-        .player-wrapper {
-            flex: 1;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-        }
-
-        .player-wrapper iframe {
+        .player-container iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -576,918 +132,760 @@
             height: 100%;
             border: none;
         }
-
-        .player-placeholder {
+        .channel-grid-container {
+            margin-top: 30px;
+        }
+        .channel-category {
+            background-color: var(--surface-color);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        .channel-category h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        .channel-buttons {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 16px;
-            color: var(--text-muted);
-        }
-
-        .player-placeholder .ph-icon {
-            font-size: 64px;
-            opacity: 0.3;
-        }
-
-        .player-placeholder p {
-            font-size: 1em;
-        }
-
-        /* ── Channel Info Bar (bottom) ── */
-        .channel-info-bar {
-            height: 48px;
-            background: var(--bg-surface);
-            border-top: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            flex-shrink: 0;
-        }
-
-        .channel-info-bar .info-left {
-            display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 12px;
         }
-
-        .info-ch-num {
-            font-size: 1.3em;
-            font-weight: 800;
-            color: var(--accent);
-            font-variant-numeric: tabular-nums;
+        .channel-button {
+            background-color: #8B0000;
+            color: #fff;
+            border: 1px solid #B22222;
+            padding: 12px 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
         }
-
-        .info-ch-name {
-            font-size: 0.95em;
-            font-weight: 600;
+        .channel-button:hover {
+            background-color: #B22222;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
-
-        .info-ch-cat {
-            font-size: 0.78em;
-            color: var(--text-muted);
-            background: var(--bg-dark);
-            padding: 3px 10px;
-            border-radius: 12px;
-        }
-
-        .info-right {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-right .btn-icon {
-            font-size: 16px;
-        }
-
-        /* ═══════════════════ TV MODE OVERLAY SIDEBAR ═══════════════════ */
-        .tv-sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
             width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity var(--transition);
+            font-size: 0.9em;
+            color: var(--secondary-text-color);
+            border-top: 1px solid var(--border-color);
         }
-
-        .tv-sidebar-overlay.visible {
-            opacity: 1;
-            pointer-events: auto;
+        #auth-container, #recharge-container, #redeem-code-modal, #device-selection-modal {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: var(--surface-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            border: 1px solid var(--border-color);
         }
-
-        .tv-sidebar {
+        #device-selection-modal {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 380px;
-            max-width: 85vw;
-            height: 100%;
-            background: var(--bg-sidebar);
-            border-right: 1px solid var(--border);
-            z-index: 101;
-            transform: translateX(-100%);
-            transition: transform var(--transition);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 300;
+            max-width: 500px;
+            width: 90%;
+            margin: 0;
+            text-align: center;
             display: flex;
             flex-direction: column;
-            box-shadow: 10px 0 40px rgba(0,0,0,0.5);
+            gap: 20px;
         }
-
-        .tv-sidebar.open {
-            transform: translateX(0);
-        }
-
-        .tv-sidebar .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .tv-sidebar .sidebar-header .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 20px;
-            cursor: pointer;
-            padding: 4px;
-        }
-
-        /* ═══════════════════ TOAST ═══════════════════ */
-        .toast {
+        #redeem-code-modal {
             position: fixed;
-            top: 20px;
+            top: 50%;
             left: 50%;
-            transform: translateX(-50%) translateY(-80px);
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 12px 24px;
-            border-radius: var(--radius);
-            font-size: 0.92em;
-            font-weight: 600;
-            z-index: 500;
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 200;
+            max-width: 450px;
+            width: 90%;
+            margin: 0; 
         }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .toast .toast-num {
-            color: var(--accent);
-            font-weight: 800;
-            font-size: 1.1em;
-        }
-
-        /* ═══════════════════ MODALS ═══════════════════ */
-        .modal-overlay {
+        #modal-overlay {
             position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 300;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            backdrop-filter: blur(4px);
-        }
-
-        .modal-box {
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 420px;
-            background: var(--bg-surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 150;
         }
-
-        .modal-box h2 {
-            font-size: 1.2em;
-            margin-bottom: 8px;
-            color: var(--text-primary);
+        .form-container h2 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 25px;
         }
-
-        .modal-box .modal-sub {
-            font-size: 0.85em;
-            color: var(--text-muted);
-            margin-bottom: 22px;
+        .form-container .form-group {
+            margin-bottom: 15px;
         }
-
-        /* ── Device Selection ── */
-        .device-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 14px;
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            background-color: var(--background-color);
+            border: 1px solid var(--border-color);
+            color: var(--primary-text-color);
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-container button[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--accent-color);
+            border: none;
+            color: white;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .form-container button[type="submit"]:hover {
+            background-color: #cc0000;
+        }
+        .toggle-form {
+            text-align: center;
             margin-top: 20px;
         }
-
-        .device-card {
-            padding: 28px 16px;
-            background: var(--bg-dark);
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
+        .toggle-form a {
+            color: var(--accent-color);
+            text-decoration: underline;
             cursor: pointer;
+        }
+        .message {
             text-align: center;
-            transition: all var(--transition);
+            margin-top: 15px;
+            font-weight: bold;
         }
-
-        .device-card:hover {
-            border-color: var(--accent);
-            background: var(--accent-soft);
-            transform: translateY(-2px);
+        #recharge-container p {
+            text-align: center;
+            line-height: 1.5;
         }
-
-        .device-card .dev-icon {
-            font-size: 36px;
-            margin-bottom: 10px;
+        .hidden {
+            display: none !important;
         }
-
-        .device-card .dev-label {
-            font-weight: 700;
-            font-size: 0.95em;
+        .modal-close-button {
+            width: 100%; 
+            padding: 12px; 
+            font-weight: bold; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+            background-color: var(--surface-color); 
+            border: 1px solid var(--border-color); 
+            color: var(--primary-text-color); 
+            margin-top: 15px;
         }
-
-        .device-card .dev-desc {
-            font-size: 0.75em;
-            color: var(--text-muted);
-            margin-top: 4px;
+        .modal-close-button:hover {
+            background-color: #4a0000;
         }
-
-        /* ═══════════════════ MOBILE RESPONSIVE ═══════════════════ */
-        @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                top: var(--header-height);
-                left: 0;
-                height: calc(100vh - var(--header-height));
-                z-index: 45;
-                box-shadow: 6px 0 30px rgba(0,0,0,0.5);
-            }
-
-            .sidebar.collapsed {
-                margin-left: calc(-1 * var(--sidebar-width));
-            }
-
-            .now-playing { display: none; }
-
-            .channel-info-bar {
-                padding: 0 12px;
-            }
-
-            .info-ch-cat { display: none; }
-        }
-
-        /* ═══════════════════ TV MODE (Fullscreen) ═══════════════════ */
-        body.tv-mode .top-bar { display: none; }
-        body.tv-mode .channel-info-bar { display: none; }
-        body.tv-mode .sidebar { display: none; }
-
-        body.tv-mode .player-area {
+        
+        /* 📺 Estilos Exclusivos do Modo TV */
+        #tv-channel-overlay {
             position: fixed;
-            inset: 0;
-            z-index: 10;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+            transition: opacity 0.3s ease;
         }
-
-        body.tv-mode .content-area {
-            display: block;
+        #tv-channel-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        #tv-channel-list {
+            width: 90%;
+            max-width: 500px;
+            max-height: 70vh;
+            overflow-y: auto;
+            background: rgba(90, 0, 0, 0.95);
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+        #tv-channel-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        #tv-channel-list::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+            border-radius: 4px;
+        }
+        #tv-channel-list::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+        .tv-channel-item {
+            padding: 15px 20px;
+            margin: 5px 0;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+            font-size: 1.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+            border-left: 4px solid transparent;
+        }
+        .tv-channel-item.selected {
+            background: var(--accent-color);
+            border-left: 4px solid #ffffff;
+            transform: scale(1.02);
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(255, 51, 51, 0.4);
+        }
+        .tv-channel-item:hover {
+            background: rgba(255, 51, 51, 0.3);
+        }
+        #channel-toast {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--accent-color);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: bold;
+            z-index: 30;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+        .device-btn {
+            padding: 20px 40px;
+            font-size: 1.2em;
+            background-color: var(--background-color);
+            color: white;
+            border: 2px solid var(--accent-color);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        .device-btn:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(255, 51, 51, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <!-- ══════════ AUTH ══════════ -->
-    <div id="auth-container" class="auth-wrapper hidden">
-        <div class="auth-card">
-            <div class="logo">
-                <h1>✰ KUROMI TV ✰</h1>
-                <p>Sua televisão, sem limites.</p>
-            </div>
-
-            <div id="login-form-container">
-                <form id="login-form">
-                    <div class="form-group">
-                        <label for="login-username">Usuário</label>
-                        <input type="text" id="login-username" placeholder="Seu usuário" required autocomplete="username">
-                    </div>
-                    <div class="form-group">
-                        <label for="login-password">Senha</label>
-                        <input type="password" id="login-password" placeholder="Sua senha" required autocomplete="current-password">
-                    </div>
-                    <button type="submit" class="btn-primary">Entrar</button>
-                    <p id="login-message" class="message"></p>
-                </form>
-                <p class="toggle-link">Não tem conta? <a id="show-register">Criar conta</a></p>
-            </div>
-
-            <div id="register-form-container" class="hidden">
-                <form id="register-form">
-                    <div class="form-group">
-                        <label for="register-username">Usuário</label>
-                        <input type="text" id="register-username" placeholder="Escolha um usuário" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="register-password">Senha</label>
-                        <input type="password" id="register-password" placeholder="Escolha uma senha" required>
-                    </div>
-                    <button type="submit" class="btn-primary">Criar Conta</button>
-                    <p id="register-message" class="message"></p>
-                </form>
-                <p class="toggle-link">Já tem conta? <a id="show-login">Fazer login</a></p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ══════════ RECHARGE ══════════ -->
-    <div id="recharge-container" class="auth-wrapper hidden">
-        <div class="auth-card">
-            <div class="logo">
-                <h1>⏳ Acesso Expirado</h1>
-                <p>Insira um código para continuar assistindo.</p>
-            </div>
-            <form id="recharge-form">
-                <div class="form-group">
-                    <label for="recharge-code">Código de Recarga</label>
-                    <input type="text" id="recharge-code" placeholder="XXXX-XXXX-XXXX" required>
-                </div>
-                <button type="submit" class="btn-primary">Ativar Acesso</button>
-                <p id="recharge-message" class="message"></p>
+    <div id="auth-container" class="hidden">
+        <div id="login-form-container" class="form-container">
+            <form id="login-form">
+                <h2>Login</h2>
+                <div class="form-group"><label for="login-username">Usuário</label><input type="text" id="login-username" required></div>
+                <div class="form-group"><label for="login-password">Senha</label><input type="password" id="login-password" required></div>
+                <button type="submit">Entrar</button>
+                <p id="login-message" class="message"></p>
             </form>
-            <button id="recharge-logout-button" class="btn-secondary">Sair da conta</button>
+            <p class="toggle-form">Não tem uma conta? <a id="show-register">Registre-se</a></p>
         </div>
-    </div>
-
-    <!-- ══════════ DEVICE SELECTION ══════════ -->
-    <div id="device-selection-modal" class="modal-overlay hidden">
-        <div class="modal-box" style="max-width:460px; text-align:center;">
-            <h2>Como você vai assistir?</h2>
-            <p class="modal-sub">Escolha o dispositivo para otimizar a interface.</p>
-            <div class="device-grid">
-                <div class="device-card" id="btn-device-mobile">
-                    <div class="dev-icon">📱</div>
-                    <div class="dev-label">Celular / PC</div>
-                    <div class="dev-desc">Layout com sidebar</div>
-                </div>
-                <div class="device-card" id="btn-device-tv">
-                    <div class="dev-icon">📺</div>
-                    <div class="dev-label">Smart TV</div>
-                    <div class="dev-desc">Tela cheia + controle</div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ══════════ MAIN APP ══════════ -->
-    <div id="main-content" class="hidden">
-
-        <!-- Top Bar -->
-        <div class="top-bar">
-            <div class="top-bar-left">
-                <button class="btn-menu-toggle" id="btn-toggle-sidebar" title="Menu de canais">☰</button>
-                <span class="top-bar-logo">✰ KUROMI TV</span>
-            </div>
-            <div class="top-bar-right">
-                <span class="now-playing" id="now-playing-text"></span>
-                <button class="btn-icon" id="settings-icon" title="Conta">⚙️</button>
-                <div id="account-menu" class="account-dropdown hidden">
-                    <div class="dropdown-header">
-                        <strong id="welcome-message"></strong>
-                        <span>Conta ativa</span>
-                    </div>
-                    <button id="menu-redeem-code">🎟️ Resgatar Código</button>
-                    <button id="menu-change-device">🔄 Alterar Dispositivo</button>
-                    <button id="menu-logout">🚪 Sair</button>
-                    <button id="menu-delete-account" class="danger">🗑️ Deletar Conta</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Content -->
-        <div class="content-area">
-
-            <!-- Sidebar -->
-            <aside class="sidebar" id="sidebar">
-                <div class="sidebar-header">
-                    <h2>📡 Canais</h2>
-                </div>
-                <div class="sidebar-search">
-                    <input type="text" id="channel-search" placeholder="Buscar canal...">
-                </div>
-                <div class="sidebar-list" id="sidebar-channel-list"></div>
-            </aside>
-
-            <!-- Player -->
-            <div class="player-area">
-                <div class="player-wrapper" id="player-wrapper">
-                    <iframe id="tv-player" src="about:blank" allow="autoplay; encrypted-media; fullscreen" allowfullscreen></iframe>
-                    <div class="player-placeholder" id="player-placeholder">
-                        <div class="ph-icon">📺</div>
-                        <p>Selecione um canal para começar</p>
-                    </div>
-                </div>
-                <div class="channel-info-bar" id="channel-info-bar">
-                    <div class="info-left">
-                        <span class="info-ch-num" id="info-ch-num">--</span>
-                        <span class="info-ch-name" id="info-ch-name">Nenhum canal</span>
-                        <span class="info-ch-cat" id="info-ch-cat"></span>
-                    </div>
-                    <div class="info-right">
-                        <button class="btn-icon" id="btn-prev-ch" title="Canal anterior">⏮</button>
-                        <button class="btn-icon" id="btn-next-ch" title="Próximo canal">⏭</button>
-                        <button class="btn-icon" id="btn-fullscreen" title="Tela cheia">⛶</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- ══════════ TV MODE SIDEBAR OVERLAY ══════════ -->
-    <div class="tv-sidebar-overlay" id="tv-sidebar-overlay"></div>
-    <div class="tv-sidebar" id="tv-sidebar">
-        <div class="sidebar-header">
-            <h2>📡 Canais</h2>
-            <button class="close-btn" id="tv-sidebar-close">✕</button>
-        </div>
-        <div class="sidebar-search">
-            <input type="text" id="tv-channel-search" placeholder="Buscar canal...">
-        </div>
-        <div class="sidebar-list" id="tv-sidebar-channel-list"></div>
-    </div>
-
-    <!-- ══════════ REDEEM MODAL ══════════ -->
-    <div id="redeem-modal-overlay" class="modal-overlay hidden">
-        <div class="modal-box">
-            <h2>🎟️ Resgatar Código</h2>
-            <p class="modal-sub">Adicione mais dias à sua assinatura.</p>
-            <form id="redeem-form">
-                <div class="form-group">
-                    <label for="redeem-code">Código</label>
-                    <input type="text" id="redeem-code" placeholder="XXXX-XXXX-XXXX" required>
-                </div>
-                <button type="submit" class="btn-primary">Resgatar</button>
-                <p id="redeem-message" class="message"></p>
+        
+        <div id="register-form-container" class="form-container hidden">
+            <form id="register-form">
+                <h2>Registro</h2>
+                <div class="form-group"><label for="register-username">Usuário</label><input type="text" id="register-username" required></div>
+                <div class="form-group"><label for="register-password">Senha</label><input type="password" id="register-password" required></div>
+                <button type="submit">Criar Conta</button>
+                <p id="register-message" class="message"></p>
             </form>
-            <button id="close-redeem-modal" class="btn-secondary">Fechar</button>
+            <p class="toggle-form">Já tem uma conta? <a id="show-login">Faça Login</a></p>
         </div>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">
-        <span class="toast-num" id="toast-num"></span>
-        <span id="toast-text"></span>
+    <div id="recharge-container" class="hidden">
+        <div class="form-container">
+             <h2>Acesso Expirado</h2>
+             <p>Sua assinatura terminou ou nunca foi ativada. Insira um código de recarga para continuar.</p>
+             <form id="recharge-form">
+                  <div class="form-group">
+                       <label for="recharge-code">Código de Recarga</label>
+                       <input type="text" id="recharge-code" required>
+                  </div>
+                  <button type="submit">Ativar</button>
+                  <p id="recharge-message" class="message"></p>
+             </form>
+             <button id="recharge-logout-button" class="logout-button" style="width: 100%; margin-top: 15px;">Sair</button>
+        </div>
+    </div>
+
+    <div id="main-content" class="container hidden">
+        <header>
+            <h1>✰ KUROMI TV ✰</h1>
+            <div id="user-session" class="hidden">
+                 <span id="welcome-message"></span>
+                 <span id="settings-icon">⚙️</span>
+                 <div id="account-menu" class="hidden">
+                     <button id="menu-redeem-code">🎟️ Resgatar Código</button>
+                     <button id="menu-change-device">🔄 Alterar Dispositivo</button>
+                     <button id="menu-logout">🚪 Sair</button>
+                     <button id="menu-delete-account" style="color: var(--accent-color);">🗑️ Deletar Conta</button>
+                 </div>
+            </div>
+        </header>
+
+        <main>
+             <div id="redeem-code-modal" class="hidden">
+                 <div class="form-container">
+                      <h2>Resgatar Código</h2>
+                      <p style="text-align: center; font-size: 0.9em; color: var(--secondary-text-color);">Adicione mais dias à sua assinatura.</p>
+                      <form id="redeem-form">
+                           <div class="form-group">
+                                <label for="redeem-code">Código de Recarga</label>
+                                <input type="text" id="redeem-code" required>
+                           </div>
+                           <button type="submit">Resgatar</button>
+                           <p id="redeem-message" class="message"></p>
+                      </form>
+                      <button id="close-redeem-modal" class="modal-close-button">Fechar</button>
+                 </div>
+             </div>
+             <div id="modal-overlay" class="hidden"></div>
+
+             <div class="player-container" id="player-container">
+                 <iframe id="tv-player" 
+                         src="about:blank" 
+                         allow="autoplay; encrypted-media; fullscreen" 
+                         width="100%" 
+                         height="100%" 
+                         frameborder="0" 
+                         allowfullscreen>
+                 </iframe>
+             </div>
+             <p id="current-channel">Escolha Um Canal Abaixo</p>
+
+             <div id="dynamic-channels-container" class="channel-grid-container"></div>
+        </main>
+        <footer><p>&copy; Serviços Ainda Em Desenvolvimento Podendo Apresentar Falhas.</p></footer>
+    </div>
+
+    <div id="device-selection-modal" class="hidden">
+        <h2 style="color: var(--accent-color); font-size: 1.8em; margin-bottom: 10px;">Como você está acessando?</h2>
+        <p style="color: var(--secondary-text-color); margin-bottom: 20px;">Selecione seu dispositivo para otimizar a experiência.</p>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <button id="btn-device-mobile" class="device-btn">📱 Celular</button>
+            <button id="btn-device-tv" class="device-btn">📺 TV</button>
+        </div>
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', async () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            const tvConfig = {
+                enabled: true,
+                baseUrl: "https://sinalpublicoetv.vercel.app",
+                categorias: [
+                    { nome: "Canais Abertos", canais: [ { id: "globorj", nome: "Globo RJ" }, { id: "globosp", nome: "Globo SP" }, { id: "sbt", nome: "SBT" }, { id: "record", nome: "Record TV" }, { id: "band", nome: "Band" }, { id: "redetv", nome: "Rede TV" }, { id: "cultura", nome: "Cultura" } ] },
+                    { nome: "Notícias", canais: [ { id: "globonews", nome: "Globo News" }, { id: "bandnews", nome: "Band News" }, { id: "cnnbrasil", nome: "CNN Brasil" }, { id: "recordnews", nome: "Record News" } ] },
+                    { nome: "Esportes", canais: [ { id: "sportv", nome: "SporTV" }, { id: "espn", nome: "ESPN" }, { id: "premiereclubes", nome: "Premiere Clubes" }, { id: "combate", nome: "Combate" }, { id: "cazetv1", nome: "Cazé TV 1" } ] },
+                    { nome: "Filmes e Séries", canais: [ { id: "telecinepremium", nome: "Telecine Premium" }, { id: "hbo", nome: "HBO" }, { id: "universaltv", nome: "Universal TV" }, { id: "amc", nome: "AMC" }, { id: "tnt", nome: "TNT" } ] },
+                    { nome: "Infantil", canais: [ { id: "gloob", nome: "Gloob" }, { id: "discoverykids", nome: "Discovery Kids" }, { id: "cartoonnetwork", nome: "Cartoon Network" } ] },
+                    { nome: "Documentários", canais: [ { id: "discoverychannel", nome: "Discovery Channel" }, { id: "history1", nome: "History 1" }, { id: "animalplanet", nome: "Animal Planet" }, { id: "hgtv", nome: "HGTV" } ] },
+                    { nome: "Entretenimento 24h", canais: [ { id: "24hnaruto", nome: "24H Naruto" }, { id: "24hdragonball", nome: "24H Dragonball" }, { id: "24hchaves", nome: "24H Chaves" } ] }
+                ]
+            };
 
-        /* ═══════════ CONFIG ═══════════ */
-        const tvConfig = {
-            enabled: true,
-            baseUrl: "https://sinalpublicoetv.vercel.app",
-            categorias: [
-                { nome: "Canais Abertos", icon: "📡", canais: [
-                    { id: "globorj", nome: "Globo RJ" }, { id: "globosp", nome: "Globo SP" },
-                    { id: "sbt", nome: "SBT" }, { id: "record", nome: "Record TV" },
-                    { id: "band", nome: "Band" }, { id: "redetv", nome: "Rede TV" },
-                    { id: "cultura", nome: "Cultura" }
-                ]},
-                { nome: "Notícias", icon: "📰", canais: [
-                    { id: "globonews", nome: "Globo News" }, { id: "bandnews", nome: "Band News" },
-                    { id: "cnnbrasil", nome: "CNN Brasil" }, { id: "recordnews", nome: "Record News" }
-                ]},
-                { nome: "Esportes", icon: "⚽", canais: [
-                    { id: "sportv", nome: "SporTV" }, { id: "espn", nome: "ESPN" },
-                    { id: "premiereclubes", nome: "Premiere Clubes" }, { id: "combate", nome: "Combate" },
-                    { id: "cazetv1", nome: "Cazé TV 1" }
-                ]},
-                { nome: "Filmes e Séries", icon: "🎬", canais: [
-                    { id: "telecinepremium", nome: "Telecine Premium" }, { id: "hbo", nome: "HBO" },
-                    { id: "universaltv", nome: "Universal TV" }, { id: "amc", nome: "AMC" },
-                    { id: "tnt", nome: "TNT" }
-                ]},
-                { nome: "Infantil", icon: "🧸", canais: [
-                    { id: "gloob", nome: "Gloob" }, { id: "discoverykids", nome: "Discovery Kids" },
-                    { id: "cartoonnetwork", nome: "Cartoon Network" }
-                ]},
-                { nome: "Documentários", icon: "🌍", canais: [
-                    { id: "discoverychannel", nome: "Discovery Channel" }, { id: "history1", nome: "History 1" },
-                    { id: "animalplanet", nome: "Animal Planet" }, { id: "hgtv", nome: "HGTV" }
-                ]},
-                { nome: "Entretenimento 24h", icon: "🔄", canais: [
-                    { id: "24hnaruto", nome: "24H Naruto" }, { id: "24hdragonball", nome: "24H Dragonball" },
-                    { id: "24hchaves", nome: "24H Chaves" }
-                ]}
-            ]
-        };
+            const mainContent = document.getElementById('main-content');
+            const authContainer = document.getElementById('auth-container');
+            const rechargeContainer = document.getElementById('recharge-container');
+            const deviceModal = document.getElementById('device-selection-modal');
+            
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const rechargeForm = document.getElementById('recharge-form');
+            const redeemForm = document.getElementById('redeem-form'); 
+            
+            const showRegisterLink = document.getElementById('show-register');
+            const showLoginLink = document.getElementById('show-login');
+            const rechargeLogoutButton = document.getElementById('recharge-logout-button'); 
+            const settingsIcon = document.getElementById('settings-icon');
+            const accountMenu = document.getElementById('account-menu');
+            const menuLogoutButton = document.getElementById('menu-logout');
+            const menuDeleteButton = document.getElementById('menu-delete-account');
+            const menuRedeemCodeButton = document.getElementById('menu-redeem-code');
+            const menuChangeDeviceButton = document.getElementById('menu-change-device'); 
+            const closeRedeemModalButton = document.getElementById('close-redeem-modal'); 
+            
+            const redeemCodeModal = document.getElementById('redeem-code-modal'); 
+            const modalOverlay = document.getElementById('modal-overlay'); 
 
-        /* ═══════════ ELEMENTS ═══════════ */
-        const $ = id => document.getElementById(id);
-        const mainContent = $('main-content');
-        const authContainer = $('auth-container');
-        const rechargeContainer = $('recharge-container');
-        const deviceModal = $('device-selection-modal');
-        const sidebar = $('sidebar');
-        const player = $('tv-player');
-        const playerPlaceholder = $('player-placeholder');
-        const toast = $('toast');
+            const loginMessage = document.getElementById('login-message');
+            const registerMessage = document.getElementById('register-message');
+            const rechargeMessage = document.getElementById('recharge-message');
+            const redeemMessage = document.getElementById('redeem-message'); 
 
-        let rechargeData = { VALID_CODES: {}, MS_PER_DAY: 0 };
-        let deviceType = localStorage.getItem('kuromi_tv_device_type');
-        let allChannels = [];
-        let currentIndex = -1;
-        let refreshInterval;
-        let toastTimer;
+            const userSession = document.getElementById('user-session');
+            const welcomeMessage = document.getElementById('welcome-message');
 
-        // Build flat channel list with numbers
-        let chNum = 1;
-        tvConfig.categorias.forEach(cat => {
-            cat.canais.forEach(c => {
-                allChannels.push({ ...c, categoria: cat.nome, catIcon: cat.icon, num: chNum++ });
-            });
-        });
+            const player = document.getElementById('tv-player');
+            const playerContainer = document.getElementById('player-container');
+            const currentChannelDisplay = document.getElementById('current-channel');
+            const dynamicChannelsContainer = document.getElementById('dynamic-channels-container');
 
-        /* ═══════════ LOAD CODES ═══════════ */
-        try {
-            const res = await fetch('codes.json');
-            if (res.ok) {
-                const data = await res.json();
-                rechargeData = { VALID_CODES: data.VALID_CODES || {}, MS_PER_DAY: data.MS_PER_DAY || 0 };
-            }
-        } catch(e) { console.warn('codes.json não encontrado', e); }
+            let rechargeData = { VALID_CODES: {}, MS_PER_DAY: 0 }; 
+            
+            const loadRechargeCodes = async () => {
+                try {
+                    const response = await fetch('codes.json');
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    return { VALID_CODES: data.VALID_CODES || {}, MS_PER_DAY: data.MS_PER_DAY || 0 };
+                } catch (error) {
+                    console.error('Falha ao carregar códigos:', error);
+                    return { VALID_CODES: {}, MS_PER_DAY: 0 };
+                }
+            };
+            rechargeData = await loadRechargeCodes();
 
-        /* ═══════════ SCREENS ═══════════ */
-        const showScreen = (name) => {
-            mainContent.classList.add('hidden');
-            authContainer.classList.add('hidden');
-            rechargeContainer.classList.add('hidden');
-            if (name === 'auth') authContainer.classList.remove('hidden');
-            else if (name === 'recharge') rechargeContainer.classList.remove('hidden');
-            else if (name === 'main') mainContent.classList.remove('hidden');
-        };
+            const showScreen = (screenName) => {
+                mainContent.classList.add('hidden');
+                authContainer.classList.add('hidden');
+                rechargeContainer.classList.add('hidden');
+                accountMenu.classList.add('hidden'); 
+                redeemCodeModal.classList.add('hidden'); 
+                modalOverlay.classList.add('hidden'); 
 
-        /* ═══════════ SIDEBAR RENDER ═══════════ */
-        const renderSidebar = (containerId, searchTerm = '') => {
-            const container = $(containerId);
-            if (!container) return;
-            const term = searchTerm.toLowerCase().trim();
-            let html = '';
-            let globalIdx = 0;
+                if (screenName === 'auth') authContainer.classList.remove('hidden');
+                else if (screenName === 'recharge') rechargeContainer.classList.remove('hidden');
+                else if (screenName === 'main') mainContent.classList.remove('hidden');
+            };
 
-            tvConfig.categorias.forEach((cat, ci) => {
-                const filtered = cat.canais.filter(c =>
-                    !term || c.nome.toLowerCase().includes(term) || cat.nome.toLowerCase().includes(term)
-                );
-                if (term && filtered.length === 0) return;
+            const logoutSession = () => {
+                localStorage.removeItem('kuromi_tv_currentUser');
+                if(refreshInterval) clearInterval(refreshInterval);
+                loginForm.reset();
+                loginMessage.textContent = '';
+                showScreen('auth');
+            };
 
-                const isOpen = term ? true : ci === 0;
-                html += `<div class="sidebar-category">
-                    <div class="category-header ${isOpen ? 'open' : ''}" data-cat="${ci}">
-                        <h3>${cat.icon} ${cat.nome}</h3>
-                        <span style="display:flex;align-items:center;gap:6px;">
-                            <span class="cat-count">${filtered.length}</span>
-                            <span class="cat-arrow">▶</span>
-                        </span>
+            const deleteAccount = () => {
+                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
+                if (confirm(`Tem certeza que deseja DELETAR a conta "${currentUser}"?`)) {
+                    const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+                    delete users[currentUser];
+                    localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
+                    logoutSession();
+                }
+            };
+
+            let deviceType = localStorage.getItem('kuromi_tv_device_type');
+            let tvChannelListVisible = false;
+            let currentTVChannelIndex = 0;
+            let allChannels = [];
+
+            const checkDevice = () => {
+                if (!deviceType) {
+                    deviceModal.classList.remove('hidden');
+                } else {
+                    deviceModal.classList.add('hidden');
+                    applyDeviceLayout();
+                }
+            };
+
+            const applyDeviceLayout = () => {
+                if (deviceType === 'mobile') {
+                    playerContainer.style.position = 'relative';
+                    playerContainer.style.top = 'auto';
+                    playerContainer.style.left = 'auto';
+                    playerContainer.style.width = '100%';
+                    playerContainer.style.height = 'auto';
+                    playerContainer.style.paddingTop = '56.25%';
+                    playerContainer.style.zIndex = 'auto';
+                    dynamicChannelsContainer.classList.remove('hidden');
+                    currentChannelDisplay.classList.remove('hidden');
+                    const overlay = document.getElementById('tv-channel-overlay');
+                    if (overlay) overlay.classList.add('hidden');
+                } else if (deviceType === 'tv') {
+                    playerContainer.style.position = 'fixed';
+                    playerContainer.style.top = '0';
+                    playerContainer.style.left = '0';
+                    playerContainer.style.width = '100vw';
+                    playerContainer.style.height = '100vh';
+                    playerContainer.style.paddingTop = '0';
+                    playerContainer.style.zIndex = '10';
+                    dynamicChannelsContainer.classList.add('hidden');
+                    currentChannelDisplay.classList.add('hidden');
+                    
+                    if (!document.getElementById('tv-channel-overlay')) {
+                        const overlay = document.createElement('div');
+                        overlay.id = 'tv-channel-overlay';
+                        overlay.className = 'hidden';
+                        const listContainer = document.createElement('div');
+                        listContainer.id = 'tv-channel-list';
+                        overlay.appendChild(listContainer);
+                        document.body.appendChild(overlay);
+                        
+                        allChannels = [];
+                        tvConfig.categorias.forEach(cat => {
+                            cat.canais.forEach(canal => allChannels.push({ ...canal, categoria: cat.nome }));
+                        });
+                    }
+                    if (allChannels.length > 0) playChannelTV(0);
+                    setTimeout(() => {
+                        if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(e => console.log("Fullscreen bloqueado"));
+                    }, 500);
+                }
+            };
+
+            const renderTVChannelList = () => {
+                const listContainer = document.getElementById('tv-channel-list');
+                if (!listContainer) return;
+                listContainer.innerHTML = allChannels.map((canal, index) => `
+                    <div class="tv-channel-item ${index === currentTVChannelIndex ? 'selected' : ''}" data-index="${index}">
+                        <span>${canal.nome}</span>
+                        <span style="font-size: 0.8em; opacity: 0.7;">${canal.categoria}</span>
                     </div>
-                    <div class="category-channels ${isOpen ? 'open' : ''}">`;
+                `).join('');
+                const selected = listContainer.querySelector('.selected');
+                if (selected) selected.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            };
 
-                filtered.forEach(canal => {
-                    const idx = allChannels.findIndex(c => c.id === canal.id);
-                    const ch = allChannels[idx];
-                    const isActive = idx === currentIndex;
-                    const initials = canal.nome.split(' ').map(w => w[0]).join('').substring(0, 3).toUpperCase();
-                    html += `<div class="channel-item ${isActive ? 'active' : ''}" data-index="${idx}">
-                        <span class="ch-number">${String(ch.num).padStart(2, '0')}</span>
-                        <span class="ch-icon">${initials}</span>
-                        <span class="ch-name">${canal.nome}</span>
-                        ${isActive ? '<span class="ch-live"></span>' : ''}
-                    </div>`;
-                });
+            const showChannelToast = (channelName) => {
+                let toast = document.getElementById('channel-toast');
+                if (!toast) {
+                    toast = document.createElement('div');
+                    toast.id = 'channel-toast';
+                    document.body.appendChild(toast);
+                }
+                toast.textContent = `📺 ${channelName}`;
+                toast.style.opacity = '1';
+                setTimeout(() => { toast.style.opacity = '0'; }, 3000);
+            };
 
-                html += `</div></div>`;
-            });
+            const playChannelTV = (index) => {
+                currentTVChannelIndex = index;
+                const canal = allChannels[index];
+                player.src = `${tvConfig.baseUrl}/?id=${canal.id}`;
+                currentChannelDisplay.textContent = `Canal Atual: ${canal.nome}`;
+                showChannelToast(canal.nome);
+                tvChannelListVisible = false;
+                const overlay = document.getElementById('tv-channel-overlay');
+                if (overlay) overlay.classList.add('hidden');
+            };
 
-            container.innerHTML = html || '<p style="padding:20px;color:var(--text-muted);text-align:center;font-size:0.85em;">Nenhum canal encontrado.</p>';
-        };
+            const toggleTVChannelList = () => {
+                tvChannelListVisible = !tvChannelListVisible;
+                const overlay = document.getElementById('tv-channel-overlay');
+                if (!overlay) return;
+                if (tvChannelListVisible) {
+                    overlay.classList.remove('hidden');
+                    renderTVChannelList();
+                } else {
+                    overlay.classList.add('hidden');
+                }
+            };
 
-        /* ═══════════ PLAY CHANNEL ═══════════ */
-        const playChannel = (index) => {
-            if (index < 0 || index >= allChannels.length) return;
-            currentIndex = index;
-            const ch = allChannels[index];
-
-            player.src = `${tvConfig.baseUrl}/?id=${ch.id}`;
-            playerPlaceholder.classList.add('hidden');
-
-            // Update info bar
-            $('info-ch-num').textContent = String(ch.num).padStart(2, '0');
-            $('info-ch-name').textContent = ch.nome;
-            $('info-ch-cat').textContent = ch.categoria;
-            $('now-playing-text').innerHTML = `▶ <strong>${ch.nome}</strong>`;
-
-            showToast(ch.num, ch.nome);
-            renderSidebar('sidebar-channel-list', $('channel-search')?.value || '');
-            renderSidebar('tv-sidebar-channel-list', $('tv-channel-search')?.value || '');
-
-            if (deviceType === 'tv') closeTVSidebar();
-            startRefreshTimer();
-        };
-
-        /* ═══════════ TOAST ═══════════ */
-        const showToast = (num, name) => {
-            $('toast-num').textContent = String(num).padStart(2, '0');
-            $('toast-text').textContent = name;
-            toast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
-        };
-
-        /* ═══════════ TV SIDEBAR ═══════════ */
-        const openTVSidebar = () => {
-            $('tv-sidebar-overlay').classList.add('visible');
-            $('tv-sidebar').classList.add('open');
-            renderSidebar('tv-sidebar-channel-list');
-        };
-
-        const closeTVSidebar = () => {
-            $('tv-sidebar-overlay').classList.remove('visible');
-            $('tv-sidebar').classList.remove('open');
-        };
-
-        /* ═══════════ DEVICE LAYOUT ═══════════ */
-        const applyDeviceLayout = () => {
-            if (deviceType === 'tv') {
-                document.body.classList.add('tv-mode');
-                sidebar.classList.add('collapsed');
-                if (currentIndex < 0) playChannel(0);
-                setTimeout(() => {
-                    if (document.documentElement.requestFullscreen)
-                        document.documentElement.requestFullscreen().catch(() => {});
-                }, 500);
-            } else {
-                document.body.classList.remove('tv-mode');
-                sidebar.classList.remove('collapsed');
-            }
-        };
-
-        const checkDevice = () => {
-            if (!deviceType) {
-                deviceModal.classList.remove('hidden');
-            } else {
+            document.getElementById('btn-device-mobile').addEventListener('click', () => {
+                deviceType = 'mobile';
+                localStorage.setItem('kuromi_tv_device_type', deviceType);
                 deviceModal.classList.add('hidden');
                 applyDeviceLayout();
-            }
-        };
+            });
 
-        /* ═══════════ SESSION ═══════════ */
-        const checkSession = () => {
-            const user = localStorage.getItem('kuromi_tv_currentUser');
-            if (!user) { showScreen('auth'); return; }
-            const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
-            const ud = users[user];
-            if (ud && ud.accessExpires && ud.accessExpires > Date.now()) {
-                $('welcome-message').textContent = user;
-                showScreen('main');
-                renderSidebar('sidebar-channel-list');
-                startRefreshTimer();
+            document.getElementById('btn-device-tv').addEventListener('click', () => {
+                deviceType = 'tv';
+                localStorage.setItem('kuromi_tv_device_type', deviceType);
+                deviceModal.classList.add('hidden');
+                applyDeviceLayout();
+            });
+
+            menuChangeDeviceButton.addEventListener('click', () => {
+                localStorage.removeItem('kuromi_tv_device_type');
+                deviceType = null;
+                accountMenu.classList.add('hidden');
                 checkDevice();
-            } else {
-                showScreen('recharge');
-            }
-        };
+            });
 
-        const logout = () => {
-            localStorage.removeItem('kuromi_tv_currentUser');
-            if (refreshInterval) clearInterval(refreshInterval);
-            currentIndex = -1;
-            player.src = 'about:blank';
-            showScreen('auth');
-        };
+            document.addEventListener('keydown', (e) => {
+                if (deviceType !== 'tv') return;
+                const key = e.key;
+                const isEnter = key === 'Enter' || key === 'OK' || e.keyCode === 13;
+                const isBack = key === 'Escape' || key === 'Backspace';
 
-        /* ═══════════ RECHARGE LOGIC ═══════════ */
-        const processCode = (code, user, msgEl, isRecharge) => {
-            const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
-            const ud = users[user] || { usedCodes: [] };
-            if (!rechargeData.VALID_CODES[code]) {
-                msgEl.textContent = '❌ Código inválido.'; msgEl.style.color = 'var(--accent)'; return;
-            }
-            if (ud.usedCodes.includes(code)) {
-                msgEl.textContent = '⚠️ Código já utilizado.'; msgEl.style.color = 'var(--accent)'; return;
-            }
-            const ms = rechargeData.VALID_CODES[code] * rechargeData.MS_PER_DAY;
-            const start = (ud.accessExpires && ud.accessExpires > Date.now()) ? ud.accessExpires : Date.now();
-            ud.accessExpires = start + ms;
-            ud.usedCodes.push(code);
-            users[user] = ud;
-            localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
-            msgEl.textContent = `✅ +${rechargeData.VALID_CODES[code]} dia(s) ativado!`;
-            msgEl.style.color = 'var(--success)';
-            if (isRecharge) setTimeout(checkSession, 1500);
-            else setTimeout(() => {
-                $('redeem-modal-overlay').classList.add('hidden');
-                $('redeem-form').reset();
-                msgEl.textContent = '';
-            }, 2000);
-        };
-
-        /* ═══════════ REFRESH TIMER ═══════════ */
-        const startRefreshTimer = () => {
-            if (refreshInterval) clearInterval(refreshInterval);
-            refreshInterval = setInterval(() => {
-                const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
-                const ud = users[localStorage.getItem('kuromi_tv_currentUser')];
-                if (ud && ud.accessExpires > Date.now()) {
-                    if (player.src && player.src !== 'about:blank') player.src = player.src;
+                if (tvChannelListVisible) {
+                    if (key === 'ArrowUp') {
+                        e.preventDefault();
+                        currentTVChannelIndex = (currentTVChannelIndex - 1 + allChannels.length) % allChannels.length;
+                        renderTVChannelList();
+                    } else if (key === 'ArrowDown') {
+                        e.preventDefault();
+                        currentTVChannelIndex = (currentTVChannelIndex + 1) % allChannels.length;
+                        renderTVChannelList();
+                    } else if (isEnter) {
+                        e.preventDefault();
+                        playChannelTV(currentTVChannelIndex);
+                    } else if (isBack) {
+                        e.preventDefault();
+                        toggleTVChannelList();
+                    }
                 } else {
-                    clearInterval(refreshInterval);
-                    checkSession();
+                    if (isEnter) {
+                        e.preventDefault();
+                        toggleTVChannelList();
+                    } else if (key === 'ArrowUp') {
+                        e.preventDefault();
+                        currentTVChannelIndex = (currentTVChannelIndex - 1 + allChannels.length) % allChannels.length;
+                        playChannelTV(currentTVChannelIndex);
+                    } else if (key === 'ArrowDown') {
+                        e.preventDefault();
+                        currentTVChannelIndex = (currentTVChannelIndex + 1) % allChannels.length;
+                        playChannelTV(currentTVChannelIndex);
+                    } else if (isBack) {
+                        e.preventDefault();
+                        showChannelToast("Pressione OK para abrir a grade de canais");
+                    }
                 }
-            }, 600000);
-        };
+            });
 
-        /* ═══════════ EVENT LISTENERS ═══════════ */
-
-        // Sidebar toggle (mobile/pc)
-        $('btn-toggle-sidebar').addEventListener('click', () => sidebar.classList.toggle('collapsed'));
-
-        // Sidebar channel click
-        const handleSidebarClick = (e) => {
-            const item = e.target.closest('.channel-item');
-            if (item) {
-                playChannel(parseInt(item.dataset.index));
-                return;
-            }
-            const catHeader = e.target.closest('.category-header');
-            if (catHeader) {
-                catHeader.classList.toggle('open');
-                const channels = catHeader.nextElementSibling;
-                channels.classList.toggle('open');
-            }
-        };
-
-        $('sidebar-channel-list').addEventListener('click', handleSidebarClick);
-        $('tv-sidebar-channel-list').addEventListener('click', handleSidebarClick);
-
-        // Search
-        $('channel-search')?.addEventListener('input', (e) => renderSidebar('sidebar-channel-list', e.target.value));
-        $('tv-channel-search')?.addEventListener('input', (e) => renderSidebar('tv-sidebar-channel-list', e.target.value));
-
-        // Player controls
-        $('btn-prev-ch').addEventListener('click', () => playChannel((currentIndex - 1 + allChannels.length) % allChannels.length));
-        $('btn-next-ch').addEventListener('click', () => playChannel((currentIndex + 1) % allChannels.length));
-        $('btn-fullscreen').addEventListener('click', () => {
-            const pw = $('player-wrapper');
-            if (document.fullscreenElement) document.exitFullscreen();
-            else if (pw.requestFullscreen) pw.requestFullscreen();
-        });
-
-        // TV sidebar
-        $('tv-sidebar-overlay').addEventListener('click', closeTVSidebar);
-        $('tv-sidebar-close').addEventListener('click', closeTVSidebar);
-
-        // Device selection
-        $('btn-device-mobile').addEventListener('click', () => {
-            deviceType = 'mobile';
-            localStorage.setItem('kuromi_tv_device_type', deviceType);
-            deviceModal.classList.add('hidden');
-            applyDeviceLayout();
-        });
-
-        $('btn-device-tv').addEventListener('click', () => {
-            deviceType = 'tv';
-            localStorage.setItem('kuromi_tv_device_type', deviceType);
-            deviceModal.classList.add('hidden');
-            applyDeviceLayout();
-        });
-
-        // Account menu
-        $('settings-icon').addEventListener('click', (e) => {
-            e.stopPropagation();
-            $('account-menu').classList.toggle('hidden');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!$('account-menu').classList.contains('hidden') && !e.target.closest('.top-bar-right'))
-                $('account-menu').classList.add('hidden');
-        });
-
-        $('menu-logout').addEventListener('click', logout);
-        $('recharge-logout-button').addEventListener('click', logout);
-
-        $('menu-delete-account').addEventListener('click', () => {
-            const user = localStorage.getItem('kuromi_tv_currentUser');
-            if (confirm(`Deletar a conta "${user}" permanentemente?`)) {
+            const checkSession = () => {
+                const currentUser = localStorage.getItem('kuromi_tv_currentUser');
+                if (!currentUser) { showScreen('auth'); return; }
                 const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
-                delete users[user];
-                localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
-                logout();
-            }
-        });
+                const userData = users[currentUser];
 
-        $('menu-redeem-code').addEventListener('click', () => {
-            $('account-menu').classList.add('hidden');
-            $('redeem-modal-overlay').classList.remove('hidden');
-            $('redeem-form').reset();
-            $('redeem-message').textContent = '';
-        });
-
-        $('close-redeem-modal').addEventListener('click', () => $('redeem-modal-overlay').classList.add('hidden'));
-        $('redeem-modal-overlay').addEventListener('click', (e) => {
-            if (e.target === $('redeem-modal-overlay')) $('redeem-modal-overlay').classList.add('hidden');
-        });
-
-        $('menu-change-device').addEventListener('click', () => {
-            localStorage.removeItem('kuromi_tv_device_type');
-            deviceType = null;
-            document.body.classList.remove('tv-mode');
-            $('account-menu').classList.add('hidden');
-            checkDevice();
-        });
-
-        // Auth forms
-        $('show-register').addEventListener('click', () => {
-            $('login-form-container').classList.add('hidden');
-            $('register-form-container').classList.remove('hidden');
-        });
-
-        $('show-login').addEventListener('click', () => {
-            $('register-form-container').classList.add('hidden');
-            $('login-form-container').classList.remove('hidden');
-        });
-
-        $('register-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const u = $('register-username').value.trim();
-            const p = $('register-password').value;
-            const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
-            if (users[u]) {
-                $('register-message').textContent = 'Usuário já existe.';
-                $('register-message').style.color = 'var(--accent)';
-            } else {
-                users[u] = { password: p, accessExpires: null, usedCodes: [] };
-                localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
-                $('register-message').textContent = 'Conta criada! Faça login.';
-                $('register-message').style.color = 'var(--success)';
-                setTimeout(() => $('show-login').click(), 1500);
-            }
-        });
-
-        $('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const u = $('login-username').value.trim();
-            const p = $('login-password').value;
-            const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
-            if (users[u] && users[u].password === p) {
-                localStorage.setItem('kuromi_tv_currentUser', u);
-                checkSession();
-            } else {
-                $('login-message').textContent = 'Usuário ou senha incorretos.';
-                $('login-message').style.color = 'var(--accent)';
-            }
-        });
-
-        $('recharge-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            processCode($('recharge-code').value.trim().toUpperCase(), localStorage.getItem('kuromi_tv_currentUser'), $('recharge-message'), true);
-        });
-
-        $('redeem-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            processCode($('redeem-code').value.trim().toUpperCase(), localStorage.getItem('kuromi_tv_currentUser'), $('redeem-message'), false);
-        });
-
-        /* ═══════════ KEYBOARD (TV MODE) ═══════════ */
-        document.addEventListener('keydown', (e) => {
-            if (deviceType !== 'tv') return;
-            const tvSidebarOpen = $('tv-sidebar').classList.contains('open');
-
-            if (tvSidebarOpen) {
-                if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    currentIndex = (currentIndex + 1) % allChannels.length;
-                    renderSidebar('tv-sidebar-channel-list');
-                    const active = $('tv-sidebar-channel-list').querySelector('.active');
-                    if (active) active.scrollIntoView({ block: 'center', behavior: 'smooth' });
-                } else if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    currentIndex = (currentIndex - 1 + allChannels.length) % allChannels.length;
-                    renderSidebar('tv-sidebar-channel-list');
-                    const active = $('tv-sidebar-channel-list').querySelector('.active');
-                    if (active) active.scrollIntoView({ block: 'center', behavior: 'smooth' });
-                } else if (e.key === 'Enter') {
-                    e.preventDefault();
-                    playChannel(currentIndex);
-                } else if (e.key === 'Escape' || e.key === 'Backspace') {
-                    e.preventDefault();
-                    closeTVSidebar();
+                if (userData && userData.accessExpires && userData.accessExpires > Date.now()) {
+                    welcomeMessage.textContent = `Olá, ${currentUser}!`;
+                    userSession.classList.remove('hidden');
+                    showScreen('main');
+                    startRefreshTimer();
+                    checkDevice();
+                } else {
+                    showScreen('recharge');
                 }
-            } else {
-                if (e.key === 'Enter' || e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    openTVSidebar();
-                } else if (e.key === 'ArrowRight') {
-                    e.preventDefault();
-                    playChannel((currentIndex + 1) % allChannels.length);
-                } else if (e.key === 'ArrowLeft') {
-                    e.preventDefault();
-                    playChannel((currentIndex - 1 + allChannels.length) % allChannels.length);
+            };
+            
+            const processRechargeCode = (code, currentUser, messageElement, isRechargeScreen = false) => {
+                const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+                const userData = users[currentUser] || { usedCodes: [] };
+                if (!rechargeData.VALID_CODES[code]) {
+                    messageElement.textContent = 'Código inválido!'; messageElement.style.color = 'var(--accent-color)'; return; 
                 }
-            }
-        });
+                if (userData.usedCodes.includes(code)) {
+                    messageElement.textContent = 'Código já utilizado!'; messageElement.style.color = 'var(--accent-color)'; return; 
+                }
+                const durationInMs = rechargeData.VALID_CODES[code] * rechargeData.MS_PER_DAY; 
+                const startTime = (userData.accessExpires && userData.accessExpires > Date.now()) ? userData.accessExpires : Date.now();
+                userData.accessExpires = startTime + durationInMs;
+                userData.usedCodes.push(code);
+                users[currentUser] = userData;
+                localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
+                messageElement.textContent = `Ativado! +${rechargeData.VALID_CODES[code]} dia(s).`;
+                messageElement.style.color = 'lightgreen';
+                
+                if (isRechargeScreen) setTimeout(() => checkSession(), 1500);
+                else setTimeout(() => { redeemCodeModal.classList.add('hidden'); modalOverlay.classList.add('hidden'); redeemForm.reset(); redeemMessage.textContent = ''; }, 2000);
+            };
+            
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('register-username').value;
+                const password = document.getElementById('register-password').value;
+                const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+                if (users[username]) {
+                    registerMessage.textContent = 'Usuário já existe!'; registerMessage.style.color = 'var(--accent-color)';
+                } else {
+                    users[username] = { password, accessExpires: null, usedCodes: [] };
+                    localStorage.setItem('kuromi_tv_users', JSON.stringify(users));
+                    registerMessage.textContent = 'Conta criada! Faça login.'; registerMessage.style.color = 'lightgreen';
+                    setTimeout(() => showLoginLink.click(), 2000);
+                }
+            });
 
-        /* ═══════════ INIT ═══════════ */
-        checkSession();
-    });
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('login-username').value;
+                const password = document.getElementById('login-password').value;
+                const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+                if (users[username] && users[username].password === password) {
+                    localStorage.setItem('kuromi_tv_currentUser', username);
+                    checkSession();
+                } else {
+                    loginMessage.textContent = 'Usuário ou senha incorretos!'; loginMessage.style.color = 'var(--accent-color)';
+                }
+            });
+
+            rechargeLogoutButton.addEventListener('click', logoutSession);
+            menuLogoutButton.addEventListener('click', logoutSession);
+            settingsIcon.addEventListener('click', (e) => { e.stopPropagation(); accountMenu.classList.toggle('hidden'); });
+            menuDeleteButton.addEventListener('click', deleteAccount);
+            menuRedeemCodeButton.addEventListener('click', () => { accountMenu.classList.add('hidden'); redeemCodeModal.classList.remove('hidden'); modalOverlay.classList.remove('hidden'); redeemForm.reset(); redeemMessage.textContent = ''; });
+            closeRedeemModalButton.addEventListener('click', () => { redeemCodeModal.classList.add('hidden'); modalOverlay.classList.add('hidden'); });
+
+            document.addEventListener('click', (e) => {
+                if (!accountMenu.classList.contains('hidden') && !e.target.closest('#user-session')) accountMenu.classList.add('hidden');
+                if (!redeemCodeModal.classList.contains('hidden') && e.target.id === 'modal-overlay') { redeemCodeModal.classList.add('hidden'); modalOverlay.classList.add('hidden'); }
+            });
+
+            rechargeForm.addEventListener('submit', (e) => { e.preventDefault(); processRechargeCode(document.getElementById('recharge-code').value.toUpperCase(), localStorage.getItem('kuromi_tv_currentUser'), rechargeMessage, true); });
+            redeemForm.addEventListener('submit', (e) => { e.preventDefault(); processRechargeCode(document.getElementById('redeem-code').value.toUpperCase(), localStorage.getItem('kuromi_tv_currentUser'), redeemMessage, false); });
+            showRegisterLink.addEventListener('click', () => { document.getElementById('login-form-container').classList.add('hidden'); document.getElementById('register-form-container').classList.remove('hidden'); });
+            showLoginLink.addEventListener('click', () => { document.getElementById('register-form-container').classList.add('hidden'); document.getElementById('login-form-container').classList.remove('hidden'); });
+
+            const renderChannels = () => {
+                if (!tvConfig.enabled) {
+                    dynamicChannelsContainer.innerHTML = '<p style="text-align:center; color: var(--accent-color); font-size: 1.2em; padding: 20px;">🚫 Sistema de canais temporariamente desativado.</p>';
+                    return;
+                }
+                dynamicChannelsContainer.innerHTML = tvConfig.categorias.map(cat => `
+                    <div class="channel-category">
+                        <h2>${cat.nome}</h2>
+                        <div class="channel-buttons">
+                            ${cat.canais.map(canal => `<button class="channel-button" data-channel="${canal.id}" data-name="${canal.nome}">${canal.nome}</button>`).join('')}
+                        </div>
+                    </div>
+                `).join('');
+            };
+
+            dynamicChannelsContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('channel-button')) {
+                    player.src = `${tvConfig.baseUrl}/?id=${e.target.getAttribute('data-channel')}`;
+                    currentChannelDisplay.textContent = `Canal Atual: ${e.target.getAttribute('data-name')}`;
+                    if (deviceType !== 'tv' && playerContainer.requestFullscreen) playerContainer.requestFullscreen();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    startRefreshTimer();
+                }
+            });
+
+            let refreshInterval;
+            const refreshPlayer = () => {
+                const users = JSON.parse(localStorage.getItem('kuromi_tv_users')) || {};
+                const userData = users[localStorage.getItem('kuromi_tv_currentUser')];
+                if (userData && userData.accessExpires > Date.now()) player.src = player.src;
+                else { clearInterval(refreshInterval); checkSession(); }
+            };
+            const startRefreshTimer = () => { if (refreshInterval) clearInterval(refreshInterval); refreshInterval = setInterval(refreshPlayer, 600000); };
+            
+            renderChannels();
+            checkSession();
+        });
     </script>
 </body>
-    </html>
+                 </html>
