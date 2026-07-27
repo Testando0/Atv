@@ -2,8 +2,26 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- ➕ ADIÇÃO: compatibilidade TVs antigas -->
+
+    <!-- ➕ ADIÇÃO INÍCIO: viewport otimizado para TV (sem zoom, tela cheia) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <!-- ➕ ADIÇÃO FIM -->
+
     <title>✰ KUROMI TV ✰</title>
+
+    <!-- ➕ ADIÇÃO INÍCIO: PWA / APP NATIVO + LOGO -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3f0000">
+    <meta name="mobile-web-app-capable" content="yes">          <!-- Samsung Tizen / Android TV -->
+    <meta name="application-name" content="KUROMI TV">
+    <meta name="apple-mobile-web-app-capable" content="yes">    <!-- LG WebOS / iOS -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="KUROMI TV">
+    <link rel="apple-touch-icon" href="https://i.ibb.co/1YSRRTV9/1003980527.jpg">
+    <link rel="icon" type="image/jpeg" href="https://i.ibb.co/1YSRRTV9/1003980527.jpg">
+    <!-- ➕ ADIÇÃO FIM -->
+
     <style>
         :root {
             --background-color: #3f0000; /* Vermelho escuro */
@@ -42,6 +60,13 @@
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
+        /* ➕ ADIÇÃO INÍCIO: logo no cabeçalho */
+        .header-brand { display: flex; align-items: center; gap: 14px; }
+        .header-brand img {
+            width: 58px; height: 58px; border-radius: 14px; object-fit: cover;
+            box-shadow: 0 0 14px rgba(255,51,51,.6); border: 2px solid var(--border-color);
+        }
+        /* ➕ ADIÇÃO FIM */
         #user-session {
             position: absolute;
             right: 0;
@@ -175,6 +200,19 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
+        /* ➕ ADIÇÃO INÍCIO: foco visível para controle remoto / D-pad de TV */
+        .channel-button:focus, .channel-button:focus-visible {
+            background-color: #B22222;
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 0 14px rgba(255,51,51,.8);
+            outline: 3px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+        :focus-visible {
+            outline: 3px solid var(--accent-color);
+            outline-offset: 2px;
+        }
+        /* ➕ ADIÇÃO FIM */
         footer {
             text-align: center;
             padding: 20px;
@@ -333,7 +371,12 @@
 
     <div id="main-content" class="container hidden">
         <header>
-            <h1>✰ KUROMI TV ✰</h1>
+            <!-- ➕ ADIÇÃO INÍCIO: agrupa logo + título -->
+            <div class="header-brand">
+                <img src="https://i.ibb.co/1YSRRTV9/1003980527.jpg" alt="KUROMI TV">
+                <h1>✰ KUROMI TV ✰</h1>
+            </div>
+            <!-- ➕ ADIÇÃO FIM -->
             <div id="user-session" class="hidden">
                  <span id="welcome-message"></span>
                  <span id="settings-icon">⚙️</span>
@@ -764,6 +807,15 @@
                 }
             });
 
+            // ➕ ADIÇÃO INÍCIO: ativar canal também com ENTER no controle remoto (D-pad)
+            dynamicChannelsContainer.addEventListener('keydown', (e) => {
+                if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('channel-button')) {
+                    e.preventDefault();
+                    e.target.click();
+                }
+            });
+            // ➕ ADIÇÃO FIM
+
             const openFullscreen = (elem) => {
                 if (elem.requestFullscreen) elem.requestFullscreen();
                 else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen(); /* Safari */
@@ -791,11 +843,57 @@
                 if (refreshInterval) clearInterval(refreshInterval);
                 refreshInterval = setInterval(refreshPlayer, REFRESH_INTERVAL_MS);
             };
+
+            // ==========================================
+            // ➕ ADIÇÃO INÍCIO: NAVEGAÇÃO POR SETAS (controle remoto / D-pad de qualquer TV)
+            // Não interfere em campos de texto e só age sobre elementos visíveis.
+            // ==========================================
+            document.addEventListener('keydown', (e) => {
+                const navKeys = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'];
+                if (navKeys.indexOf(e.key) === -1) return;
+
+                const active = document.activeElement;
+                const tag = (active && active.tagName) || '';
+                // Deixa o usuário digitar normalmente nos inputs
+                if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+
+                let focusables = Array.prototype.slice.call(
+                    document.querySelectorAll('button:not([disabled]), a, input, .channel-button')
+                ).filter(el => el.offsetParent !== null); // apenas visíveis
+
+                if (!focusables.length) return;
+
+                let idx = focusables.indexOf(active);
+                if (idx === -1) { focusables[0].focus(); e.preventDefault(); return; }
+
+                let n = idx;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') n = idx + 1;
+                if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   n = idx - 1;
+
+                if (n >= 0 && n < focusables.length) {
+                    focusables[n].focus();
+                    e.preventDefault();
+                }
+            });
+            // ➕ ADIÇÃO FIM
             
             // --- INICIALIZAÇÃO ---
             renderChannels(); // Renderiza a grade de canais
             checkSession();
         });
+
+        // ==========================================
+        // ➕ ADIÇÃO INÍCIO: REGISTRO DO SERVICE WORKER (app nativo / offline)
+        // Protegido: TVs antigas sem suporte continuam funcionando normalmente.
+        // ==========================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function () {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function (reg) { console.log('[KUROMI TV] SW ativo:', reg.scope); })
+                    .catch(function (err) { console.warn('[KUROMI TV] SW não suportado:', err); });
+            });
+        }
+        // ➕ ADIÇÃO FIM
     </script>
 </body>
-                </html>
+    </html>
